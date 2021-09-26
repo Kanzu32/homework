@@ -8,7 +8,7 @@ int main()
   int n, x;
   cout << "Enter n: ";
   cin >> n;
-  x = fmod(n, 12) + 1;
+  x = n % 12 + 1;
   cout << x << endl;
   system("pause");
   return 0;
