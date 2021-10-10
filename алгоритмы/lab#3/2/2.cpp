@@ -11,7 +11,7 @@ int main() {
 
   length = sqrt(pow(x-x1, 2) + pow(y-y1, 2));
   
-  if (length <= r) {
+  if (length == r) {
     cout << "C = " << 2*M_PI*r;
   } else {
     cout << "S = " << M_PI*length*length;
