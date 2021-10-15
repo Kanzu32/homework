@@ -12,9 +12,9 @@ int main() {
   length = sqrt(pow(x-x1, 2) + pow(y-y1, 2));
   
   if (length == r) {
-    cout << "C = " << 2*M_PI*r;
+    cout << "C = " << 2*M_PI*r << endl;
   } else {
-    cout << "S = " << M_PI*length*length;
+    cout << "S = " << M_PI*length*length << endl;
   }
   system("pause");
   return 0;

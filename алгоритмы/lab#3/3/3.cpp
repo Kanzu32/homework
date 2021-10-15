@@ -11,8 +11,9 @@ int main() {
   n4 = x%10;
   
   if (n1 != n2 && n1 != n3 && n1 != n4 && n2 != n3 && n2 != n4 && n3 != n4) {
-    cout << "YES";
+    cout << "YES" << endl;
   } else {
-    cout << "NO";
+    cout << "NO" << endl;
   }
+  system("pause");
 }
