@@ -11,7 +11,6 @@ int main()
   while ( abs(pow(y, 2) - pow(last, 2)) >= e ) {
     last = y;
     y = 0.5 * (last + x / (last - 1));
-    cout << y << " " << last << "aboba" << endl;
   }
 
   cout << y;
