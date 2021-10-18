@@ -2,24 +2,26 @@ package com.company;
 import java.util.Scanner;
 
 public class Main {
+	public static void main(String[] args) {
+		Scanner input = new Scanner(System.in);
+		int n = input.nextInt();
+		System.out.println(n);
+		boolean fl = false;
 
-    public static void main(String[] args) {
-        Scanner input = new Scanner(System.in);
-        int a = input.nextInt();
-        int b = input.nextInt();
-        int c = input.nextInt();
+		for (int i = 2; i < Math.sqrt(n)+1; i++) {
+			if (n%i == 0) {
+				fl = true;
+			}
+		}
 
-        if ((a+b)>c && (a+c)>b && (c+b)>a) {
+		if (n <= 1) {
+			fl = true;
+		}
 
-            if ( ((a*a + b*b) == c*c) || ((a*a + c*c) == b*b) || ((c*c + b*b) == a*a) ) {
-                System.out.println("right");
-            }
-            else if ( ((a*a + b*b) < c*c || (a*a + c*c) < b*b || (c*c + b*b) < a*a) ) {
-                System.out.println("obtuse");
-            } else {
-                System.out.println("acute");
-            }
-
-        } else System.out.println("impossible");
-    }
+		if (fl) {
+			System.out.println("composite");
+		} else {
+			System.out.println("prime");
+		}
+	}
 }
