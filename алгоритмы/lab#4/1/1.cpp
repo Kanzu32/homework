@@ -10,5 +10,6 @@ int main () {
     sm += 1.0/i;
   }
 
-  cout << sm;
+  cout << sm << endl;
+  system("pause");
 }

@@ -11,8 +11,9 @@ int main()
 
   do {
     last = y;
-    double y = 0.5 * (last + x / (last - 1));
+    y = 0.5 * (last + x / (last - 1));
   } while (abs(pow(y, 2) - pow(last, 2)) >= e);
 
-  cout << y;
+  cout << y << endl;
+  system("pause");
 }
