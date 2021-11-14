@@ -1,27 +1,16 @@
 package com.company;
+import java.util.Locale;
 import java.util.Scanner;
 
 public class Main {
 	public static void main(String[] args) {
-		Scanner input = new Scanner(System.in);
-		int n = input.nextInt();
-		System.out.println(n);
-		boolean fl = false;
-
-		for (int i = 2; i < Math.sqrt(n)+1; i++) {
-			if (n%i == 0) {
-				fl = true;
-			}
-		}
-
-		if (n <= 1) {
-			fl = true;
-		}
-
-		if (fl) {
-			System.out.println("composite");
-		} else {
-			System.out.println("prime");
-		}
+		Vector2D v = new Vector2D(1.2374, 2.2334);
+		Vector2D v2 = new Vector2D();
+		Vector2D v3 = new Vector2D(v);
+		v.print();
+		v2.print();
+		v3.print();
 	}
+
 }
+
