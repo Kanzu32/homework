@@ -4,7 +4,8 @@ import java.util.Scanner;
 
 public class Main {
 	public static void main(String[] args) {
-		A.a = 0;
+		Alphabet a = new Alphabet();
+		a.setA();
 	}
 
 }

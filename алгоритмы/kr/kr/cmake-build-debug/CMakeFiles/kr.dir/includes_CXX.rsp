@@ -1,0 +1,1 @@
+-IC:/Users/Max/Documents/kr/cmake-build-debug -IC:/Users/Max/Documents/kr -IC:/Users/Max/Documents/kr/cmake-build-debug/kr_autogen/include -isystem D:/Qt/6.2.1/mingw81_64/include/QtCore -isystem D:/Qt/6.2.1/mingw81_64/include -isystem D:/Qt/6.2.1/mingw81_64/mkspecs/win32-g++ -isystem D:/Qt/6.2.1/mingw81_64/include/QtWidgets -isystem D:/Qt/6.2.1/mingw81_64/include/QtGui

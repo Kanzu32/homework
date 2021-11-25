@@ -1,0 +1,4 @@
+C:/Users/Max/Documents/kr/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/Max/Documents/kr/cmake-build-debug/CMakeFiles/kr.dir
+C:/Users/Max/Documents/kr/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+C:/Users/Max/Documents/kr/cmake-build-debug/CMakeFiles/kr_autogen.dir
