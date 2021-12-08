@@ -1,7 +1,16 @@
 plugins {
     id 'com.android.application'
 }
+android {
+    compileSdkVersion 17
+    buildToolsVersion "17.0.0"
 
+    defaultConfig {
+        applicationId "com.example.myapplication"
+        minSdk 14
+        targetSdk 16
+    }
+}
 android {
     compileSdk 31
 
