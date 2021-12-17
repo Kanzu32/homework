@@ -1,4 +1,4 @@
-package ru.samsung.itschool.book.equation243;
+package com.example.myapplication;
 
 import org.junit.Test;
 
