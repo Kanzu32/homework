@@ -27,11 +27,12 @@ int main() {
       count = 1;
       value = arr[i-1];
     } else count = 1;
-    
-    if (i == 15 && count > countMax) {
-      value = arr[i];
-    }
   }
 
-  cout << value;
+  if (count > countMax) {
+    value = arr[15];
+  }
+
+  cout << value << endl;
+  system("pause");
 }
