@@ -10,13 +10,13 @@ int main() {
 	scanf("%c", &c);
 	fflush(stdin);
 
-	char *cptr = strtok(str, " ,");
+	char *cptr = strtok(str, " ,\n");
 	
 	while (cptr != NULL) {
 		if (cptr[strlen(cptr)-1] != c) {
 			printf("%s\n", cptr);
 		}
-		cptr = strtok(NULL, " ,");
+		cptr = strtok(NULL, " ,\n");
 	}
 	
 
