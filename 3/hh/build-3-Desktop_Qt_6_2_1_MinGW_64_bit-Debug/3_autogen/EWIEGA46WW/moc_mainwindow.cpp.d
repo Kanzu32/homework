@@ -1,4 +1,4 @@
-C:/Users/Max/Desktop/3/hh/build-3-Desktop_Qt_6_2_1_MinGW_64_bit-Debug/3_autogen/EWIEGA46WW/moc_mainwindow.cpp: C:/Users/Max/Desktop/3/hh/3/mainwindow.h \
+C:/Users/Max/Desktop/3/hh/build-3-Desktop_Qt_6_2_1_MinGW_64_bit-Debug/3_autogen/EWIEGA46WW/moc_mainwindow.cpp: C:/Users/Max/Documents/GitHub/homework/алгоритмы/2/lab\#2.4/3/3/mainwindow.h \
   C:/Users/Max/Desktop/3/hh/build-3-Desktop_Qt_6_2_1_MinGW_64_bit-Debug/3_autogen/moc_predefs.h \
   D:/Qt/6.2.1/mingw81_64/include/QtCore/qalgorithms.h \
   D:/Qt/6.2.1/mingw81_64/include/QtCore/qanystringview.h \

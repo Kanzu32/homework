@@ -1,4 +1,4 @@
-# Install script for directory: C:/Users/Max/Desktop/3/hh/3
+# Install script for directory: C:/Users/Max/Desktop/3/3
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -45,5 +45,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "C:/Users/Max/Desktop/3/hh/build-3-Desktop_Qt_6_2_1_MinGW_64_bit-Debug/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "C:/Users/Max/Desktop/3/build-3-Desktop_Qt_6_2_1_MinGW_64_bit-Debug/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

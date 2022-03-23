@@ -1,12 +1,12 @@
 3_autogen/timestamp: \
-  C:/Users/Max/Desktop/3/hh/3/CMakeLists.txt \
-  C:/Users/Max/Desktop/3/hh/3/main.cpp \
-  C:/Users/Max/Desktop/3/hh/3/mainwindow.cpp \
-  C:/Users/Max/Desktop/3/hh/3/mainwindow.h \
   3_autogen/moc_predefs.h \
   CMakeFiles/3.21.1/CMakeCXXCompiler.cmake \
   CMakeFiles/3.21.1/CMakeRCCompiler.cmake \
   CMakeFiles/3.21.1/CMakeSystem.cmake \
+  C:/Users/Max/Documents/GitHub/homework/алгоритмы/2/lab#2.4/3/3/CMakeLists.txt \
+  C:/Users/Max/Documents/GitHub/homework/алгоритмы/2/lab#2.4/3/3/main.cpp \
+  C:/Users/Max/Documents/GitHub/homework/алгоритмы/2/lab#2.4/3/3/mainwindow.cpp \
+  C:/Users/Max/Documents/GitHub/homework/алгоритмы/2/lab#2.4/3/3/mainwindow.h \
   D:/Qt/6.2.1/mingw81_64/include/QtCore/qalgorithms.h \
   D:/Qt/6.2.1/mingw81_64/include/QtCore/qanystringview.h \
   D:/Qt/6.2.1/mingw81_64/include/QtCore/qarraydata.h \
@@ -455,5 +455,5 @@
   D:/Qt/Tools/mingw810_64/x86_64-w64-mingw32/include/vadefs.h \
   D:/Qt/Tools/mingw810_64/x86_64-w64-mingw32/include/wchar.h \
   D:/Qt/Tools/mingw810_64/x86_64-w64-mingw32/include/wctype.h \
-  C:/Users/Max/Desktop/3/hh/3/mainwindow.ui \
+  C:/Users/Max/Documents/GitHub/homework/алгоритмы/2/lab#2.4/3/3/mainwindow.ui \
   D:/Qt/Tools/CMake_64/bin/cmake.exe

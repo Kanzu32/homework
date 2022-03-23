@@ -7,7 +7,7 @@
 *****************************************************************************/
 
 #include <memory>
-#include "../../../3/mainwindow.h"
+#include "../../../../../../Documents/GitHub/homework/алгоритмы/2/lab#2.4/3/3/mainwindow.h"
 #include <QtCore/qbytearray.h>
 #include <QtCore/qmetatype.h>
 #if !defined(Q_MOC_OUTPUT_REVISION)

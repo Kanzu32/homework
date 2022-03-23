@@ -136,7 +136,7 @@
 					"path" : "C:/Users/Max/Desktop/3/hh/build-3-Desktop_Qt_6_2_1_MinGW_64_bit-Debug"
 				},
 				{
-					"path" : "C:/Users/Max/Desktop/3/hh/3"
+					"path" : "C:/Users/Max/Documents/GitHub/homework/алгоритмы/2/lab#2.4/3/3"
 				},
 				{
 					"backtrace" : 0,
@@ -188,11 +188,11 @@
 	"dependencies" : 
 	[
 		{
-			"backtrace" : 0,
-			"id" : "3_autogen::@6890427a1f51a3e7e1df"
+			"id" : "3_autogen_timestamp_deps::@6890427a1f51a3e7e1df"
 		},
 		{
-			"id" : "3_autogen_timestamp_deps::@6890427a1f51a3e7e1df"
+			"backtrace" : 0,
+			"id" : "3_autogen::@6890427a1f51a3e7e1df"
 		}
 	],
 	"id" : "3::@6890427a1f51a3e7e1df",
