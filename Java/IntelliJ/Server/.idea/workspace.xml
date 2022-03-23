@@ -2,15 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="63914efe-12c5-4205-972c-85c72581dc86" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../000/src/com/company/Point.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../000/src/com/company/Point2d.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../000/src/com/company/Train.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../алгоритмы/lab#8/1.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../алгоритмы/lab#8/1.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../алгоритмы/lab#8/1.exe" beforeDir="false" afterPath="$PROJECT_DIR$/../../../алгоритмы/lab#8/1.exe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../алгоритмы/lab#8/2.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../алгоритмы/lab#8/2.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../алгоритмы/lab#8/2.exe" beforeDir="false" afterPath="$PROJECT_DIR$/../../../алгоритмы/lab#8/2.exe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../алгоритмы/lab#8/3.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../алгоритмы/lab#8/3.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../алгоритмы/lab#8/3.exe" beforeDir="false" afterPath="$PROJECT_DIR$/../../../алгоритмы/lab#8/3.exe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../алгоритмы/2/lab#2.2/1.exe" beforeDir="false" afterPath="$PROJECT_DIR$/../../../алгоритмы/2/lab#2.2/1.exe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../алгоритмы/2/lab#2.3/1.c" beforeDir="false" afterPath="$PROJECT_DIR$/../../../алгоритмы/2/lab#2.3/1.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../алгоритмы/2/lab#2.3/1.exe" beforeDir="false" afterPath="$PROJECT_DIR$/../../../алгоритмы/2/lab#2.3/1.exe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../алгоритмы/2/lab#2.3/3.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../алгоритмы/2/lab#2.3/3.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../алгоритмы/2/lab#2.3/3.exe" beforeDir="false" afterPath="$PROJECT_DIR$/../../../алгоритмы/2/lab#2.3/3.exe" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

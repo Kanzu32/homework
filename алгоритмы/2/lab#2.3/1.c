@@ -19,18 +19,8 @@ int main() {
 	getchar();
 	scanf("%i", &n);
 	fflush(stdin);
-
-	int startIndex1 = strrchr(str1, symbol) - str1;
-	for (int i = startIndex1; i < strlen(str1); i++) {
-		*(res + iRes) = *(str1 + i);
-		iRes++;
-	}
-
-	int startIndex2 = strchr(str2, symbol) - str2;
-	for (int i = startIndex2; i < startIndex2 + n; i++) {
-		*(res + iRes) = *(str2 + i);
-		iRes++;
-	}
-	*(res + iRes) = '\n';
+	
+	strcat(res, strrchr(str1, symbol));
+	strncat(res, strchr(str2, symbol), n);
 	printf("%s", res);
 }

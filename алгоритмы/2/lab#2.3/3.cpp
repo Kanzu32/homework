@@ -17,7 +17,14 @@ int main() {
 }
 
 void strsort(char *str, bool f) {
-	int len = strlen(str);
+	int z = 0;
+	char ch = str[z];
+	int len = 0;
+	while (ch != '\0') {
+		len++;
+		ch = str[++z];
+	}
+	
 	char temp;
 	for (int x = 0; x < len; x++) {
 		for (int i = 0; i < len - x - 1; i++) {
