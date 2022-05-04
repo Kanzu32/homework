@@ -117,20 +117,33 @@ void taskTwo() {
 	string name;
 	double height;
 	bool mode;
-	cout << "Name, Height: ";
-	cin >> name >> height;
+	printStructArray(arr);
+}
+
+void printStructArray(vector<Human> arr) {
+	for (Human i : arr) {
+		cout << i.name << " " << i.height << "\n";
+	}
+}
+
+void sortStructArray(vector<Human> &arr) {
+	bool mode;
 	cout << "Sort (1 - increase, 0 - decrease): ";
 	cin >> mode;
-	arr.push_back(Human{name, height});
 	if (mode) {
 		sort(arr.begin(), arr.end(), increase);
 	}
 	else {
 		sort(arr.begin(), arr.end(), decrease);
 	}
-	for (Human i : arr) {
-		cout << i.name << " " << i.height << "\n";
-	}
+}
+
+void addHuman(vector<Human> &arr, Human human) {
+	arr.push_back(human);
+}
+
+void delHuman(vector<Human> &arr, int n) {
+	arr.erase(arr.begin() + n-1);
 }
 
 void taskThree() {

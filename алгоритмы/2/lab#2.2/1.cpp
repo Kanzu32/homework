@@ -32,7 +32,8 @@ int main() {
 			break;
 
 		case 2:
-			int n, x, i, j;
+			int n, i, j;
+			double x; 
 			cout << "n, x: ";
 			cin >> n >> x;
 			i = n;
