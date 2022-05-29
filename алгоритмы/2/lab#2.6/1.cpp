@@ -3,10 +3,6 @@
 #include <string>
 #include <vector>
 #include <algorithm>
-#include <windows.h>
-#include <clocale>
-#include <codecvt>
-#include <sstream>
 
 using namespace std;
 
@@ -89,7 +85,7 @@ void shiftArray(double* &arr, int n) {
 	}
 }
 
-void readArrayFromFile(string fileName, double* &arr, int &n) {
+void readArrayFromTextFile(string fileName, double* &arr, int &n) {
 	ifstream file;
 	file.open(fileName + ".txt");
 	file >> n;
@@ -102,16 +98,28 @@ void readArrayFromFile(string fileName, double* &arr, int &n) {
 	file.close();
 }
 
+void readArrayFromDataFile(string fileName, double *&arr, int &n) {
+	ifstream file;
+	file.open(fileName + ".data", ios::binary);
+	file.read(reinterpret_cast<char*> (&n), sizeof(int));
+	arr = new double[n];
+	file.read(reinterpret_cast<char*>(arr), sizeof(double)*n);
+	file.close();
+	
+}
+
 void writeArrayToFile(string fileName, double* arr, int n) {
 	
 	ofstream toTextFile(fileName + ".txt");
 	int textBegin = toTextFile.tellp();
 	ofstream toBinFile(fileName + ".data", ios::binary);
 	int binBegin = toBinFile.tellp();
+	toTextFile << n << "\n";
 	for (int i = 0; i < n; i++) {
 		toTextFile << arr[i] << " ";
 	}
-	toBinFile.write(reinterpret_cast<char*>(arr), n*sizeof(double));
+	toBinFile.write(reinterpret_cast<char*>(&n), sizeof(int));
+	toBinFile.write(reinterpret_cast<char*>(arr), n * sizeof(double));
 	int textEnd = toTextFile.tellp();
 	int binEnd = toBinFile.tellp();
 	cout << "Text file size: " << (textEnd-textBegin) << '\n'
@@ -123,13 +131,21 @@ void writeArrayToFile(string fileName, double* arr, int n) {
 void printArray(double *arr, int n) {
 	for (int i = 0; i < n; i++) {
 		cout << arr[i] << " ";
+		cout << endl;
 	}
 }
 
 void taskOne() {
 	double* arr;
 	int n;
-	readArrayFromFile("in", arr, n);
+	bool mode = false;
+	cout << "Enter mode (0 - text, 1 - binary): ";
+	cin >> mode;
+	if (mode) {
+		readArrayFromDataFile("in", arr, n);
+	} else {
+		readArrayFromTextFile("in", arr, n);
+	}
 	shiftArray(arr, n);
 	writeArrayToFile("out", arr, n);
 }
@@ -166,12 +182,16 @@ void delHuman(vector<Human> &arr, int n) {
 }
 
 void readStructArrayFromFile(string fileName, vector<Human> &arr) {
+	arr.clear();
 	ifstream file;
 	string name;
 	double height;
 	file.open(fileName + ".data");
 	while (!file.eof()) {
 		file >> name >> height;
+		if (file.eof()) {
+			break;
+		}
 		addHuman(arr, Human{name, height});
 	}
 	file.close();
@@ -230,7 +250,7 @@ void taskTwo() {
 			cout << "OK\n";
 		}
 		else {
-			cout << "unknown command.";
+			cout << "unknown command.\n";
 		} 
 		printCommads();
 		cin >> command;
@@ -240,6 +260,7 @@ void taskTwo() {
 
 wstring readTextFromFile(string fileName) {
 	wstring res;
+	return res;
 	ifstream file;
 	file.open(fileName+".txt");
 	// char c;
@@ -247,8 +268,8 @@ wstring readTextFromFile(string fileName) {
 	// 	file.get(c);
 	// 	res += c;
 	// }
-	string* arr[];
-	file.read(reinterpret_cast<wchar_t>(arr), 100*sizeof(wchar_t));
+	// string* arr[];
+	// file.read(reinterpret_cast<wchar_t>(arr), 100*sizeof(wchar_t));
 }
 
 void writeTextToFile(string fileName, string data) {
