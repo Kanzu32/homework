@@ -67,7 +67,7 @@ void taskThree();
 int main()
 {
 	int taskNumber;
-
+	cout << "task number: ";
 	cin >> taskNumber;
 
 	while (!cin.eof())
