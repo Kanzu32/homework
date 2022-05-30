@@ -28,42 +28,37 @@ struct Vector {
 	}
 };
 
-int skewProduct(Vector v1, Vector v2) {
+double skewProduct(Vector v1, Vector v2) {
 	return v1.x*v2.y - v2.x*v1.y;
+}
+
+double skalarProduct(Vector v1, Vector v2) {
+	return v1.x*v2.x + v1.y*v2.y;
+}
+
+double distance(Point a, Point b) {
+	return sqrt(pow(b.x - a.x, 2)+pow(b.y - a.y, 2));
+}
+
+double perpendicularDistance(Point a, Point b, Point c) {
+	double A = c.y - b.y;
+	double B = b.x - c.x;
+	double C = c.x*b.y-b.x*c.y;
+
+	return abs(A*a.x+B*a.y+C)/sqrt(A*A + B*B);
 }
 
 // 1: кол-во левых и правых поворотов.
 void taskOne();
 
-double leng(Point a, Point b) {
-	return sqrt(pow(b.x-a.x, 2) + pow(b.y-a.y, 2));
-};
-
-struct Triangle {
-	Point a;
-	Point b;
-	Point c;
-};
-double perim(Triangle t) {
-	return leng(t.a, t.b)+leng(t.b, t.c)+leng(t.a, t.c);
-}
-double area(Triangle t) {
-	double p = perim(t)/2;
-	return sqrt(p * (p - leng(t.a, t.b)) * (p - leng(t.a, t.c)) * (p - leng(t.b, t.c)));
-}
-double areaN(Point* p, int n) {
-	Point fixed = p[0];
-	double sum;
-	for (int i = 2; i < n; i++) {
-		sum += area(Triangle{fixed, p[i - 1], p[i]});
-	}
-	return sum;
-}
-
 // Принадлежит ли точка к треугольнику
 void taskTwo();
 
+// Пересечение отрезков
 void taskThree();
+
+// Пересечение окружности и отрезка
+void taskFour();
 
 int main()
 {
@@ -77,16 +72,24 @@ int main()
 		{
 		case 1:
 			taskOne();
+			cout << "task number: ";
 			cin >> taskNumber;
 			break;
 
 		case 2:
 			taskTwo();
+			cout << "task number: ";
 			cin >> taskNumber;
 			break;
 
 		case 3:
 			taskThree();
+			cout << "task number: ";
+			cin >> taskNumber;
+			break;
+		case 4:
+			taskFour();
+			cout << "task number: ";
 			cin >> taskNumber;
 			break;
 
@@ -155,24 +158,63 @@ void taskTwo() {
 }
 
 void taskThree() {
-	double x1, y1, x2, y2, x1_, y1_, x2_, y2_;
+	double x1, y1, x2, y2, x1_, y1_, x2_, y2_, A1, B1, C1, A2, B2, C2, yP, xP;
 	cout << "Enter coordinates: ";
 	cin >> x1 >> y1 >> x2 >> y2 >> x1_ >> y1_ >> x2_ >>y2_;
-	Point p1{x1, y1};
-	Point p2{x2, y2};
-	Point p3{x1_,y1_};
-	Point p4{x2_, y2_};
-	if (skewProduct(Vector(p1, p3), Vector(p1, p2)) == 0 || skewProduct(Vector(p2, p3), Vector(p2, p1)) == 0 || skewProduct(Vector(p2, p4), Vector(p2, p1)) == 0 || skewProduct(Vector(p3, p1), Vector(p3, p4)) == 0 || skewProduct(Vector(p3, p2), Vector(p3, p4)) == 0 || skewProduct(Vector(p4, p1), Vector(p4, p3)) == 0 || skewProduct(Vector(p4, p2), Vector(p4, p3))==0){
-		cout << "ti ne zaichik";
 
+	A1 = y2-y1;
+	B1 = x1-x2;
+	C1 = x2*y1-x1*y2;
+
+	A2 = y2_-y1_;
+	B2 = x1_-x2_;
+	C2 = x2_*y1_ - x1_*y2_;
+
+	if (A1 == A2 && B1 == B2 && C1 == C2) {
+		if ((max(x1, x2) >= min(x1_, x2_))) {
+			cout << "true\n";
+		} else {
+			cout << "false\n";
+		}
+	} else if (A1*B2-A2*B1 == 0) {
+		cout << "false\n";
+	} else {
+		yP = (A2*C1-A1*C2)/(A1*B2-A2*B1);
+		xP = (B1*C2-B2*C1)/(A1*B2-A2*B1);
+
+		cout << "Point projections "<< xP << " " << yP << "\n";
+
+		if (((x1 <= xP && x2 >= xP) || (x1 >= xP && x2 <= xP)) &&
+			((y1 <= yP && y2 >= yP) || (y1 >= yP && y2 <= yP))) {
+				cout << "true\n";
+			}
+		else {
+			cout << "false\n";
+		}
 	}
-	else if (skewProduct(Vector(p1, p3), Vector(p1, p2)) / abs(skewProduct(Vector(p1, p3), Vector(p1, p2))) != skewProduct(Vector(p1, p4), Vector(p1, p2)) / abs(skewProduct(Vector(p1, p4), Vector(p1, p2))) &&
-				skewProduct(Vector(p2, p3), Vector(p2, p1)) / abs(skewProduct(Vector(p2, p3), Vector(p2, p1))) != skewProduct(Vector(p2, p4), Vector(p2, p1)) / abs(skewProduct(Vector(p2, p4), Vector(p2, p1))) && skewProduct(Vector(p3, p1), Vector(p3, p4)) / abs(skewProduct(Vector(p3, p1), Vector(p3, p4))) != skewProduct(Vector(p3, p2), Vector(p3, p4)) / abs(skewProduct(Vector(p3, p2), Vector(p3, p4))) && skewProduct(Vector(p4, p1), Vector(p4, p3)) / abs(skewProduct(Vector(p4, p1), Vector(p4, p3))) != skewProduct(Vector(p4, p2), Vector(p4, p3)) / abs(skewProduct(Vector(p4, p2), Vector(p4, p3))))
-		{
-			cout << "true";
-		}
-		else
-		{
-			cout << "false";
-		}
+}
+
+void taskFour() {
+	double x0, y0, r, x1, y1, x2, y2, l;
+	cout << "Enter x0, y0, r, x1, y1, x2, y2: ";
+	cin >> x0 >> y0 >> r >> x1 >> y1 >> x2 >> y2;
+
+	Point p0 = Point{x0, y0};
+	Point p1 = Point{x1, y1};
+	Point p2 = Point{x2, y2};
+
+	if (skalarProduct(Vector(p1, p0), Vector(p1, p2)) < 0 || skalarProduct(Vector(p2, p0), Vector(p2, p1)) < 0) {
+		l = min(distance(p0, p1), distance(p0, p2));
+	}
+	else {
+		l = perpendicularDistance(p0, p1, p2);
+	}
+	cout << l << "\n";
+	if (l < r) {
+		cout << "true, 2 points\n";
+	} else if (l == r) {
+		cout << "true, 1 point\n";
+	} else {
+		cout << "false\n";
+	}
 }
