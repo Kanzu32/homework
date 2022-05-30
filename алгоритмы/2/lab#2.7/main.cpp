@@ -20,7 +20,7 @@ int main() {
 
 	// получить трехмерный подмассив исходного массива, находящийся между одним из углов исходного и вершиной, в которой содержится минимальное значение исходного массива.
 	std::cout << "### TASK 2 ###\n";
-	Array arr = realisation::createRandom(3, 3, 3);
+	arr = realisation::createRandom(3, 3, 3);
 	int minIndex = realisation::findElement(arr, 1);
 	realisation::print(arr);
 	cout << "Coordinates: " << minIndex/(arr.k*arr.m) << " " << (minIndex%(arr.k*arr.m))/arr.m << " " <<  minIndex%(arr.k*arr.m)%arr.m << "\n";
