@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cmath>
+#include <stdexcept>
 
 using namespace std;
 
@@ -34,30 +35,30 @@ int skewProduct(Vector v1, Vector v2) {
 // 1: кол-во левых и правых поворотов.
 void taskOne();
 
-// double leng(Point a, Point b) {
-// 	return sqrt(pow(b.x-a.x, 2) + pow(b.y-a.y, 2));
-// };
+double leng(Point a, Point b) {
+	return sqrt(pow(b.x-a.x, 2) + pow(b.y-a.y, 2));
+};
 
-// struct Triangle {
-// 	Point a;
-// 	Point b;
-// 	Point c;
-// };
-// double perim(Triangle t) {
-// 	return leng(t.a, t.b)+leng(t.b, t.c)+leng(t.a, t.c);
-// }
-// double area(Triangle t) {
-// 	double p = perim(t)/2;
-// 	return sqrt(p * (p - leng(t.a, t.b)) * (p - leng(t.a, t.c)) * (p - leng(t.b, t.c)));
-// }
-// double areaN(Point* p, int n) {
-// 	Point fixed = p[0];
-// 	double sum;
-// 	for (int i = 2; i < n; i++) {
-// 		sum += area(Triangle{fixed, p[i - 1], p[i]});
-// 	}
-// 	return sum;
-// }
+struct Triangle {
+	Point a;
+	Point b;
+	Point c;
+};
+double perim(Triangle t) {
+	return leng(t.a, t.b)+leng(t.b, t.c)+leng(t.a, t.c);
+}
+double area(Triangle t) {
+	double p = perim(t)/2;
+	return sqrt(p * (p - leng(t.a, t.b)) * (p - leng(t.a, t.c)) * (p - leng(t.b, t.c)));
+}
+double areaN(Point* p, int n) {
+	Point fixed = p[0];
+	double sum;
+	for (int i = 2; i < n; i++) {
+		sum += area(Triangle{fixed, p[i - 1], p[i]});
+	}
+	return sum;
+}
 
 // Принадлежит ли точка к треугольнику
 void taskTwo();
@@ -154,5 +155,24 @@ void taskTwo() {
 }
 
 void taskThree() {
-	
+	double x1, y1, x2, y2, x1_, y1_, x2_, y2_;
+	cout << "Enter coordinates: ";
+	cin >> x1 >> y1 >> x2 >> y2 >> x1_ >> y1_ >> x2_ >>y2_;
+	Point p1{x1, y1};
+	Point p2{x2, y2};
+	Point p3{x1_,y1_};
+	Point p4{x2_, y2_};
+	if (skewProduct(Vector(p1, p3), Vector(p1, p2)) == 0 || skewProduct(Vector(p2, p3), Vector(p2, p1)) == 0 || skewProduct(Vector(p2, p4), Vector(p2, p1)) == 0 || skewProduct(Vector(p3, p1), Vector(p3, p4)) == 0 || skewProduct(Vector(p3, p2), Vector(p3, p4)) == 0 || skewProduct(Vector(p4, p1), Vector(p4, p3)) == 0 || skewProduct(Vector(p4, p2), Vector(p4, p3))==0){
+		cout << "ti ne zaichik";
+
+	}
+	else if (skewProduct(Vector(p1, p3), Vector(p1, p2)) / abs(skewProduct(Vector(p1, p3), Vector(p1, p2))) != skewProduct(Vector(p1, p4), Vector(p1, p2)) / abs(skewProduct(Vector(p1, p4), Vector(p1, p2))) &&
+				skewProduct(Vector(p2, p3), Vector(p2, p1)) / abs(skewProduct(Vector(p2, p3), Vector(p2, p1))) != skewProduct(Vector(p2, p4), Vector(p2, p1)) / abs(skewProduct(Vector(p2, p4), Vector(p2, p1))) && skewProduct(Vector(p3, p1), Vector(p3, p4)) / abs(skewProduct(Vector(p3, p1), Vector(p3, p4))) != skewProduct(Vector(p3, p2), Vector(p3, p4)) / abs(skewProduct(Vector(p3, p2), Vector(p3, p4))) && skewProduct(Vector(p4, p1), Vector(p4, p3)) / abs(skewProduct(Vector(p4, p1), Vector(p4, p3))) != skewProduct(Vector(p4, p2), Vector(p4, p3)) / abs(skewProduct(Vector(p4, p2), Vector(p4, p3))))
+		{
+			cout << "true";
+		}
+		else
+		{
+			cout << "false";
+		}
 }
