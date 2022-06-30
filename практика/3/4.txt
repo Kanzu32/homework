@@ -1,0 +1,6 @@
+A1 = rot90(diag(2:2:6));
+A2 = ones(2, 3)*3;
+A3 = ones(5, 3)*4;
+A4 = ones(1, 6)*(-5);
+a = [[A1; A2] A3; A4];
+max(sum(abs(a)))
