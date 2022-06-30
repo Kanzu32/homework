@@ -1,0 +1,2 @@
+res = ones(6, 6)*(-1) + diag(3:2:13) + diag(ones(1, 5)*2, 1);
+rot90(res)

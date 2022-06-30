@@ -1,0 +1,11 @@
+x = 1;
+y = 2;
+a = 1/(1+1/(1+1/x));
+res = a + cos(y)^a;
+format short
+res
+format long e
+res
+format hex
+res
+whos res
