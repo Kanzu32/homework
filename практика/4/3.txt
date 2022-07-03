@@ -1,0 +1,17 @@
+x1 = -3:0.2:-2;
+x2 = -2:0.2:1;
+x3 = 1:0.2:3;
+x4 = 3:0.2:4;
+
+f1 = x1.*0;;
+f2 = (x2-1).^2;
+f3 = cos(pi.*x3./2);
+f4 = 1-exp(3-x4);
+
+figure
+hold on
+plot(x1, f1, 'r-*')
+plot(x2, f2, 'g--o')
+plot(x3, f3, 'b-.^')
+plot(x4, f4, 'm:d')
+hold off

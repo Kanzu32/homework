@@ -1,0 +1,7 @@
+t = -1:0.1:1;
+x = exp(-t).*cos(t);
+y = sin(t);
+figure
+plot(x, y);
+figure
+comet(x, y);

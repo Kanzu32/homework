@@ -1,0 +1,82 @@
+x1 = -pi:pi/30:pi;
+x2 = -2*pi:pi/10:2*pi;
+f = -x1.^2;
+g = abs(sin(x1).*cos(x1));
+u = cos(x2./2);
+v = sin(abs(x2));
+
+///ОКНА///
+
+figure
+plot(x1, f, 'y:s')
+grid
+xlabel 'X'
+ylabel 'Y'
+title('Graph 1')
+legend('f(x)')
+figure
+plot(x1, g, 'r-*')
+grid
+xlabel 'X'
+ylabel 'Y'
+title('Graph 2')
+legend('g(x)')
+figure
+plot(x2, u, 'b-.x')
+grid
+xlabel 'X'
+ylabel 'Y'
+title('Graph 3')
+legend('u(x)')
+figure
+plot(x2, v, 'g--+')
+grid
+xlabel 'X'
+ylabel 'Y'
+title('Graph 4')
+legend('v(x)')
+
+///ОДНА ОСЬ///
+
+figure
+plot(x1, f, 'y:s')
+hold on
+plot(x1, g, 'r-*')
+plot(x2, u, 'b-.x')
+plot(x2, v, 'g--+')
+xlabel 'X'
+ylabel 'Y'
+title('Graphs 1-4')
+legend('f(x)', 'g(x)', 'u(x)', 'v(x)')
+hold off
+
+///ОДНО ОКНО///
+
+subplot(2, 2, 1)
+plot(x1, f, 'y:s')
+grid
+xlabel 'X'
+ylabel 'Y'
+title('Graph 1')
+legend('f(x)')
+subplot(2, 2, 2)
+plot(x1, g, 'r-*')
+grid
+xlabel 'X'
+ylabel 'Y'
+title('Graph 2')
+legend('g(x)')
+subplot(2, 2, 3)
+plot(x2, u, 'b-.x')
+grid
+xlabel 'X'
+ylabel 'Y'
+title('Graph 3')
+legend('u(x)')
+subplot(2, 2, 4)
+plot(x2, v, 'g--+')
+grid
+xlabel 'X'
+ylabel 'Y'
+title('Graph 4')
+legend('v(x)')

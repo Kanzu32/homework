@@ -1,0 +1,2 @@
+str = 'aabaa hjh hhhk ll lkl';
+textFunc(str)
