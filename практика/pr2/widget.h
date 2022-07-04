@@ -16,7 +16,7 @@ class Widget : public QWidget
 public:
     Widget(QWidget *parent = nullptr);
     void paintEvent(QPaintEvent *event);
-    void drawAxis(QPainter &canv, int centerX, int centerY, int size);
+    void drawAxis(QPainter &canv, int centerX, int centerY, int size, double maxR);
     double f(double x);
     double g(double x);
     double u(double x);

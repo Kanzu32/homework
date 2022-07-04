@@ -17,12 +17,15 @@ Widget::~Widget()
 void Widget::paintEvent(QPaintEvent *event) {
     QPainter canv(this);
     const int size = 400;
-    const double pi = 3.141592653;
     int axisX = 450;
     int axisY = 450;
-    int scale = 200;
+    double scale = 200.0;
     const int pointsCount = 100;
-    const double step = 0.8/(pointsCount-1);
+
+    const double left = 0.1;
+    const double right = 0.9;
+
+    const double step = (right-left)/(pointsCount-1);
     const double offset = 0.001;
 
     QPoint points1[pointsCount];
@@ -30,7 +33,7 @@ void Widget::paintEvent(QPaintEvent *event) {
     int i = 0;
     double maxR = 0;
 
-    for (double a = 0.1; a <= 0.9+offset; a+=step, i++) {
+    for (double a = left; a <= right+offset; a+=step, i++) {
         double r = f(a);
         if (r > maxR) {
             maxR = r;
@@ -49,7 +52,7 @@ void Widget::paintEvent(QPaintEvent *event) {
         points1[n] = QPoint(rawPoints[n].x()*scale+axisX, axisY-rawPoints[n].y()*scale);
         qInfo() << rawPoints[n].x()*scale+axisX << axisY-rawPoints[n].y()*scale;
     }
-    drawAxis(canv, axisX, axisY, size);
+    drawAxis(canv, axisX, axisY, size, maxR);
 
     QPen pen;
     pen.setColor(Qt::red);
@@ -62,12 +65,37 @@ void Widget::paintEvent(QPaintEvent *event) {
 
 }
 
-void Widget::drawAxis(QPainter &canv, int centerX, int centerY, int size) {
+void Widget::drawAxis(QPainter &canv, int centerX, int centerY, int size, double maxR) {
+    double coef = sqrt(2)/2;
     QPen pen;
     pen.setColor(Qt::black);
     canv.setPen(pen);
     canv.drawLine(centerX-size, centerY, centerX+size, centerY);
     canv.drawLine(centerX, centerY-size, centerX, centerY+size);
+    canv.drawLine(centerX-size*coef, centerY+size*coef, centerX+size*coef, centerY-size*coef);
+    canv.drawLine(centerX-size*coef, centerY-size*coef, centerX+size*coef, centerY+size*coef);
+
+    canv.drawEllipse(centerX-size, centerY-size, size*2, size*2);
+    canv.drawEllipse(centerX-size*0.75, centerY-size*0.75, size*1.5, size*1.5);
+    canv.drawEllipse(centerX-size/2.0, centerY-size/2.0, size, size);
+    canv.drawEllipse(centerX-size/4.0, centerY-size/4.0, size/2.0, size/2.0);
+
+    QFont font;
+    font.setFamily("Helvetica");
+    font.setPixelSize(10);
+    canv.setFont(font);
+
+    canv.drawText(centerX+5, centerY-size-2, QString::number(maxR));
+    canv.drawText(centerX+5, centerY-size*0.75-2, QString::number(maxR*0.75));
+    canv.drawText(centerX+5, centerY-size*0.5-2, QString::number(maxR*0.5));
+    canv.drawText(centerX+5, centerY-size*0.25-2, QString::number(maxR*0.25));
+    canv.drawText(centerX+5, centerY-2, "0");
+
+    font.setPixelSize(14);
+    canv.drawText(centerX+size+20, centerY+3, "0°");
+    canv.drawText(centerX-8, centerY-size-20, "90°");
+    canv.drawText(centerX-size-20, centerY+3, "180°");
+    canv.drawText(centerX-10, centerY+size+20, "270°");
 
 }
 
