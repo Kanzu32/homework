@@ -13,7 +13,7 @@ using namespace std;
 int main() {
 	// 32 вар. Удалить из массива матрицу, содержащую максимальное значение исходного массива;
 	std::cout << "### TASK 1 ###\n";
-	Array arr = realisation::createRandom(4, 2, 2);
+	Array arr = realisation::createRandom(4, 2, 3);
 	realisation::print(arr);
 	realisation::delMatrix(arr, realisation::findMatrix(arr, 1));
 	realisation::print(arr);

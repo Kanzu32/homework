@@ -4,4 +4,4 @@ function print()
   figure
   plot(x, y);
   figure
-  fplot('f1', [-1, 1])
+  fplot('f1', [-1, 1]);
