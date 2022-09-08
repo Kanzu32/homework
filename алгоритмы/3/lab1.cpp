@@ -12,8 +12,16 @@ class Player {
         void moveRight();
         int playerSpeed;
         int getX() { return _x; };
-        int getY() { return _y; };;
-    Player(int _x = 0, int _y = 0, int spd = 3): _x(_x), _y(_y), playerSpeed(spd){};
+        int getY() { return _y; };
+    Player() {
+        this->_x = 0;
+        this->_y = 0;
+        this->playerSpeed = 3;
+    }
+    Player(int _x, int _y): _x(_x), _y(_y){};
+    Player(int _x, int _y, int spd): Player(_x, _y) {
+        this->playerSpeed = spd;
+    }
     Player(const Player &original);
     ~Player() {};
 };
