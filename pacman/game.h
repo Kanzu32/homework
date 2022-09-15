@@ -26,7 +26,7 @@ public:
     QPixmap *spriteMap;
     const int spriteSize = 16;
     int frame = 0;
-    int animationSpeed = 150;
+    int animationSpeed = 25;
     QTimer *animationTimer;
     Level level;
     int lives;
@@ -38,12 +38,18 @@ public:
     int p2downkey;
     int p2rightkey;
     int p2upkey;
-    int playerSpeed = 2;
+    int playerSpeed = 1;
+    int bonusTime = 3000;
+    int viewSize = 3;
     int** map;
+    QTimer *timer2;
+    QTimer *timer1;
     ~Game();
 
 private slots:
     void nextFrame();
+    void endBonusPl1();
+    void endBonusPl2();
 
 private:
     void keyPressEvent(QKeyEvent *event) override;

@@ -16,6 +16,9 @@ public:
     Player p1;
     Player p2;
     bool p2enabled;
+    int p1Score;
+    int p2Score;
+    int score;
     int getWidth() {return w;};
     int getHeight() {return h;};
     int** getMap() {return map;};
@@ -50,6 +53,9 @@ public:
                 }
             }
         }
+        score = 0;
+        p1Score = 0;
+        p2Score = 0;
     }
 
     Level() {h = 0; w = 0;};
