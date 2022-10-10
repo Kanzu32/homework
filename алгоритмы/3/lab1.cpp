@@ -41,5 +41,6 @@ int main() {
     cout << "Player 2 Copy: " << copy.getX() << "\t" << copy.getY() << endl;
     Player arr[10];
     arr[0] = Player(2, 3);
+    
 }
 
