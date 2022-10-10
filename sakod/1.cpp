@@ -1,4 +1,6 @@
 #include <iostream>
+#include <cmath>
+#include <algorithm>
 
 using namespace std;
 
@@ -25,54 +27,49 @@ void qsort(int* arr, int begin, int end) {
     qsort(arr, i, end);
 }
 
-void twoArrSort(int* arr, int n) {
-  
+int* mergeSort(int* arr, int n, int length = 1) {
+  if (length >= n) {
+    return arr;
+  }
   int* tmp = new int[n]{};
-  for (int grLen = 1; grLen <= n; grLen = 2*grLen) {
-    int i = 0;
-    int j = grLen;
-    int tmpi = 0;
-    int iter = 1;
-    while (iter*grLen <= n) {
-      while (tmpi < iter*grLen) {
-      if (i < (iter-1)*2*grLen+grLen && arr[i] <= arr[j]) {
+  int tmpi = 0;
+  int mid = ceil(n/(length*2.0))*length;
+  for (int section = 0; section < ceil(mid*1.0/length); section++) {
+    int i = section*length;
+    int j = mid+section*length;
+    while(j < min(mid+(section+1)*length, n) || i < section*length+length) {
+      if (j >= min(mid+(section+1)*length, n)) {
         tmp[tmpi] = arr[i];
         i++;
-      } else if (j < iter*2*grLen && arr[j] < arr[i]) {
+      } else if (i >= section*length+length || arr[i] >= arr[j]) {
         tmp[tmpi] = arr[j];
         j++;
-      } else if (i >= n) {
-        for (int k = 0; k < n; k++) {
-          arr[k] = tmp[k];
-          tmpi = 0;
-        }
-      } else {
+      }else {
         tmp[tmpi] = arr[i];
         i++;
       }
       tmpi++;
-      }
-      i += grLen+1;
-      j += grLen+1;
-      iter++;
     }
-    for (int k = 0; k < n; k++) {
-      cout << tmp[k] << " ";
-      arr[k] = tmp[k];
-      tmpi = 0;
-    }
-    cout << "\n";
   }
+
+  return mergeSort(tmp, n, length*2);
   
+}
+
+void pasteSort(int* arr, int n) {
+  for (int i = 1; i < n; i++) {
+    for (int j = i; j > 0 && arr[j-1] > arr[j]; j--) {
+      swap(arr[j-1], arr[j]);
+    }
+  }
 }
 
 int main()
 {
   int n = 6;
   int *arr = new int[n]{4, 3, 5, 7, 0, 1};
-
-  int *res = new int[n]{};
-  twoArrSort(arr, n);
+  //pasteSort(arr, n);
+  //arr = mergeSort(arr, n);
   //qsort(arr, 0, n-1);
   for (int i = 0; i < n; i++) {
     cout << arr[i] << " ";
