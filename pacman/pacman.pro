@@ -12,7 +12,9 @@ SOURCES += \
     controller.cpp \
     game.cpp \
     main.cpp \
+    records.cpp \
     settings.cpp \
+    settingsdialog.cpp \
     widget.cpp
 
 HEADERS += \
@@ -20,12 +22,16 @@ HEADERS += \
     game.h \
     level.h \
     movable.h \
+    records.h \
     settings.h \
+    settingsdialog.h \
     widget.h
 
 FORMS += \
     game.ui \
+    records.ui \
     settings.ui \
+    settingsdialog.ui \
     widget.ui
 
 # Default rules for deployment.

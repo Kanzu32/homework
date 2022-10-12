@@ -15,6 +15,10 @@ private:
 public:
     Player p1;
     Player p2;
+    QString p1name;
+    QString p2name;
+    QString mapName;
+    int coinsCount;
     bool p2enabled;
     int p1Score;
     int p2Score;
@@ -23,8 +27,12 @@ public:
     int getHeight() {return h;};
     int** getMap() {return map;};
 
-    Level(QString filename) {
-        this->p2enabled = false;
+    Level(QString filename, bool mode, QString p1, QString p2) {
+        this->coinsCount = 0;
+        this->p2enabled = mode;
+        this->p1name = p1;
+        this->p2name = p2;
+        this->mapName = filename.mid(filename.lastIndexOf('/')+1, filename.lastIndexOf('.')-filename.lastIndexOf('/')-1);
         QFile file(filename);
         file.open(QIODevice::ReadOnly);
         QString data;
@@ -39,17 +47,19 @@ public:
         for (int i = 0; i < this->w; i++) {
             this->map[i] = new int[h];
             for (int j = 0; j < this->h; j++) {
-
                 this->map[i][j] = QString(lvlMap.at(i+j*w)).toInt();
                 if (this->map[i][j] == 4) {
                     this->p1 = Player(i, j);
                     this->map[i][j] = 0;
                 } else if (this->map[i][j] == 5) {
                     ;
-                } else if (this->map[i][j] == 6) {
-                    this->p2enabled = true;
+                } else if (this->map[i][j] == 6 && p2enabled) {
                     this->p2 = Player(i, j);
                     this->map[i][j] = 0;
+                } else if (this->map[i][j] == 6 && !p2enabled){
+                    this->map[i][j] = 0;
+                } else if (this->map[i][j] == 2 || this->map[i][j] == 3) {
+                    this->coinsCount++;
                 }
             }
         }

@@ -1,38 +1,46 @@
 #include "game.h"
 #include "ui_game.h"
 
-
-
 Game::Game(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Game)
 {
     ui->setupUi(this);
-    spriteMap = new QPixmap(":/images/sprites.png");
-    QString filename = QFileDialog::getOpenFileName();
-    level = Level(filename);
-    animationTimer = new QTimer();
-    connect(animationTimer, SIGNAL(timeout()), this, SLOT(nextFrame()));
-    timer1 = new QTimer(this);
-    timer2 = new QTimer(this);
-    animationTimer->start(animationSpeed);
     QWidget::showFullScreen();
 
+    bool mode = true;
+    SettingsDialog dialog(this);
+    QString filename = QFileDialog::getOpenFileName();
+    if (!dialog.exec() || filename == "") {
+        error = true;
+    } else {
+        dialog.getSettings(mode, pl1name, pl2name);
+        spriteMap = new QPixmap(":/images/sprites.png");
 
-    QString Path = QCoreApplication::applicationDirPath();
-    QString endPath = Path + "/config/config.ini";
-    QFileInfo fileinfo(endPath);
-    if (fileinfo.isFile()) {
-        QSettings* config = new QSettings(endPath, QSettings::IniFormat);
-        lives = config->value("lives", "").toInt();
-        p1leftkey = config->value("p1left", "").toInt();
-        p1downkey = config->value("p1down", "").toInt();
-        p1rightkey = config->value("p1right", "").toInt();
-        p1upkey = config->value("p1up", "").toInt();
-        p2leftkey = config->value("p2left", "").toInt();
-        p2downkey = config->value("p2down", "").toInt();
-        p2rightkey = config->value("p2right", "").toInt();
-        p2upkey = config->value("p2up", "").toInt();
+        level = Level(filename, mode, pl1name, pl2name);
+        animationTimer = new QTimer();
+        connect(animationTimer, SIGNAL(timeout()), this, SLOT(nextFrame()));
+
+        timer1 = new QTimer(this);
+        timer2 = new QTimer(this);
+        animationTimer->start(animationSpeed);
+
+        QString Path = QCoreApplication::applicationDirPath();
+        QString endPath = Path + "/config/config.ini";
+        QFileInfo fileinfo(endPath);
+        if (fileinfo.isFile()) {
+            QSettings* config = new QSettings(endPath, QSettings::IniFormat);
+            lives = config->value("lives", "").toInt();
+            p1leftkey = config->value("p1left", "").toInt();
+            p1downkey = config->value("p1down", "").toInt();
+            p1rightkey = config->value("p1right", "").toInt();
+            p1upkey = config->value("p1up", "").toInt();
+            p2leftkey = config->value("p2left", "").toInt();
+            p2downkey = config->value("p2down", "").toInt();
+            p2rightkey = config->value("p2right", "").toInt();
+            p2upkey = config->value("p2up", "").toInt();
+        }
+        gameTimer.start();
     }
 
 }
@@ -43,6 +51,13 @@ Game::~Game()
 }
 
 void Game::paintEvent(QPaintEvent *event) {
+
+    if (error) {
+        Widget* widget = new Widget();
+        widget->show();
+        this->close();
+    };
+
     QPainter canv(this);
     canv.setViewport(0, 0, canv.viewport().width()*viewSize, canv.viewport().height()*viewSize);
     canv.fillRect(QRect(0, 0, canv.device()->width(), canv.device()->height()), Qt::GlobalColor::black);
@@ -62,29 +77,59 @@ void Game::paintEvent(QPaintEvent *event) {
                 canv.drawPixmap(spriteSize*i, spriteSize*j, *spriteMap, 6*spriteSize, 0, spriteSize, spriteSize);
             } else if (map[i][j] == 3) {
                 canv.drawPixmap(spriteSize*i, spriteSize*j, *spriteMap, 7*spriteSize, 0, spriteSize, spriteSize);
-            }else if (map[i][j] == 5) {
+            } else if (map[i][j] == 5) {
                 canv.drawPixmap(spriteSize*i, spriteSize*j, *spriteMap, (frame/15)*spriteSize, 4*spriteSize, spriteSize, spriteSize);
             }
-            canv.drawPixmap(spriteSize*level.p1.getX()+level.p1.movePhase*level.p1.getH(), spriteSize*level.p1.getY()+level.p1.movePhase*level.p1.getV(), *spriteMap, (frame/10)*spriteSize, 0, spriteSize, spriteSize);
-            canv.drawPixmap(spriteSize*level.p2.getX()+level.p2.movePhase*level.p2.getH(), spriteSize*level.p2.getY()+level.p2.movePhase*level.p2.getV(), *spriteMap, (3+frame/10)*spriteSize, 0, spriteSize, spriteSize);
+            canv.drawPixmap(spriteSize*level.p1.getX()+level.p1.movePhase*level.p1.getH(), spriteSize*level.p1.getY()+level.p1.movePhase*level.p1.getV(), *spriteMap, (frame/10)*spriteSize, level.p1.getAnimDir()*spriteSize, spriteSize, spriteSize);
+            if (level.p2enabled) {
+                canv.drawPixmap(spriteSize*level.p2.getX()+level.p2.movePhase*level.p2.getH(), spriteSize*level.p2.getY()+level.p2.movePhase*level.p2.getV(), *spriteMap, (3+frame/10)*spriteSize, level.p2.getAnimDir()*spriteSize, spriteSize, spriteSize);
+            }
         }
     }
+
     canv.setPen(Qt::white);
-    canv.drawText(10, 10, QString("Player 1: ") + QString::number(level.p1Score));
-    canv.drawText(canv.device()->width()/2/viewSize, 10, QString::number(level.score));
-    canv.drawText(canv.device()->width()/viewSize-60, 10, QString("Player 2: ") + QString::number(level.p2Score));
+    canv.drawText(10, 10, QString("Pl1 [" + level.p1name + "]: ") + QString::number(level.p1Score));
+    if (level.p2enabled) {
+        canv.drawText(canv.device()->width()/2/viewSize, 10, QString::number(level.score));
+        canv.drawText(canv.device()->width()/2/viewSize, 30, QString::number(gameTimer.elapsed()/1000.0));
+        canv.drawText(canv.device()->width()/viewSize-60, 10, QString("Pl2 [" + level.p2name + "]: ") + QString::number(level.p2Score));
+    }
 
     canv.end();
 
 }
 
+void Game::endGame() {
+    if (!QDir(QCoreApplication::applicationDirPath() + "/records").exists()) {
+        QDir().mkdir(QCoreApplication::applicationDirPath() + "/records");
+    }
+    if (level.p2enabled) {
+
+        QString endPath = QCoreApplication::applicationDirPath() + "/records/records2players.txt";
+        QFile file(endPath);
+        file.open(QIODevice::ReadWrite | QIODevice::Append);
+        QTextStream out(&file);
+        out << QString(level.mapName + "|" + level.p1name + "|" + level.p2name + "|" + QString::number(level.p1Score) + "|" + QString::number(level.p2Score) + "|" + QString::number(gameTimer.elapsed()/1000.0) + '\n');
+        file.close();
+    } else {
+        QString endPath = QCoreApplication::applicationDirPath() + "/records/records1player.txt";
+        QFile file(endPath);
+        file.open(QIODevice::ReadWrite | QIODevice::Append);
+        QTextStream out(&file);
+        out << QString(level.mapName + "|" + level.p1name + "|" + QString::number(level.p1Score) + "|" + QString::number(gameTimer.elapsed()/1000.0) + '\n');
+        file.close();
+    }
+
+
+}
+
 void Game::nextFrame() {
     frame++;
-    if (level.p1.getH() != 0 || level.p1.getV() != 0) {
+    if ((level.p1.getH() != 0 || level.p1.getV() != 0) && !pause) {
         level.p1.movePhase += level.p1.playerSpeed;
         if (level.p1.movePhase >= spriteSize/2) {
             level.p1.movePhase = -level.p1.movePhase;
-            level.p1.move();
+            level.p1.move(level.getHeight(), level.getWidth());
         }
         if (map[level.p1.getX()+level.p1.getH()][level.p1.getY()+level.p1.getV()] == 1 && level.p1.movePhase == 0) {
             level.p1.setDir(0, 0);
@@ -96,9 +141,12 @@ void Game::nextFrame() {
             level.getMap()[level.p1.getX()][level.p1.getY()] = 0;
             level.p1Score += 10;
             level.score += 10;
+            level.coinsCount--;
+
         }
         if (map[level.p1.getX()][level.p1.getY()] == 3) {
             level.getMap()[level.p1.getX()][level.p1.getY()] = 0;
+            level.coinsCount--;
             level.p1Score += 30;
             level.score += 30;
             level.p1.playerSpeed = 2;
@@ -115,7 +163,7 @@ void Game::nextFrame() {
         level.p2.movePhase += level.p2.playerSpeed;
         if (level.p2.movePhase >= spriteSize/2) {
             level.p2.movePhase = -level.p2.movePhase;
-            level.p2.move();
+            level.p2.move(level.getHeight(), level.getWidth());
         }
         if (map[level.p2.getX()+level.p2.getH()][level.p2.getY()+level.p2.getV()] == 1 && level.p2.movePhase == 0) {
             level.p2.setDir(0, 0);
@@ -125,11 +173,13 @@ void Game::nextFrame() {
         }
         if (map[level.p2.getX()][level.p2.getY()] == 2) {
             level.getMap()[level.p2.getX()][level.p2.getY()] = 0;
+            level.coinsCount--;
             level.p2Score += 10;
             level.score += 10;
         }
         if (map[level.p2.getX()][level.p2.getY()] == 3) {
             level.getMap()[level.p2.getX()][level.p2.getY()] = 0;
+            level.coinsCount--;
             level.p2Score += 30;
             level.score += 30;
             level.p2.playerSpeed = 2;
@@ -142,22 +192,33 @@ void Game::nextFrame() {
             timer2->start();
         }
     }
+
+    if (level.coinsCount <= 0) {
+        level.coinsCount = 1;
+        endGame();
+        Widget* widget = new Widget();
+        widget->show();
+        this->close();
+    }
     frame = frame%30;
     repaint();
 }
 
 void Game::endBonusPl1() {
-    qDebug() << "1";
     level.p1.playerSpeed = 1;
 }
 
 void Game::endBonusPl2() {
-    qDebug() << "2";
     level.p2.playerSpeed = 1;
 }
 
 void Game::keyPressEvent(QKeyEvent *event) {
     int key = event->key();
+    if (key == Qt::Key_Escape) {
+        Widget widget = Widget();
+        this->close();
+        widget.show();
+    }
     if (key == p1leftkey && (level.p1.getH() == 0 ||level.p1.getH() == 1)) {
         if (map[level.p1.getX()-1][level.p1.getY()] == 1 || (level.p1.movePhase != 0 && level.p1.getH() != 1)) {
             level.p1.setMDir(-1, 0);
@@ -231,3 +292,4 @@ void Game::keyPressEvent(QKeyEvent *event) {
         }
     }
 }
+

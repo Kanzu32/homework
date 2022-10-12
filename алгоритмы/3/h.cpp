@@ -21,6 +21,7 @@ A& operator +(A& a, A& b) {
   a.a += b.a;
   return a;
 }
+
 void fn(A a) {
   a.a = a.a+1;
   cout << a.a;

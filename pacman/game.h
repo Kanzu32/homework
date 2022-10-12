@@ -9,8 +9,13 @@
 #include <QDebug>
 #include <QKeyEvent>
 #include <QSettings>
+#include <QVBoxLayout>
+#include <QInputDialog>
+#include <QElapsedTimer>
 
 #include <level.h>
+#include <widget.h>
+#include <settingsdialog.h>
 
 namespace Ui {
 class Game;
@@ -23,12 +28,14 @@ class Game : public QWidget
 public:
     explicit Game(QWidget *parent = nullptr);
     void paintEvent(QPaintEvent *event) override;
+    void endGame();
     QPixmap *spriteMap;
     const int spriteSize = 16;
     int frame = 0;
     int animationSpeed = 25;
     QTimer *animationTimer;
     Level level;
+    bool error = false;
     int lives;
     int p1leftkey;
     int p1downkey;
@@ -42,8 +49,13 @@ public:
     int bonusTime = 3000;
     int viewSize = 3;
     int** map;
+    bool pause;
+    QString pl1name;
+    QString pl2name;
     QTimer *timer2;
     QTimer *timer1;
+    QElapsedTimer gameTimer;
+    QVBoxLayout *layout;
     ~Game();
 
 private slots:

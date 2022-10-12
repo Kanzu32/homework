@@ -6,6 +6,9 @@ Widget::Widget(QWidget *parent)
     , ui(new Ui::Widget)
 {
     ui->setupUi(this);
+    int id = QFontDatabase::addApplicationFont(":/fonts/font.ttf");
+    QString family = QFontDatabase::applicationFontFamilies(id).at(0);
+    QFont font = QFont(family);
     QWidget::showFullScreen();
 }
 
@@ -33,6 +36,14 @@ void Widget::on_pushButton_2_clicked()
 {
     Settings* settings = new Settings();
     settings->show();
+    this->close();
+}
+
+
+void Widget::on_pushButton_4_clicked()
+{
+    Records* records = new Records();
+    records->show();
     this->close();
 }
 

@@ -22,12 +22,25 @@ protected:
     int y;
     int realX;
     int realY;
+    int memAnim;
     Direction direction;
 
 public:
-    void move() {
+    void move(int h, int w) {
         this->x += direction.horizontal;
         this->y += direction.vertical;
+
+        if (this->x <= 0) {
+            this->x = w-1;
+        } else if (this->x >= w-1) {
+            this->x = 0;
+        }
+
+        if (this->y <= 0) {
+            this->y = h-1;
+        } else if (this->y >= h-1) {
+            this->y = 0;
+        }
     };
     int getX() {return x;};
     int getY() {return y;};
@@ -41,12 +54,32 @@ public:
     int getH() {return this->direction.horizontal;};
     int getV() {return this->direction.vertical;};
     Direction getDir() {return this->direction;};
-    Movable() {direction.horizontal = 0; direction.vertical = 0;};
+    int getAnimDir() {
+        if (direction.horizontal == -1) {
+            memAnim = 2;
+            return 2;
+        }
+        else if (direction.horizontal == 1) {
+            memAnim = 0;
+            return 0;
+        }
+        else if (direction.vertical == -1) {
+            memAnim = 3;
+            return 3;
+        }
+        else if (direction.vertical == 1) {
+            memAnim = 1;
+            return 1;
+        }
+        else { return memAnim; };
+    }
+    Movable() {direction.horizontal = 0; direction.vertical = 0; memAnim = 0;};
     Movable(int x, int y)  {
         this->x = x;
         this->y = y;
         direction.horizontal = 0;
         direction.vertical = 0;
+        memAnim = 0;
     };
 };
 

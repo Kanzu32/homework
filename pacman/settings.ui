@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1004</width>
-    <height>639</height>
+    <width>1070</width>
+    <height>699</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -38,9 +38,9 @@
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>320</x>
-     <y>20</y>
-     <width>381</width>
+     <x>260</x>
+     <y>10</y>
+     <width>571</width>
      <height>71</height>
     </rect>
    </property>
@@ -367,7 +367,7 @@
     <rect>
      <x>380</x>
      <y>230</y>
-     <width>81</width>
+     <width>101</width>
      <height>41</height>
     </rect>
    </property>
@@ -389,7 +389,7 @@
     <rect>
      <x>380</x>
      <y>280</y>
-     <width>81</width>
+     <width>101</width>
      <height>41</height>
     </rect>
    </property>
@@ -411,7 +411,7 @@
     <rect>
      <x>380</x>
      <y>330</y>
-     <width>81</width>
+     <width>101</width>
      <height>41</height>
     </rect>
    </property>
@@ -433,7 +433,7 @@
     <rect>
      <x>380</x>
      <y>380</y>
-     <width>81</width>
+     <width>101</width>
      <height>41</height>
     </rect>
    </property>
@@ -455,7 +455,7 @@
     <rect>
      <x>850</x>
      <y>230</y>
-     <width>81</width>
+     <width>101</width>
      <height>41</height>
     </rect>
    </property>
@@ -612,7 +612,7 @@
     <rect>
      <x>850</x>
      <y>380</y>
-     <width>81</width>
+     <width>101</width>
      <height>41</height>
     </rect>
    </property>
@@ -656,7 +656,7 @@
     <rect>
      <x>850</x>
      <y>280</y>
-     <width>81</width>
+     <width>101</width>
      <height>41</height>
     </rect>
    </property>
@@ -700,7 +700,7 @@
     <rect>
      <x>850</x>
      <y>330</y>
-     <width>81</width>
+     <width>101</width>
      <height>41</height>
     </rect>
    </property>
