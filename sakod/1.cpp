@@ -4,7 +4,7 @@
 #include <chrono>
 
 using namespace std;
-
+int* glarr;
 void qsort(int* arr, int size) {
   int i = 0;
   int j = size-1;
@@ -30,67 +30,53 @@ void qsort(int* arr, int size) {
 }
 
 int* msort(int* arr, int n) {
-  int* tmp = new int[n]{};
-  int i = 0;
-  int j = 0;
-  int mid = n/2;
-  if (n%2 == 1) {
-    mid++;
-  }
-  for (int k = 0; k<n; k++) {
-    if (i > mid) {
-            int a = arr[mid+j];
-            tmp[k] = a;
-            j++;
-        }
-        else if (j > n-1) {
-            int a = arr[i];
-            tmp[k] = a;
-            i++;
-        }
-        else if (arr[i] < arr[mid+j]) {
-            int a = arr[i]; 
-            tmp[k] = a;
-            i++;
-        }
-        else {
-            int b = arr[mid+j];
-            tmp[k] = b;
-            j++;
-        }
-  }
 
-  return tmp;
-} 
-
-int* mergeSort(int* arr, int n, int length = 1) {
-  if (length >= n) {
+  if (n == 2) {
+    if (arr[0] > arr[1]) {
+      swap(arr[0], arr[1]);
+    }
     return arr;
   }
-  int* tmp = new int[n]{};
-  int tmpi = 0;
-  int mid = n/2;
-  if (n%2 == 1) mid++;
-  for (int section = 0; section < ceil(mid*1.0/length); section++) {
-    int i = section*length;
-    int j = mid+section*length;
-    while(j < min(mid+(section+1)*length, n) || i < min(section*length+length, n)) {
-      if (j >= min(mid+(section+1)*length, n)) {
-        tmp[tmpi] = arr[i];
-        i++;
-      } else if (i >= min(section*length+length, n) || arr[i] >= arr[j]) {
-        tmp[tmpi] = arr[j];
-        j++;
-      }else {
-        tmp[tmpi] = arr[i];
-        i++;
-      }
-      tmpi++;
+  if (n == 1) {
+    return arr;
+  }
+  int m = 2*floor(log2(n));
+
+  if (m == n) { m = n/2; };
+  msort(arr, m);
+  msort(&arr[m], n-m);
+  int i = 0;
+  int j = m;
+  int r = 0;
+  int tmp[m];
+
+  for (int x = 0; x < m; x++) {tmp[x] = arr[x];};
+
+  while (i < m && j < n) {
+    if (tmp[i] > arr[j]) {
+      arr[r] = arr[j];
+      j++;
+      r++;
+    } else {
+      arr[r] = tmp[i];
+      i++;
+      r++;
     }
   }
 
-  return mergeSort(tmp, n, length*2);
-  
+  while(j < n) {
+    arr[r] = arr[j];
+    j++;
+    r++;
+  }
+
+  while(i < m) {
+    arr[r] = tmp[i];
+    i++;
+    r++;
+  }
+
+  return arr;
 }
 
 void pasteSort(int* arr, int n) {
@@ -106,11 +92,12 @@ int main()
   const std::chrono::steady_clock::time_point t1 = std::chrono::steady_clock::now();
   int n = 5;
   //int *arr = new int[n]{4, 3, 5, 7, 0, 1};
-  int *arr = new int[n]{0, 1, 3, 4, 6};
+  //int *arr = new int[n]{0, 1, 3, 4, 6};
+  int *arr = new int[n]{7, 6, 5, 3, 0};
+  glarr = arr;
   //pasteSort(arr, n);
-  //arr = mergeSort(arr, n);
-  arr = msort(arr, n);
-  //qsort(arr, n);
+  //arr = msort(arr, n);
+  qsort(arr, n);
   const std::chrono::steady_clock::time_point t2 = std::chrono::steady_clock::now();
   for (int i = 0; i < n; i++) {
     cout << arr[i] << " ";

@@ -12,6 +12,23 @@ class A{
         };
 };
 
+class Parent {
+    int a;
+    
+    public:
+    Parent* ret() {
+        return this;
+    };
+    void pr() {cout << "u gay";};
+};
+
+class Child: public Parent{
+    void a() {
+        Parent* p = Parent::ret();
+        p->pr();
+    }
+};
+
 void A::add() {
     a +=1;
 }
