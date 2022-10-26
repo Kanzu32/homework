@@ -1,31 +1,20 @@
 #ifndef MOVABLE_H
 #define MOVABLE_H
 
-class Direction {
-public:
-    short horizontal;
-    short vertical;
-    Direction(int h, int v) {
-        this->horizontal = h;
-        this->vertical = v;
-    }
-    Direction() {
-        this->horizontal = 0;
-        this->vertical = 0;
-    }
-};
+#include <direction.h>
+#include <cstdlib>
 
 class Movable
 {
 protected:
     int x;
     int y;
-    int realX;
-    int realY;
     int memAnim;
     Direction direction;
 
 public:
+    int speed;
+    int movePhase;
     void move(int h, int w) {
         this->x += direction.horizontal;
         this->y += direction.vertical;
@@ -87,8 +76,6 @@ class Player: public Movable {
 private:
     Direction memoryDirection;
 public:
-    int movePhase;
-    int playerSpeed;
 
     void setMDir(int h, int v) {
         this->memoryDirection.horizontal = h;
@@ -109,7 +96,7 @@ public:
         x = 0;
         y = 0;
         movePhase = 0;
-        playerSpeed = 1;
+        speed = 1;
     }
 
     Player(int x, int y): Player() {
@@ -128,6 +115,19 @@ public:
 };
 
 class Enemy: public Movable {
+public:
+    int color;
+    Enemy() {
+        this->color = rand()%4;
+        this->movePhase = 0;
+        this->speed = 1;
+        direction.horizontal = 0;
+        direction.vertical = 0;
+    };
+    Enemy(int x, int y): Enemy() {
+        this->x = x;
+        this->y = y;
+    };
 
 };
 

@@ -16,6 +16,7 @@
 #include <level.h>
 #include <widget.h>
 #include <settingsdialog.h>
+#include <direction.h>
 
 namespace Ui {
 class Game;
@@ -49,7 +50,7 @@ public:
     int bonusTime = 3000;
     int viewSize = 3;
     int** map;
-    bool pause;
+    bool loaded = false;
     QString pl1name;
     QString pl2name;
     QTimer *timer2;

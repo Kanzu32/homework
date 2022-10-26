@@ -19,6 +19,7 @@ SOURCES += \
 
 HEADERS += \
     controller.h \
+    direction.h \
     game.h \
     level.h \
     movable.h \
