@@ -38,6 +38,7 @@ public:
     Level level;
     bool error = false;
     int lives;
+    int difficulty;
     int p1leftkey;
     int p1downkey;
     int p1rightkey;
@@ -48,6 +49,7 @@ public:
     int p2upkey;
     int playerSpeed = 1;
     int bonusTime = 3000;
+    int untargetTime = 2000;
     int viewSize = 3;
     int** map;
     bool loaded = false;
@@ -55,6 +57,8 @@ public:
     QString pl2name;
     QTimer *timer2;
     QTimer *timer1;
+    QTimer *untargetTimer1;
+    QTimer *untargetTimer2;
     QElapsedTimer gameTimer;
     QVBoxLayout *layout;
     ~Game();
@@ -63,6 +67,8 @@ private slots:
     void nextFrame();
     void endBonusPl1();
     void endBonusPl2();
+    void endUntargetPl1();
+    void endUntargetPl2();
 
 private:
     void keyPressEvent(QKeyEvent *event) override;

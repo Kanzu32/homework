@@ -11,23 +11,11 @@ Game::Game(QWidget *parent) :
     bool mode = true;
     SettingsDialog dialog(this);
     QString filename = QFileDialog::getOpenFileName();
-    if (!dialog.exec() || filename == "") {
+    if (dialog.exec() == QDialog::Rejected || filename == "") {
         error = true;
     } else {
-        dialog.getSettings(mode, pl1name, pl2name);
+        dialog.getSettings(mode, difficulty, pl1name, pl2name);
         spriteMap = new QPixmap(":/images/sprites.png");
-
-        level = Level(filename, mode, pl1name, pl2name, 3);
-        level.recreateNavMap();
-        for (int x = 0; x < level.enemiesCount; x++) {
-            level.enemies[x].setDir(level.getNavMap()[level.enemies[x].getX()][level.enemies[x].getY()].dir);
-        }
-        animationTimer = new QTimer();
-        connect(animationTimer, SIGNAL(timeout()), this, SLOT(nextFrame()));
-
-        timer1 = new QTimer(this);
-        timer2 = new QTimer(this);
-        animationTimer->start(animationSpeed);
 
         QString Path = QCoreApplication::applicationDirPath();
         QString endPath = Path + "/config/config.ini";
@@ -44,6 +32,21 @@ Game::Game(QWidget *parent) :
             p2rightkey = config->value("p2right", "").toInt();
             p2upkey = config->value("p2up", "").toInt();
         }
+
+        level = Level(filename, mode, pl1name, pl2name, difficulty, lives);
+        level.recreateNavMap();
+        for (int x = 0; x < level.enemiesCount; x++) {
+            level.enemies[x].setDir(level.getNavMap()[level.enemies[x].getX()][level.enemies[x].getY()].dir);
+        }
+        animationTimer = new QTimer();
+        connect(animationTimer, SIGNAL(timeout()), this, SLOT(nextFrame()));
+
+        timer1 = new QTimer(this);
+        timer2 = new QTimer(this);
+        untargetTimer1 = new QTimer(this);
+        untargetTimer2 = new QTimer(this);
+        animationTimer->start(animationSpeed);
+
         gameTimer.start();
         loaded = true;
     }
@@ -56,13 +59,12 @@ Game::~Game()
 }
 
 void Game::paintEvent(QPaintEvent *event) {
+    if (error) {
+        Widget* widget = new Widget();
+        widget->show();
+        this->close();
+    };
     if (loaded) {
-        if (error) {
-            Widget* widget = new Widget();
-            widget->show();
-            this->close();
-        };
-
         QPainter canv(this);
         canv.setViewport(0, 0, canv.viewport().width()*viewSize, canv.viewport().height()*viewSize);
         canv.fillRect(QRect(0, 0, canv.device()->width(), canv.device()->height()), Qt::GlobalColor::black);
@@ -91,11 +93,18 @@ void Game::paintEvent(QPaintEvent *event) {
 
             }
         }
-
+        if (!level.p1.targetable) {
+            canv.setOpacity(0.5);
+        }
         canv.drawPixmap(spriteSize*level.p1.getX()+level.p1.movePhase*level.p1.getH(), spriteSize*level.p1.getY()+level.p1.movePhase*level.p1.getV(), *spriteMap, (frame/10)*spriteSize, level.p1.getAnimDir()*spriteSize, spriteSize, spriteSize);
+        canv.setOpacity(1);
+        if (!level.p2.targetable) {
+            canv.setOpacity(0.5);
+        }
         if (level.p2enabled) {
             canv.drawPixmap(spriteSize*level.p2.getX()+level.p2.movePhase*level.p2.getH(), spriteSize*level.p2.getY()+level.p2.movePhase*level.p2.getV(), *spriteMap, (3+frame/10)*spriteSize, level.p2.getAnimDir()*spriteSize, spriteSize, spriteSize);
         }
+        canv.setOpacity(1);
 
         for (int x = 0; x < level.enemiesCount; x++) {
             Enemy enemy = level.enemies[x];
@@ -103,13 +112,13 @@ void Game::paintEvent(QPaintEvent *event) {
         }
 
         canv.setPen(Qt::white);
-        canv.drawText(10, 10, QString("Pl1 [" + level.p1name + "]: ") + QString::number(level.p1Score) + " " + QString::number(level.p1.getX()) + " " + QString::number(level.p1.getY()));
+        canv.setFont(QFont("Press Start 2P", 5));
+        canv.drawText(10, 10, QString("Pl1 [" + level.p1name + "]: ") + QString::number(level.p1Score) + " lives: " + QString::number(level.p1.lives));
+        canv.drawText(canv.device()->width()/2/viewSize-15, 10, QString::number(gameTimer.elapsed()/1000.0));
         if (level.p2enabled) {
-            canv.drawText(canv.device()->width()/2/viewSize, 10, QString::number(level.score));
-            canv.drawText(canv.device()->width()/2/viewSize, 30, QString::number(gameTimer.elapsed()/1000.0));
-            canv.drawText(canv.device()->width()/viewSize-60, 10, QString("Pl2 [" + level.p2name + "]: ") + QString::number(level.p2Score));
+            canv.drawText(canv.device()->width()/2/viewSize, 20, QString::number(level.score));
+            canv.drawText(canv.device()->width()/viewSize-230, 10, QString("Pl2 [" + level.p2name + "]: ") + QString::number(level.p2Score) + " lives: " + QString::number(level.p2.lives));
         }
-
         canv.end();
     }
 }
@@ -124,14 +133,14 @@ void Game::endGame() {
         QFile file(endPath);
         file.open(QIODevice::ReadWrite | QIODevice::Append);
         QTextStream out(&file);
-        out << QString(level.mapName + "|" + level.p1name + "|" + level.p2name + "|" + QString::number(level.p1Score) + "|" + QString::number(level.p2Score) + "|" + QString::number(gameTimer.elapsed()/1000.0) + '\n');
+        out << QString(level.mapName + "|" + QString::number(difficulty) + "|" + QString::number(level.maxLives) + "|" + level.p1name + "|" + level.p2name + "|" + QString::number(level.p1Score) + "|" + QString::number(level.p2Score) + "|" + QString::number(gameTimer.elapsed()/1000.0) + '\n');
         file.close();
     } else {
         QString endPath = QCoreApplication::applicationDirPath() + "/records/records1player.txt";
         QFile file(endPath);
         file.open(QIODevice::ReadWrite | QIODevice::Append);
         QTextStream out(&file);
-        out << QString(level.mapName + "|" + level.p1name + "|" + QString::number(level.p1Score) + "|" + QString::number(gameTimer.elapsed()/1000.0) + '\n');
+        out << QString(level.mapName + "|" + QString::number(difficulty) + "|" + QString::number(level.maxLives) + "|" + level.p1name + "|" + QString::number(level.p1Score) + "|" + QString::number(gameTimer.elapsed()/1000.0) + '\n');
         file.close();
     }
 
@@ -148,7 +157,8 @@ void Game::nextFrame() {
                 level.enemies[x].move(level.getHeight(), level.getWidth());
             }
         }
-        if (level.enemies[x].movePhase == 0) {
+        if (abs(level.enemies[x].movePhase) <= 0.1) {
+            level.enemies[x].movePhase = 0;
             level.enemies[x].setDir(level.getNavMap()[level.enemies[x].getX()][level.enemies[x].getY()].dir);
         }
 
@@ -179,16 +189,33 @@ void Game::nextFrame() {
             level.coinsCount--;
             level.p1Score += 30;
             level.score += 30;
-            level.p1.speed = 2;
+            level.p1.speed = 2.0;
             if (timer1->isActive()) {
                 timer1->stop();
             }
             connect(timer1, SIGNAL(timeout()), this, SLOT(endBonusPl1()));
             timer1->setSingleShot(true);
-            timer1->setInterval(bonusTime);
+            timer1->setInterval(untargetTime);
             timer1->start();
         }
     }
+    for (int i = 0; i < level.enemiesCount; i++) {
+        if (level.p1.targetable && level.p1.getX() == level.enemies[i].getX() && level.p1.getY() == level.enemies[i].getY()) {
+            level.p1.toSpawn();
+            connect(untargetTimer1, SIGNAL(timeout()), this, SLOT(endUntargetPl1()));
+            untargetTimer1->setSingleShot(true);
+            untargetTimer1->setInterval(untargetTime);
+            untargetTimer1->start();
+        }
+        if (level.p2enabled && level.p2.targetable && level.p2.getX() == level.enemies[i].getX() && level.p2.getY() == level.enemies[i].getY()) {
+            level.p2.toSpawn();
+            connect(untargetTimer2, SIGNAL(timeout()), this, SLOT(endUntargetPl2()));
+            untargetTimer2->setSingleShot(true);
+            untargetTimer2->setInterval(untargetTime);
+            untargetTimer2->start();
+        }
+    }
+
     if (level.p2enabled && (level.p2.getH() != 0 || level.p2.getV() != 0)) {
         level.p2.movePhase += level.p2.speed;
         if (level.p2.movePhase >= spriteSize/2) {
@@ -213,7 +240,7 @@ void Game::nextFrame() {
             level.coinsCount--;
             level.p2Score += 30;
             level.score += 30;
-            level.p2.speed = 2;
+            level.p2.speed = 2.0;
             if (timer2->isActive()) {
                 timer2->stop();
             }
@@ -224,8 +251,8 @@ void Game::nextFrame() {
         }
     }
 
-    if (level.coinsCount <= 0) {
-        level.coinsCount = 1;
+    if (loaded && (level.coinsCount <= 0 || level.p1.lives == 0 || level.p2.lives == 0)) {
+        loaded = false;
         endGame();
         Widget* widget = new Widget();
         widget->show();
@@ -236,19 +263,28 @@ void Game::nextFrame() {
 }
 
 void Game::endBonusPl1() {
-    level.p1.speed = 1;
+    level.p1.speed = 1.0;
 }
 
 void Game::endBonusPl2() {
-    level.p2.speed = 1;
+    level.p2.speed = 1.0;
+}
+
+void Game::endUntargetPl1() {
+    level.p1.targetable = true;
+}
+
+void Game::endUntargetPl2() {
+    level.p2.targetable = true;
 }
 
 void Game::keyPressEvent(QKeyEvent *event) {
     int key = event->key();
     if (key == Qt::Key_Escape) {
-        Widget widget = Widget();
+        loaded = false;
+        Widget* widget = new Widget();
+        widget->show();
         this->close();
-        widget.show();
     }
     if (key == p1leftkey && (level.p1.getH() == 0 ||level.p1.getH() == 1)) {
         if (level.p1.getX() > 0 && (map[level.p1.getX()-1][level.p1.getY()] == 1 || (level.p1.movePhase != 0 && level.p1.getH() != 1))) {

@@ -15,14 +15,21 @@ class SettingsDialog : public QDialog
 public:
     explicit SettingsDialog(QWidget *parent = nullptr);
     bool mode;
+    int difficulty;
     QString pl1name;
     QString pl2name;
-    void getSettings(bool& mode, QString& p1, QString& p2);
+    void getSettings(bool& mode, int& difficulty, QString& p1, QString& p2);
     ~SettingsDialog();
 private slots:
     void on_radioButton_clicked();
 
     void on_radioButton_2_clicked();
+
+    void on_radioButton_5_clicked();
+
+    void on_radioButton_6_clicked();
+
+    void on_radioButton_7_clicked();
 
     void on_pushButton_2_clicked();
 

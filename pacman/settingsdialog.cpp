@@ -6,6 +6,7 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
     ui(new Ui::SettingsDialog)
 {
     mode = true;
+    difficulty = 1;
     ui->setupUi(this);
 }
 
@@ -33,6 +34,21 @@ void SettingsDialog::on_pushButton_2_clicked()
     this->reject();
 }
 
+void SettingsDialog::on_radioButton_5_clicked()
+{
+    difficulty = 1;
+}
+
+void SettingsDialog::on_radioButton_6_clicked()
+{
+    difficulty = 2;
+}
+
+void SettingsDialog::on_radioButton_7_clicked()
+{
+    difficulty = 3;
+}
+
 
 void SettingsDialog::on_pushButton_clicked()
 {
@@ -41,8 +57,9 @@ void SettingsDialog::on_pushButton_clicked()
     this->accept();
 }
 
-void SettingsDialog::getSettings(bool& m, QString& p1, QString& p2) {
+void SettingsDialog::getSettings(bool& m, int& difficulty, QString& p1, QString& p2) {
     m = this->mode;
     p1 = this->pl1name;
     p2 = this->pl2name;
+    difficulty = this->difficulty;
 }

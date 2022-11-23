@@ -42,6 +42,7 @@ public:
     int p1Score;
     int p2Score;
     int score;
+    int maxLives;
     int getWidth() {return w;};
     int getHeight() {return h;};
     navCell** navMap;
@@ -50,10 +51,12 @@ public:
     void recreateNavMap() {
         this->restoreNavMap();
         std::queue <coord> q;
-        navMap[p1.getX()][p1.getY()].length = 0;
-        q.push(coord{p1.getX(), p1.getY()});
+        if (p1.targetable) {
+            navMap[p1.getX()][p1.getY()].length = 0;
+            q.push(coord{p1.getX(), p1.getY()});
+        }
 
-        if (p2enabled) {
+        if (p2enabled && p2.targetable) {
             navMap[p2.getX()][p2.getY()].length = 0;
             q.push(coord{p2.getX(), p2.getY()});
         }
@@ -105,7 +108,8 @@ public:
         }
     }
 
-    Level(QString filename, bool mode, QString p1, QString p2, int difficulty) {
+    Level(QString filename, bool mode, QString p1, QString p2, int difficulty, int lives) {
+        this->maxLives = lives;
         this->difficulty = difficulty;
         this->coinsCount = 0;
         this->p2enabled = mode;
@@ -147,14 +151,14 @@ public:
             for (int j = 0; j < this->h; j++) {
                 this->map[i][j] = QString(lvlMap.at(i+j*w)).toInt();
                 if (this->map[i][j] == 4) {
-                    this->p1 = Player(i, j);
+                    this->p1 = Player(lives, i, j);
                     this->map[i][j] = 0;
                 } else if (this->map[i][j] == 5) {
                     this->enemies[x] = Enemy(i, j);
                     this->map[i][j] = 0;
                     x++;
                 } else if (this->map[i][j] == 6 && p2enabled) {
-                    this->p2 = Player(i, j);
+                    this->p2 = Player(lives, i, j);
                     this->map[i][j] = 0;
                 } else if (this->map[i][j] == 6 && !p2enabled){
                     this->map[i][j] = 0;

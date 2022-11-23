@@ -13,8 +13,8 @@ protected:
     Direction direction;
 
 public:
-    int speed;
-    int movePhase;
+    float speed;
+    float movePhase;
     void move(int h, int w) {
         this->x += direction.horizontal;
         this->y += direction.vertical;
@@ -75,8 +75,11 @@ public:
 class Player: public Movable {
 private:
     Direction memoryDirection;
+    int spawnX;
+    int spawnY;
 public:
-
+    int lives;
+    bool targetable;
     void setMDir(int h, int v) {
         this->memoryDirection.horizontal = h;
         this->memoryDirection.vertical = v;
@@ -87,6 +90,13 @@ public:
     int getMH() {return this->memoryDirection.horizontal;};
     int getMV() {return this->memoryDirection.vertical;};
     Direction getMDir() {return this->memoryDirection;};
+    void toSpawn() {
+        targetable = false;
+        x = spawnX;
+        y = spawnY;
+        lives--;
+        movePhase = 0;
+    }
 
     Player() {
         direction.horizontal = 0;
@@ -96,19 +106,29 @@ public:
         x = 0;
         y = 0;
         movePhase = 0;
-        speed = 1;
+        speed = 1.0;
+        lives = 3;
+        spawnX = x;
+        spawnY = y;
+        targetable = true;
     }
 
-    Player(int x, int y): Player() {
+    Player(int lives): Player() {
+        this->lives = lives;
+    }
+
+    Player(int lives, int x, int y): Player(lives) {
         this->x = x;
         this->y = y;
+        spawnX = x;
+        spawnY = y;
     }
 
-    Player(int x, int y, int h, int v): Player(x, y) {
+    Player(int lives, int x, int y, int h, int v): Player(lives, x, y) {
         this->setDir(h, v);
     }
 
-    Player(int x, int y, Direction dir): Player(x, y) {
+    Player(int lives, int x, int y, Direction dir): Player(lives, x, y) {
         this->setDir(dir);
     }
 
@@ -120,7 +140,7 @@ public:
     Enemy() {
         this->color = rand()%4;
         this->movePhase = 0;
-        this->speed = 1;
+        this->speed = 0.8;
         direction.horizontal = 0;
         direction.vertical = 0;
     };
