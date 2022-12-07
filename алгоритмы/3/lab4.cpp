@@ -104,4 +104,5 @@ int main() {
     queue.pop();
     queue.print();
     cout << !queue << "\n";
+    system("pause");
 }
