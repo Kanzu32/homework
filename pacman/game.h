@@ -12,6 +12,8 @@
 #include <QVBoxLayout>
 #include <QInputDialog>
 #include <QElapsedTimer>
+#include <QLabel>
+#include <cmath>
 
 #include <level.h>
 #include <widget.h>
@@ -61,6 +63,9 @@ public:
     QTimer *untargetTimer2;
     QElapsedTimer gameTimer;
     QVBoxLayout *layout;
+    QFrame* endScreen;
+    QLabel* title;
+    QLabel* stats;
     ~Game();
 
 private slots:
@@ -69,6 +74,12 @@ private slots:
     void endBonusPl2();
     void endUntargetPl1();
     void endUntargetPl2();
+
+    void on_pushButton_clicked();
+
+    void on_pushButton_3_clicked();
+
+    void on_pushButton_2_clicked();
 
 private:
     void keyPressEvent(QKeyEvent *event) override;

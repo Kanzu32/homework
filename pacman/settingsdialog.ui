@@ -13,6 +13,9 @@
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: rgb(44, 47, 51);</string>
+  </property>
   <widget class="QGroupBox" name="groupBox">
    <property name="geometry">
     <rect>
@@ -26,6 +29,9 @@
     <string/>
    </property>
    <widget class="QRadioButton" name="radioButton">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>0</x>
@@ -39,11 +45,20 @@
       <pointsize>12</pointsize>
      </font>
     </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(216, 216, 216);</string>
+    </property>
     <property name="text">
      <string>1 Player</string>
     </property>
+    <property name="checked">
+     <bool>true</bool>
+    </property>
    </widget>
    <widget class="QRadioButton" name="radioButton_2">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>0</x>
@@ -56,6 +71,9 @@
      <font>
       <pointsize>12</pointsize>
      </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(216, 216, 216);</string>
     </property>
     <property name="text">
      <string>2 Players</string>
@@ -71,6 +89,16 @@
      <height>41</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton {
+	background-color: rgb(74, 80, 86);
+	color: rgb(216, 216, 216);
+}
+QPushButton:hover:!pressed  {
+	background-color: rgb(244, 226, 66);
+	color: rgb(43, 43, 43);
+}</string>
+   </property>
    <property name="text">
     <string>EXIT</string>
    </property>
@@ -83,6 +111,16 @@
      <width>211</width>
      <height>41</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton {
+	background-color: rgb(74, 80, 86);
+	color: rgb(216, 216, 216);
+}
+QPushButton:hover:!pressed  {
+	background-color: rgb(244, 226, 66);
+	color: rgb(43, 43, 43);
+}</string>
    </property>
    <property name="text">
     <string>CONTINUE</string>
@@ -97,6 +135,10 @@
      <height>41</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(216, 216, 216);
+border: 2px solid gray;</string>
+   </property>
    <property name="maxLength">
     <number>10</number>
    </property>
@@ -105,6 +147,9 @@
    </property>
   </widget>
   <widget class="QLineEdit" name="lineEdit_2">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>190</x>
@@ -112,6 +157,15 @@
      <width>261</width>
      <height>41</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLineEdit{
+	color: rgb(216, 216, 216);
+	border: 2px solid gray;
+}
+ QLineEdit:disabled {
+     background: rgb(132, 132, 132);
+}</string>
    </property>
    <property name="maxLength">
     <number>10</number>
@@ -129,26 +183,63 @@
      <height>65</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(216, 216, 216);
+border: none;</string>
+   </property>
    <property name="title">
     <string>Difficulty</string>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
      <widget class="QSplitter" name="splitter">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="styleSheet">
+       <string notr="true"/>
+      </property>
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
       </property>
       <widget class="QRadioButton" name="radioButton_5">
+       <property name="styleSheet">
+        <string notr="true">color: rgb(216, 216, 216);</string>
+       </property>
        <property name="text">
         <string>Easy</string>
        </property>
+       <property name="checked">
+        <bool>true</bool>
+       </property>
       </widget>
       <widget class="QRadioButton" name="radioButton_6">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color: rgb(216, 216, 216);</string>
+       </property>
        <property name="text">
         <string>Medium</string>
        </property>
       </widget>
       <widget class="QRadioButton" name="radioButton_7">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color: rgb(216, 216, 216);</string>
+       </property>
        <property name="text">
         <string>Hard</string>
        </property>

@@ -1,5 +1,6 @@
 #include "game.h"
 #include "ui_game.h"
+#include <QSound>
 
 Game::Game(QWidget *parent) :
     QWidget(parent),
@@ -7,8 +8,13 @@ Game::Game(QWidget *parent) :
 {
     ui->setupUi(this);
     QWidget::showFullScreen();
-
+    QWidget::setAttribute( Qt::WA_DeleteOnClose, true );
+    endScreen = ui->frame_5;
+    endScreen->setVisible(false);
+    title = ui->label;
+    stats = ui->label_2;
     bool mode = true;
+    try {
     SettingsDialog dialog(this);
     QString filename = QFileDialog::getOpenFileName();
     if (dialog.exec() == QDialog::Rejected || filename == "") {
@@ -32,8 +38,9 @@ Game::Game(QWidget *parent) :
             p2rightkey = config->value("p2right", "").toInt();
             p2upkey = config->value("p2up", "").toInt();
         }
-
         level = Level(filename, mode, pl1name, pl2name, difficulty, lives);
+
+
         level.recreateNavMap();
         for (int x = 0; x < level.enemiesCount; x++) {
             level.enemies[x].setDir(level.getNavMap()[level.enemies[x].getX()][level.enemies[x].getY()].dir);
@@ -50,6 +57,14 @@ Game::Game(QWidget *parent) :
         gameTimer.start();
         loaded = true;
     }
+    } catch(std::exception const&e) {
+        QMessageBox msgBox;
+        msgBox.setText(e.what());
+        msgBox.setIcon(QMessageBox::Warning);
+        msgBox.setDefaultButton(QMessageBox::Ok);
+        msgBox.exec();
+        error = true;
+    };
 
 }
 
@@ -67,7 +82,7 @@ void Game::paintEvent(QPaintEvent *event) {
     if (loaded) {
         QPainter canv(this);
         canv.setViewport(0, 0, canv.viewport().width()*viewSize, canv.viewport().height()*viewSize);
-        canv.fillRect(QRect(0, 0, canv.device()->width(), canv.device()->height()), Qt::GlobalColor::black);
+        canv.fillRect(QRect(0, 0, canv.device()->width(), canv.device()->height()), QColor(44, 47, 51));
 
         map = level.getMap();
         for (int i = 0; i < level.getWidth(); i++) {
@@ -79,17 +94,6 @@ void Game::paintEvent(QPaintEvent *event) {
                 } else if (map[i][j] == 3) {
                     canv.drawPixmap(spriteSize*i, spriteSize*j, *spriteMap, 7*spriteSize, 0, spriteSize, spriteSize);
                 }
-
-//                if (level.navMap[i][j].dir.horizontal == 1) {
-//                    canv.drawPixmap(spriteSize*i, spriteSize*j, *spriteMap, 0, 0, spriteSize, spriteSize);
-//                } else if (level.navMap[i][j].dir.horizontal == -1) {
-//                    canv.drawPixmap(spriteSize*i, spriteSize*j, *spriteMap, 0, 2*spriteSize, spriteSize, spriteSize);
-//                } else if (level.navMap[i][j].dir.vertical == 1) {
-//                    canv.drawPixmap(spriteSize*i, spriteSize*j, *spriteMap, 0, 1*spriteSize, spriteSize, spriteSize);
-//                } else if (level.navMap[i][j].dir.vertical == -1) {
-//                    canv.drawPixmap(spriteSize*i, spriteSize*j, *spriteMap, 0, 3*spriteSize, spriteSize, spriteSize);
-//                }
-
 
             }
         }
@@ -127,7 +131,16 @@ void Game::endGame() {
     if (!QDir(QCoreApplication::applicationDirPath() + "/records").exists()) {
         QDir().mkdir(QCoreApplication::applicationDirPath() + "/records");
     }
+
     if (level.p2enabled) {
+        if (level.p1.lives > 0 && level.p2.lives > 0) {
+            title->setText("WIN");
+            QSound::play(":/music/win.wav");
+        } else {
+            title->setText("LOSE");
+            QSound::play(":/music/lose.wav");
+        }
+        stats->setText("Pl1 Score: " + QString::number(level.p1Score) + " Pl2 Score: " + QString::number(level.p2Score) + " Time: " + QString::number(gameTimer.elapsed()/1000.0));
 
         QString endPath = QCoreApplication::applicationDirPath() + "/records/records2players.txt";
         QFile file(endPath);
@@ -136,6 +149,15 @@ void Game::endGame() {
         out << QString(level.mapName + "|" + QString::number(difficulty) + "|" + QString::number(level.maxLives) + "|" + level.p1name + "|" + level.p2name + "|" + QString::number(level.p1Score) + "|" + QString::number(level.p2Score) + "|" + QString::number(gameTimer.elapsed()/1000.0) + '\n');
         file.close();
     } else {
+        if (level.p1.lives > 0) {
+            title->setText("WIN");
+            QSound::play(":/music/win.wav");
+        } else {
+            title->setText("LOSE");
+            QSound::play(":/music/lose.wav");
+        }
+        stats->setText("Score: " + QString::number(level.p1Score) + " Time: " + QString::number(gameTimer.elapsed()/1000.0));
+
         QString endPath = QCoreApplication::applicationDirPath() + "/records/records1player.txt";
         QFile file(endPath);
         file.open(QIODevice::ReadWrite | QIODevice::Append);
@@ -143,8 +165,8 @@ void Game::endGame() {
         out << QString(level.mapName + "|" + QString::number(difficulty) + "|" + QString::number(level.maxLives) + "|" + level.p1name + "|" + QString::number(level.p1Score) + "|" + QString::number(gameTimer.elapsed()/1000.0) + '\n');
         file.close();
     }
-
-
+    this->setStyleSheet("background-color: black;");
+    endScreen->setVisible(true);
 }
 
 void Game::nextFrame() {
@@ -193,6 +215,7 @@ void Game::nextFrame() {
             if (timer1->isActive()) {
                 timer1->stop();
             }
+            QSound::play(":/music/bonus.wav");
             connect(timer1, SIGNAL(timeout()), this, SLOT(endBonusPl1()));
             timer1->setSingleShot(true);
             timer1->setInterval(untargetTime);
@@ -201,18 +224,22 @@ void Game::nextFrame() {
     }
     for (int i = 0; i < level.enemiesCount; i++) {
         if (level.p1.targetable && level.p1.getX() == level.enemies[i].getX() && level.p1.getY() == level.enemies[i].getY()) {
+            QSound::play(":/music/hit.wav");
             level.p1.toSpawn();
             connect(untargetTimer1, SIGNAL(timeout()), this, SLOT(endUntargetPl1()));
             untargetTimer1->setSingleShot(true);
             untargetTimer1->setInterval(untargetTime);
             untargetTimer1->start();
+            level.recreateNavMap();
         }
         if (level.p2enabled && level.p2.targetable && level.p2.getX() == level.enemies[i].getX() && level.p2.getY() == level.enemies[i].getY()) {
+            QSound::play(":/music/hit.wav");
             level.p2.toSpawn();
             connect(untargetTimer2, SIGNAL(timeout()), this, SLOT(endUntargetPl2()));
             untargetTimer2->setSingleShot(true);
             untargetTimer2->setInterval(untargetTime);
             untargetTimer2->start();
+            level.recreateNavMap();
         }
     }
 
@@ -244,6 +271,7 @@ void Game::nextFrame() {
             if (timer2->isActive()) {
                 timer2->stop();
             }
+            QSound::play(":/music/bonus.wav");
             connect(timer2, SIGNAL(timeout()), this, SLOT(endBonusPl2()));
             timer2->setSingleShot(true);
             timer2->setInterval(bonusTime);
@@ -253,10 +281,8 @@ void Game::nextFrame() {
 
     if (loaded && (level.coinsCount <= 0 || level.p1.lives == 0 || level.p2.lives == 0)) {
         loaded = false;
+        animationTimer->stop();
         endGame();
-        Widget* widget = new Widget();
-        widget->show();
-        this->close();
     }
     frame = frame%30;
     repaint();
@@ -272,10 +298,12 @@ void Game::endBonusPl2() {
 
 void Game::endUntargetPl1() {
     level.p1.targetable = true;
+    level.recreateNavMap();
 }
 
 void Game::endUntargetPl2() {
     level.p2.targetable = true;
+    level.recreateNavMap();
 }
 
 void Game::keyPressEvent(QKeyEvent *event) {
@@ -358,5 +386,31 @@ void Game::keyPressEvent(QKeyEvent *event) {
             level.p2.movePhase = -level.p2.movePhase;
         }
     }
+}
+
+
+void Game::on_pushButton_clicked() {
+    QSound::play(":/music/ok.wav");
+    Game* game = new Game();
+    game->show();
+    this->close();
+}
+
+
+void Game::on_pushButton_3_clicked()
+{
+    QSound::play(":/music/ok.wav");
+    Records* records = new Records();
+    records->show();
+    this->close();
+}
+
+
+void Game::on_pushButton_2_clicked()
+{
+    QSound::play(":/music/close.wav");
+    Widget* widget = new Widget();
+    widget->show();
+    this->close();
 }
 

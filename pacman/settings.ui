@@ -13,6 +13,9 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: rgb(44, 47, 51);</string>
+  </property>
   <layout class="QVBoxLayout" name="verticalLayout_5">
    <item>
     <widget class="QFrame" name="frame_17">
@@ -59,6 +62,9 @@
              <pointsize>36</pointsize>
             </font>
            </property>
+           <property name="styleSheet">
+            <string notr="true">color: rgb(244, 226, 66);</string>
+           </property>
            <property name="text">
             <string>PAC-MAN</string>
            </property>
@@ -74,6 +80,9 @@
              <family>Press Start 2P</family>
              <pointsize>16</pointsize>
             </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">color: rgb(244, 226, 66);</string>
            </property>
            <property name="text">
             <string>SETTINGS</string>
@@ -153,6 +162,9 @@
              <pointsize>16</pointsize>
             </font>
            </property>
+           <property name="styleSheet">
+            <string notr="true">color: rgb(216, 216, 216);</string>
+           </property>
            <property name="text">
             <string>LIVES:</string>
            </property>
@@ -166,8 +178,14 @@
            <property name="focusPolicy">
             <enum>Qt::NoFocus</enum>
            </property>
+           <property name="styleSheet">
+            <string notr="true"/>
+           </property>
            <property name="minimum">
             <number>1</number>
+           </property>
+           <property name="maximum">
+            <number>50</number>
            </property>
            <property name="orientation">
             <enum>Qt::Horizontal</enum>
@@ -181,6 +199,9 @@
              <family>Press Start 2P</family>
              <pointsize>16</pointsize>
             </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">color: rgb(216, 216, 216);</string>
            </property>
            <property name="text">
             <string>0</string>
@@ -248,6 +269,9 @@
              <pointsize>16</pointsize>
             </font>
            </property>
+           <property name="styleSheet">
+            <string notr="true">color: rgb(216, 216, 216);</string>
+           </property>
            <property name="text">
             <string>PLAYER 1</string>
            </property>
@@ -285,6 +309,9 @@
                 <pointsize>16</pointsize>
                </font>
               </property>
+              <property name="styleSheet">
+               <string notr="true">color: rgb(216, 216, 216);</string>
+              </property>
               <property name="text">
                <string>left</string>
               </property>
@@ -300,6 +327,9 @@
                 <family>Press Start 2P</family>
                 <pointsize>16</pointsize>
                </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">color: rgb(216, 216, 216);</string>
               </property>
               <property name="text">
                <string>left</string>
@@ -325,6 +355,16 @@
               </property>
               <property name="focusPolicy">
                <enum>Qt::NoFocus</enum>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">QPushButton {
+	background-color: rgb(74, 80, 86);
+	color: rgb(216, 216, 216);
+}
+QPushButton:hover:!pressed  {
+	background-color: rgb(244, 226, 66);
+	color: rgb(43, 43, 43);
+}</string>
               </property>
               <property name="text">
                <string>enter</string>
@@ -363,6 +403,9 @@
                 <pointsize>16</pointsize>
                </font>
               </property>
+              <property name="styleSheet">
+               <string notr="true">color: rgb(216, 216, 216);</string>
+              </property>
               <property name="text">
                <string>down</string>
               </property>
@@ -378,6 +421,9 @@
                 <family>Press Start 2P</family>
                 <pointsize>16</pointsize>
                </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">color: rgb(216, 216, 216);</string>
               </property>
               <property name="text">
                <string>left</string>
@@ -403,6 +449,16 @@
               </property>
               <property name="focusPolicy">
                <enum>Qt::NoFocus</enum>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">QPushButton {
+	background-color: rgb(74, 80, 86);
+	color: rgb(216, 216, 216);
+}
+QPushButton:hover:!pressed  {
+	background-color: rgb(244, 226, 66);
+	color: rgb(43, 43, 43);
+}</string>
               </property>
               <property name="text">
                <string>enter</string>
@@ -441,6 +497,9 @@
                 <pointsize>16</pointsize>
                </font>
               </property>
+              <property name="styleSheet">
+               <string notr="true">color: rgb(216, 216, 216);</string>
+              </property>
               <property name="text">
                <string>right</string>
               </property>
@@ -456,6 +515,9 @@
                 <family>Press Start 2P</family>
                 <pointsize>16</pointsize>
                </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">color: rgb(216, 216, 216);</string>
               </property>
               <property name="text">
                <string>left</string>
@@ -481,6 +543,16 @@
               </property>
               <property name="focusPolicy">
                <enum>Qt::NoFocus</enum>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">QPushButton {
+	background-color: rgb(74, 80, 86);
+	color: rgb(216, 216, 216);
+}
+QPushButton:hover:!pressed  {
+	background-color: rgb(244, 226, 66);
+	color: rgb(43, 43, 43);
+}</string>
               </property>
               <property name="text">
                <string>enter</string>
@@ -519,6 +591,9 @@
                 <pointsize>16</pointsize>
                </font>
               </property>
+              <property name="styleSheet">
+               <string notr="true">color: rgb(216, 216, 216);</string>
+              </property>
               <property name="text">
                <string>up</string>
               </property>
@@ -534,6 +609,9 @@
                 <family>Press Start 2P</family>
                 <pointsize>16</pointsize>
                </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">color: rgb(216, 216, 216);</string>
               </property>
               <property name="text">
                <string>left</string>
@@ -559,6 +637,16 @@
               </property>
               <property name="focusPolicy">
                <enum>Qt::NoFocus</enum>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">QPushButton {
+	background-color: rgb(74, 80, 86);
+	color: rgb(216, 216, 216);
+}
+QPushButton:hover:!pressed  {
+	background-color: rgb(244, 226, 66);
+	color: rgb(43, 43, 43);
+}</string>
               </property>
               <property name="text">
                <string>enter</string>
@@ -587,6 +675,9 @@
              <family>Press Start 2P</family>
              <pointsize>16</pointsize>
             </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">color: rgb(216, 216, 216);</string>
            </property>
            <property name="text">
             <string>PLAYER 2</string>
@@ -625,6 +716,9 @@
                 <pointsize>16</pointsize>
                </font>
               </property>
+              <property name="styleSheet">
+               <string notr="true">color: rgb(216, 216, 216);</string>
+              </property>
               <property name="text">
                <string>left</string>
               </property>
@@ -643,6 +737,9 @@
               </property>
               <property name="focusPolicy">
                <enum>Qt::NoFocus</enum>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">color: rgb(216, 216, 216);</string>
               </property>
               <property name="text">
                <string>left</string>
@@ -668,6 +765,16 @@
               </property>
               <property name="focusPolicy">
                <enum>Qt::NoFocus</enum>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">QPushButton {
+	background-color: rgb(74, 80, 86);
+	color: rgb(216, 216, 216);
+}
+QPushButton:hover:!pressed  {
+	background-color: rgb(244, 226, 66);
+	color: rgb(43, 43, 43);
+}</string>
               </property>
               <property name="text">
                <string>enter</string>
@@ -706,6 +813,9 @@
                 <pointsize>16</pointsize>
                </font>
               </property>
+              <property name="styleSheet">
+               <string notr="true">color: rgb(216, 216, 216);</string>
+              </property>
               <property name="text">
                <string>down</string>
               </property>
@@ -721,6 +831,9 @@
                 <family>Press Start 2P</family>
                 <pointsize>16</pointsize>
                </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">color: rgb(216, 216, 216);</string>
               </property>
               <property name="text">
                <string>left</string>
@@ -746,6 +859,16 @@
               </property>
               <property name="focusPolicy">
                <enum>Qt::NoFocus</enum>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">QPushButton {
+	background-color: rgb(74, 80, 86);
+	color: rgb(216, 216, 216);
+}
+QPushButton:hover:!pressed  {
+	background-color: rgb(244, 226, 66);
+	color: rgb(43, 43, 43);
+}</string>
               </property>
               <property name="text">
                <string>enter</string>
@@ -784,6 +907,9 @@
                 <pointsize>16</pointsize>
                </font>
               </property>
+              <property name="styleSheet">
+               <string notr="true">color: rgb(216, 216, 216);</string>
+              </property>
               <property name="text">
                <string>right</string>
               </property>
@@ -799,6 +925,9 @@
                 <family>Press Start 2P</family>
                 <pointsize>16</pointsize>
                </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">color: rgb(216, 216, 216);</string>
               </property>
               <property name="text">
                <string>left</string>
@@ -824,6 +953,16 @@
               </property>
               <property name="focusPolicy">
                <enum>Qt::NoFocus</enum>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">QPushButton {
+	background-color: rgb(74, 80, 86);
+	color: rgb(216, 216, 216);
+}
+QPushButton:hover:!pressed  {
+	background-color: rgb(244, 226, 66);
+	color: rgb(43, 43, 43);
+}</string>
               </property>
               <property name="text">
                <string>enter</string>
@@ -862,6 +1001,9 @@
                 <pointsize>16</pointsize>
                </font>
               </property>
+              <property name="styleSheet">
+               <string notr="true">color: rgb(216, 216, 216);</string>
+              </property>
               <property name="text">
                <string>up</string>
               </property>
@@ -877,6 +1019,9 @@
                 <family>Press Start 2P</family>
                 <pointsize>16</pointsize>
                </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">color: rgb(216, 216, 216);</string>
               </property>
               <property name="text">
                <string>left</string>
@@ -902,6 +1047,16 @@
               </property>
               <property name="focusPolicy">
                <enum>Qt::NoFocus</enum>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">QPushButton {
+	background-color: rgb(74, 80, 86);
+	color: rgb(216, 216, 216);
+}
+QPushButton:hover:!pressed  {
+	background-color: rgb(244, 226, 66);
+	color: rgb(43, 43, 43);
+}</string>
               </property>
               <property name="text">
                <string>enter</string>
@@ -990,6 +1145,16 @@
            <property name="focusPolicy">
             <enum>Qt::NoFocus</enum>
            </property>
+           <property name="styleSheet">
+            <string notr="true">QPushButton {
+	background-color: rgb(74, 80, 86);
+	color: rgb(216, 216, 216);
+}
+QPushButton:hover:!pressed  {
+	background-color: rgb(244, 226, 66);
+	color: rgb(43, 43, 43);
+}</string>
+           </property>
            <property name="text">
             <string>SAVE</string>
            </property>
@@ -1011,6 +1176,16 @@
            </property>
            <property name="focusPolicy">
             <enum>Qt::NoFocus</enum>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QPushButton {
+	background-color: rgb(74, 80, 86);
+	color: rgb(216, 216, 216);
+}
+QPushButton:hover:!pressed  {
+	background-color: rgb(244, 226, 66);
+	color: rgb(43, 43, 43);
+}</string>
            </property>
            <property name="text">
             <string>BACK</string>

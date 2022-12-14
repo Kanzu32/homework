@@ -4,6 +4,15 @@
 #include <QDialog>
 #include <widget.h>
 
+class PlayerNameExeption : public std::exception{
+    std::string msg;
+public:
+    const char * what() const noexcept override {
+        return msg.c_str();
+    }
+    PlayerNameExeption(std::string msg) {this->msg = msg;};
+};
+
 namespace Ui {
 class SettingsDialog;
 }

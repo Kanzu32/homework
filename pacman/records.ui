@@ -13,6 +13,9 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: rgb(44, 47, 51);</string>
+  </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <widget class="QFrame" name="frame_2">
@@ -43,6 +46,9 @@
           <pointsize>36</pointsize>
          </font>
         </property>
+        <property name="styleSheet">
+         <string notr="true">color: rgb(244, 226, 66);</string>
+        </property>
         <property name="text">
          <string>PAC-MAN</string>
         </property>
@@ -58,6 +64,9 @@
           <family>Press Start 2P</family>
           <pointsize>16</pointsize>
          </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">color: rgb(244, 226, 66);</string>
         </property>
         <property name="text">
          <string>LEADERBOARD</string>
@@ -105,6 +114,16 @@
           <pointsize>20</pointsize>
          </font>
         </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton {
+	background-color: rgb(74, 80, 86);
+	color: rgb(216, 216, 216);
+}
+QPushButton:hover:!pressed  {
+	background-color: rgb(244, 226, 66);
+	color: rgb(43, 43, 43);
+}</string>
+        </property>
         <property name="text">
          <string>1 PLAYER</string>
         </property>
@@ -123,6 +142,16 @@
           <family>Press Start 2P</family>
           <pointsize>20</pointsize>
          </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton {
+	background-color: rgb(74, 80, 86);
+	color: rgb(216, 216, 216);
+}
+QPushButton:hover:!pressed  {
+	background-color: rgb(244, 226, 66);
+	color: rgb(43, 43, 43);
+}</string>
         </property>
         <property name="text">
          <string>2 PLAYERS</string>
@@ -143,6 +172,16 @@
           <pointsize>20</pointsize>
           <kerning>true</kerning>
          </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton {
+	background-color: rgb(74, 80, 86);
+	color: rgb(216, 216, 216);
+}
+QPushButton:hover:!pressed  {
+	background-color: rgb(244, 226, 66);
+	color: rgb(43, 43, 43);
+}</string>
         </property>
         <property name="text">
          <string>BACK</string>
@@ -177,8 +216,28 @@
      <property name="focusPolicy">
       <enum>Qt::NoFocus</enum>
      </property>
+     <property name="styleSheet">
+      <string notr="true">QTableWidget {
+	color: rgb(216, 216, 216);
+    gridline-color: #fffff8;
+}
+
+
+
+QHeaderView::section {
+	color: rgb(216, 216, 216);
+    background-color: rgb(35, 37, 40);
+	gridline-color: #fffff8;
+    padding: 4px;
+    font-size: 14pt;
+}
+</string>
+     </property>
      <property name="editTriggers">
       <set>QAbstractItemView::NoEditTriggers</set>
+     </property>
+     <property name="cornerButtonEnabled">
+      <bool>false</bool>
      </property>
     </widget>
    </item>

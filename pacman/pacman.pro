@@ -1,8 +1,8 @@
 QT       += core gui
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets multimedia
 
-CONFIG += c++17
+CONFIG += c++17 exception
 
 # You can make your code fail to compile if it uses deprecated APIs.
 # In order to do so, uncomment the following line.
@@ -11,6 +11,7 @@ CONFIG += c++17
 SOURCES += \
     controller.cpp \
     game.cpp \
+    help.cpp \
     main.cpp \
     records.cpp \
     settings.cpp \
@@ -21,6 +22,7 @@ HEADERS += \
     controller.h \
     direction.h \
     game.h \
+    help.h \
     level.h \
     movable.h \
     records.h \
@@ -30,6 +32,7 @@ HEADERS += \
 
 FORMS += \
     game.ui \
+    help.ui \
     records.ui \
     settings.ui \
     settingsdialog.ui \
@@ -42,3 +45,5 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 RESOURCES += \
     res.qrc
+
+DISTFILES +=

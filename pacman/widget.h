@@ -5,6 +5,7 @@
 #include <game.h>
 #include <settings.h>
 #include <records.h>
+#include <help.h>
 #include <QFont>
 #include <QFontDatabase>
 
@@ -17,8 +18,11 @@ class Widget : public QWidget
     Q_OBJECT
 
 public:
+    void keyPressEvent(QKeyEvent *event);
     Widget(QWidget *parent = nullptr);
     ~Widget();
+
+
 
 private slots:
     void on_pushButton_clicked();
@@ -28,6 +32,8 @@ private slots:
     void on_pushButton_2_clicked();
 
     void on_pushButton_4_clicked();
+
+    void on_pushButton_5_clicked();
 
 private:
     Ui::Widget *ui;

@@ -6,6 +6,16 @@
 #include <QFile>
 #include <movable.h>
 #include <queue>
+#include <QMessageBox>
+
+class LevelLoadException : public std::exception {
+    std::string msg;
+public:
+    const char * what() const noexcept override {
+        return msg.c_str();
+    }
+    LevelLoadException(std::string msg) {this->msg = msg;};
+};
 
 struct navCell {
     Direction dir;
@@ -121,6 +131,15 @@ public:
         QString data;
         data = file.readAll();
         QStringList splited = data.split('|');
+        QRegExp re("\\D*");
+        if (splited.size() < 8 ||
+            re.exactMatch(splited.at(0))||
+            re.exactMatch(splited.at(1))||
+            re.exactMatch(splited.at(2))||
+            re.exactMatch(splited.at(3))||
+            re.exactMatch(splited.at(4))) {
+            throw LevelLoadException("Level file corrupted");
+        }
         this->w = QString(splited.at(0)).toInt();
         this->h = QString(splited.at(1)).toInt();
         switch (difficulty) {
@@ -145,38 +164,55 @@ public:
         map = new int*[w];
         navMap = new navCell*[w];
         int x = 0;
+        bool pl1created = false;
+        bool pl2created = false;
         for (int i = 0; i < this->w; i++) {
             this->map[i] = new int[h];
             this->navMap[i] = new navCell[h];
             for (int j = 0; j < this->h; j++) {
+                if (i+j*w > lvlMap.length()) {
+                    throw LevelLoadException("Level file corrupted");
+                }
+                if (!lvlMap.at(i+j*w).isNumber()) {
+                    throw LevelLoadException("Level file contains illegal characters");
+                }
                 this->map[i][j] = QString(lvlMap.at(i+j*w)).toInt();
+
                 if (this->map[i][j] == 4) {
                     this->p1 = Player(lives, i, j);
                     this->map[i][j] = 0;
-                } else if (this->map[i][j] == 5) {
+                    pl1created = true;
+                } else if (this->map[i][j] == 5 && x < enemiesCount) {
                     this->enemies[x] = Enemy(i, j);
                     this->map[i][j] = 0;
                     x++;
                 } else if (this->map[i][j] == 6 && p2enabled) {
                     this->p2 = Player(lives, i, j);
                     this->map[i][j] = 0;
+                    pl2created = true;
                 } else if (this->map[i][j] == 6 && !p2enabled){
                     this->map[i][j] = 0;
+                    pl2created = true;
                 } else if (this->map[i][j] == 2 || this->map[i][j] == 3) {
                     this->coinsCount++;
-                }
-
-                if (this->map[i][j] == 1) {
+                } else if (this->map[i][j] == 1) {
                     navMap[i][j] = navCell{Direction(0, 0), -2};
-                } else {
+                } else if (this->map[i][j] == 0) {
                     navMap[i][j] = navCell{Direction(0, 0), -1};
+                } else {
+                    throw LevelLoadException("Level file contains illegal characters");
                 }
             }
         }
         score = 0;
         p1Score = 0;
         p2Score = 0;
+
+        if (!pl1created || !pl2created) {
+            throw LevelLoadException("Level file doesn't contains player position");
+        }
     }
+
 
     Level() {h = 0; w = 0;};
 };

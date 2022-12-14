@@ -5,7 +5,8 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::SettingsDialog)
 {
-    mode = true;
+    setWindowFlags(Qt::Dialog | Qt::MSWindowsFixedSizeDialogHint);
+    mode = false;
     difficulty = 1;
     ui->setupUi(this);
 }
@@ -55,9 +56,16 @@ void SettingsDialog::on_pushButton_clicked()
     pl2name = ui->lineEdit_2->text();
     pl1name = ui->lineEdit->text();
     this->accept();
+
 }
 
 void SettingsDialog::getSettings(bool& m, int& difficulty, QString& p1, QString& p2) {
+    if (pl1name == "" || (mode && pl2name == "")) {
+        throw PlayerNameExeption("Player name can't be empty");
+    }
+    if (pl1name.contains('|') || pl2name.contains('|')) {
+        throw PlayerNameExeption("Player name can't contain symbol '|'");
+    }
     m = this->mode;
     p1 = this->pl1name;
     p2 = this->pl2name;

@@ -1,5 +1,6 @@
 #include "settings.h"
 #include "ui_settings.h"
+#include <QSound>
 
 Settings::Settings(QWidget *parent) :
     QWidget(parent),
@@ -149,6 +150,7 @@ void Settings::on_pushButton_8_clicked()
 
 void Settings::on_pushButton_clicked()
 {
+    QSound::play(":/music/close.wav");
     Widget* widget = new Widget();
     widget->show();
     this->close();
@@ -157,6 +159,7 @@ void Settings::on_pushButton_clicked()
 
 void Settings::on_pushButton_2_clicked()
 {
+    QSound::play(":/music/ok.wav");
     QString Path = QCoreApplication::applicationDirPath();
     QString endPath = Path + "/config/config.ini";
     config = new QSettings(endPath, QSettings::IniFormat);

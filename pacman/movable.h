@@ -94,6 +94,7 @@ public:
         targetable = false;
         x = spawnX;
         y = spawnY;
+        setDir(0, 0);
         lives--;
         movePhase = 0;
     }

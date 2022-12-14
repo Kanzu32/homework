@@ -1,6 +1,8 @@
 #include "records.h"
 #include "ui_records.h"
 #include <QDebug>
+#include <QSound>
+
 Records::Records(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Records)
@@ -8,7 +10,9 @@ Records::Records(QWidget *parent) :
     ui->setupUi(this);
     QWidget::showFullScreen();
     table = ui->tableWidget;
+    table->setStyleSheet("QTableCornerButton::section { background-color: rgb(35, 37, 40); }QTableWidget {color: rgb(216, 216, 216); gridline-color: #fffff8;}QHeaderView::section {color: rgb(216, 216, 216);background-color: rgb(35, 37, 40);gridline-color: #fffff8;padding: 4px;font-size: 14pt;}");
     model = new QStandardItemModel();
+    load();
     fill1player();
 }
 
@@ -17,15 +21,55 @@ Records::~Records()
     delete ui;
 }
 
+void Records::load() {
+    QString endPath = QCoreApplication::applicationDirPath() + "/records/records1player.txt";
+    QFile file(endPath);
+    try {
+    file.open(QIODevice::ReadOnly | QIODevice::Text);
+    QTextStream in(&file);
+    while (!in.atEnd()) {
+        QString data = in.readLine();
+        QStringList splited = data.split('|');
+        if (splited.size() < 6) {continue;};
+        Entry1 entry1 = Entry1(splited);
+        auto id = entry1.pl1name + entry1.difficulty + entry1.lives + entry1.map;
+        int count = map1pl.count(id);
+        if (count == 0 || (count > 0 && map1pl.at(id).pl1score*(1/map1pl.at(id).time) < entry1.pl1score*(1/entry1.time))) {
+            map1pl[id] = entry1;
+        }
+    }
+    file.close();
+
+
+    endPath = QCoreApplication::applicationDirPath() + "/records/records2players.txt";
+    QFile file2(endPath);
+    file2.open(QIODevice::ReadOnly | QIODevice::Text);
+    QTextStream in2(&file2);
+    while (!in2.atEnd()) {
+        QString data = in2.readLine();
+        QStringList splited = data.split('|');
+        if (splited.size() < 8) {continue;};
+        Entry2 entry2 = Entry2(splited);
+        map2pl[entry2.pl1name + entry2.pl2name] = entry2;
+    }
+    file2.close();
+    } catch (std::exception const&e) {
+        QMessageBox msgBox;
+        msgBox.setText(e.what());
+        msgBox.setIcon(QMessageBox::Warning);
+        msgBox.setDefaultButton(QMessageBox::Ok);
+        msgBox.exec();
+        Widget* widget = new Widget();
+        widget->show();
+        this->close();
+    }
+
+}
+
 void Records::fill1player() {
     table->clear();
     table->setSortingEnabled(false);
     table->setRowCount(0);
-    QString endPath = QCoreApplication::applicationDirPath() + "/records/records1player.txt";
-    QFile file(endPath);
-    file.open(QIODevice::ReadOnly | QIODevice::Text);
-    QTextStream in(&file);
-    int i = 0;
     table->setColumnCount(6);
     table->setHorizontalHeaderItem(0, new QTableWidgetItem("Map"));
     table->setHorizontalHeaderItem(1, new QTableWidgetItem("Difficulty"));
@@ -33,53 +77,17 @@ void Records::fill1player() {
     table->setHorizontalHeaderItem(3, new QTableWidgetItem("Name"));
     table->setHorizontalHeaderItem(4, new QTableWidgetItem("Score"));
     table->setHorizontalHeaderItem(5, new QTableWidgetItem("Time"));
-    while (!in.atEnd()) {
-        table->setRowCount(table->rowCount()+1);
-        QString data = in.readLine();
-        QStringList splited = data.split('|');
-        if (splited.size() < 6) {
-            break;
-        }
-        table->setItem(i, 0, new QTableWidgetItem(splited.at(0)));
-        switch (splited.at(1).toInt()) {
-        case 1:
-            table->setItem(i, 1, new QTableWidgetItem("Easy"));
-            break;
-        case 2:
-            table->setItem(i, 1, new QTableWidgetItem("Medium"));
-            break;
-        case 3:
-            table->setItem(i, 1, new QTableWidgetItem("Hard"));
-            break;
-        default:
-            break;
-        }
-        QTableWidgetItem* item = new QTableWidgetItem();
-        item->setData(Qt::DisplayRole, splited.at(2).toInt());
-        table->setItem(i, 2, item);
-        item = new QTableWidgetItem();
-        table->setItem(i, 3, new QTableWidgetItem(splited.at(3)));
-        item->setData(Qt::DisplayRole, splited.at(4).toInt());
-        table->setItem(i, 4, item);
-        item = new QTableWidgetItem();
-        item->setData(Qt::DisplayRole, splited.at(5).toFloat());
-        table->setItem(i, 5, item);
-        i++;
+    for (std::pair<QString, Entry1> pair : map1pl) {
+        Entry1 entry = pair.second;
+        entry.addTo(table);
     }
-    file.close();
     table->setSortingEnabled(true);
 }
 
 void Records::fill2players() {
     table->clear();
     table->setSortingEnabled(false);
-
     table->setRowCount(0);
-    QString endPath = QCoreApplication::applicationDirPath() + "/records/records2players.txt";
-    QFile file(endPath);
-    file.open(QIODevice::ReadOnly | QIODevice::Text);
-    QTextStream in(&file);
-    int i = 0;
     table->setColumnCount(8);
     table->setHorizontalHeaderItem(0, new QTableWidgetItem("Map"));
     table->setHorizontalHeaderItem(1, new QTableWidgetItem("Difficulty"));
@@ -89,61 +97,30 @@ void Records::fill2players() {
     table->setHorizontalHeaderItem(5, new QTableWidgetItem("1 Pl Score"));
     table->setHorizontalHeaderItem(6, new QTableWidgetItem("2 Pl Score"));
     table->setHorizontalHeaderItem(7, new QTableWidgetItem("Time"));
-    while (!in.atEnd()) {
-        table->setRowCount(table->rowCount()+1);
-        QString data = in.readLine();
-        QStringList splited = data.split('|');
-        if (splited.size() < 8) {
-            break;
-        }
-        table->setItem(i, 0, new QTableWidgetItem(splited.at(0)));
-        switch (splited.at(1).toInt()) {
-        case 1:
-            table->setItem(i, 1, new QTableWidgetItem("Easy"));
-            break;
-        case 2:
-            table->setItem(i, 1, new QTableWidgetItem("Medium"));
-            break;
-        case 3:
-            table->setItem(i, 1, new QTableWidgetItem("Hard"));
-            break;
-        default:
-            break;
-        }
-        QTableWidgetItem* item = new QTableWidgetItem();
-        item->setData(Qt::DisplayRole, splited.at(2).toInt());
-        table->setItem(i, 2, item);
-        table->setItem(i, 3, new QTableWidgetItem(splited.at(3)));
-        table->setItem(i, 4, new QTableWidgetItem(splited.at(4)));
-        item = new QTableWidgetItem();
-        item->setData(Qt::DisplayRole, splited.at(5).toInt());
-        table->setItem(i, 5, item);
-        item = new QTableWidgetItem();
-        item->setData(Qt::DisplayRole, splited.at(6).toInt());
-        table->setItem(i, 6, item);
-        item = new QTableWidgetItem();
-        item->setData(Qt::DisplayRole, splited.at(7).toFloat());
-        table->setItem(i, 7, item);
-        i++;
+    for (std::pair<QString, Entry2> pair : map2pl) {
+        Entry2 entry = pair.second;
+        entry.addTo(table);
     }
-    file.close();
     table->setSortingEnabled(true);
 }
 
 void Records::on_pushButton_clicked()
 {
+    QSound::play(":/music/ok.wav");
     fill1player();
 }
 
 
 void Records::on_pushButton_2_clicked()
 {
+    QSound::play(":/music/ok.wav");
     fill2players();
 }
 
 
 void Records::on_pushButton_3_clicked()
 {
+    QSound::play(":/music/close.wav");
     Widget* widget = new Widget();
     widget->show();
     this->close();
