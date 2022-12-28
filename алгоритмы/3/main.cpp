@@ -1,114 +1,75 @@
 #include <iostream>
+#include <vector>
+#include <bitset>
+#include <cmath>
+#include <regex>
+#include <functional>
 
 using namespace std;
 
-template <typename Type>
-class A {
-    Type a;
-};
-
-template <int num = 3>
-class B {
-public:
-    int a;
-    B () {
-        a = num;
+int main() {
+    try {
+        std::vector<int> arr;
+        arr.at(6);
+    } catch (std::out_of_range err) {
+        cout << err.what() << "  out of range"<< endl; //std::logic_error
     }
-};
 
-template <int num, typename T>
-class D {};
-
-template<template<typename> class subClass>
-class WierdClass {
-    subClass<int> sub;
-};
-
-template <typename G = float>
-class MethodClass {
-    public:
-    void innerMethod(G gg) {cout << "inner\n" << gg << endl;};
-    void outerMethod();
-};
-
-
-template <typename G>
-void MethodClass<G>::outerMethod() {cout << "outer\n";}
-
-template <>
-void MethodClass<int>::outerMethod() {cout << "INTus\n";};
-
-template <>
-class MethodClass<double> {
-    public:
-    double a;
-    double b;
-    void innerMethod() {a+=b;};
-    void outerMethod();
-};
-
-void MethodClass<double>::outerMethod() {cout << a << " " << b << endl;};
-
-template <typename H>
-class ParentTempl {
-    public:
-    H h;
-};
-
-class Parent {
-    int h;
-};
-
-template <typename H>
-class Child1: ParentTempl<H> {};
-
-template <typename H>
-class Child2: Parent {};
-
-template <typename Type1> class Friend;
-template <typename Type1> class NoFriend;
-template <typename Type2> class Friend1;
-template <typename Type2> class Friend2;
-
-template <typename Type1>
-class Friend {
-    friend class NoFriend<Type1>;
-    Type1 s;
-    Friend(Type1 n) {s = n;};
-};
-
-template <typename Type1>
-class NoFriend {
-    Type1 d;
-    Friend<Type1> fri;
-    void get() {cout << fri.s;};
-    NoFriend () {
-        fri = Friend<Type1>(3);
+    try {
+        vector<int> v;
+        v.reserve(v.max_size()+1);
+    } catch (std::length_error err) {
+        cout << err.what() << "  length" << endl; //std::logic_error
     }
-};
 
-template <typename Type2>
-class Friend1 {
-    friend class Friend2<Type2>;
-};
+    try {
+        stoi("a");
+    } catch (std::invalid_argument err) {
+        cout << err.what() << "  argument" << endl; //std::logic_error
+    }
 
-template <typename Type2>
-class Friend2 {
-    friend class Friend1<Type2>;
-};
+    try {
+        bitset<33> b(10);
+        bitset<33> inv = ~b;
+        inv.to_ulong();
+    } catch (std::overflow_error err) {
+        cout << err.what() << "  overflow" << endl; //std::runtime_error
+    }
 
-int main(){
-    //B<5> b = B<5>();
-    //cout << b.a;
-    MethodClass<string> clas = MethodClass<string>();
-    clas.innerMethod("aboba");
-    clas.outerMethod();
-    MethodClass<int> clas1 = MethodClass<int>();
-    clas1.innerMethod(2);
-    clas1.outerMethod();
-    MethodClass<double> clas2 = MethodClass<double>();
-    clas2.a = 2;
-    clas2.b = 3;
-    clas2.innerMethod();
-    clas2.outerMethod();
+    struct Basic {} b;
+    struct Virtual {public: virtual void m(){};} v;
+
+    try {
+        dynamic_cast<Basic&>(v);
+    } catch (std::bad_cast err) {
+        cout << err.what() << "  bad cast" << endl;
+    }
+
+    try {
+        Virtual* vptr = nullptr;
+        typeid(*vptr);
+    } catch (std::bad_typeid err) {
+        cout << err.what() << "  bad type id" << endl;
+    }
+
+    try {
+        long long n = 10e17;
+        double* arr = new double[n*n];
+    } catch (std::bad_alloc err) {
+        cout << err.what() << "  bad alloc" << endl;
+    }
+
+    try {
+        std::regex re("[");
+    }
+    catch (std::regex_error err) {
+        cout << err.what() << "  regex" << endl;
+    }
+
+    std::function<int()> f = nullptr;
+    try {
+        f();
+    } catch(std::bad_function_call err) {
+        std::cout << err.what() << "  bad function call" << endl;
+    }
 }
