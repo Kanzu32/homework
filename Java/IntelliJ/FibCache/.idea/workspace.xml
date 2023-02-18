@@ -2,8 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c282ab6a-448c-41f3-96c2-418ba465c3ee" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../../../алгоритмы/2/lab#2.5/1.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../алгоритмы/2/lab#2.5/1.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../алгоритмы/2/lab#2.5/1.exe" beforeDir="false" afterPath="$PROJECT_DIR$/../../../алгоритмы/2/lab#2.5/1.exe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../sakod/1.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../sakod/1.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../sakod/1.exe" beforeDir="false" afterPath="$PROJECT_DIR$/../../../sakod/1.exe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../sakod/tempCodeRunnerFile.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../sakod/tempCodeRunnerFile.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

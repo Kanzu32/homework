@@ -2,10 +2,13 @@
 #include <vector>
 #include <iterator>
 
+//Написать шаблонную функцию пузырьковой сортировки, параметрами которой являются два итератора и функтор для сравнения элементов (на которые указывают итераторы). С помощью описанной шаблонной функции отсортировать массив целых чисел и вектор дробных чисел. Обратите внимание, что 3-м параметром должен быть именно функтор, т.е. объект класса специального вида.
+
 using namespace std;
 
 template <typename T>
 class F {
+public:
     bool operator ()(T a, T b) {
         if (a > b) return true;
         else return false;
@@ -17,7 +20,7 @@ template <typename Iter, typename Cmp>
 void sort(Iter first, Iter last, Cmp cmp) {
     for (int x = 0; x < last-first; x++) {
         for (Iter i = first; i < last-x; i++) {
-            if (*i > *(i+1)) {
+            if (cmp(*i, *(i+1))) {
                 swap(*i, *(i+1));
             };
         }
@@ -44,5 +47,5 @@ int main() {
 
     vector<double> vec = {0.1, 11.5, 6, -5.5, 9.9};
     sort(vec.begin(), vec.end(), F<double>());
-	print(vec.begin(), vec.end());
+	print(vec.begin(), vec.end()); //std::cout << std::flush;
 }

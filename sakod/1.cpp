@@ -2,9 +2,10 @@
 #include <cmath>
 #include <algorithm>
 #include <chrono>
+#include <ctime>
 
 using namespace std;
-int* glarr;
+
 void qsort(int* arr, int size) {
   int i = 0;
   int j = size-1;
@@ -89,15 +90,15 @@ void pasteSort(int* arr, int n) {
 
 int main()
 {
-  const std::chrono::steady_clock::time_point t1 = std::chrono::steady_clock::now();
-  int n = 5;
+  int n = 15;
   //int *arr = new int[n]{4, 3, 5, 7, 0, 1};
   //int *arr = new int[n]{0, 1, 3, 4, 6};
-  int *arr = new int[n]{7, 6, 5, 3, 0};
-  glarr = arr;
-  //pasteSort(arr, n);
+  //int *arr = new int[n]{7, 6, 5, 3, 0};
+  int* arr = new int[n]{17, 48, -5, 6, 0, 3, 10, 8, 14, 33, 10, 15, 7, 45, -10};
+  const std::chrono::steady_clock::time_point t1 = std::chrono::steady_clock::now();
+  pasteSort(arr, n);
   //arr = msort(arr, n);
-  qsort(arr, n);
+  //qsort(arr, n);
   const std::chrono::steady_clock::time_point t2 = std::chrono::steady_clock::now();
   for (int i = 0; i < n; i++) {
     cout << arr[i] << " ";

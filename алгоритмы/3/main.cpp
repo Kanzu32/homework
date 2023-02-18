@@ -1,4 +1,5 @@
 #include <iostream>
+#include <vector>
 
 using namespace std;
 
@@ -21,7 +22,7 @@ class D {};
 
 template<template<typename> class subClass>
 class WierdClass {
-    subClass<int> sub;
+    subClass<T> sub;
 };
 
 template <typename G = float>
@@ -59,11 +60,12 @@ class Parent {
     int h;
 };
 
-template <typename H>
-class Child1: ParentTempl<H> {};
+template <typename H, typename T>
+class Child1: ParentTempl<H> {T a;};
 
 template <typename H>
-class Child2: Parent {};
+class Child2: Parent {H l;};
+
 
 template <typename Type1> class Friend;
 template <typename Type1> class NoFriend;
