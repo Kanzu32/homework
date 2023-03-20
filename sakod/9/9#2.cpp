@@ -1,7 +1,10 @@
 #include <iostream>
 #include <stdexcept>
+#include <fstream>
 #include <map>
 #include <set>
+#include <vector>
+#include <algorithm>
 
 //Найдите: (а) для двух выделенных вершин графа соединяющий их
 //простой путь; (б) самый длинный простой путь в заданном графе.
@@ -151,6 +154,34 @@ public:
         
     }
 
+    Type get(int n) {
+        if (n > header->count) {
+            throw std::length_error("Index error!!!");
+        }
+        Node<Type>* node = header->next;
+        for (int i = 0; i < n; i++) {
+            node = node->next;
+        }
+        return node->data;
+    }
+
+    bool include(int n) {
+        Node<Type>* node = header;
+        while (node->next != nullptr) {
+            node = node->next;
+            if (node->data == n) {
+                return true;
+            }
+        }
+        // for (int i = 0; i < header->getCount(); i++) {
+        //     if (node->data == n) {
+        //         return true;
+        //     }
+        //     node = node->next;
+        // }
+        return false;
+    }
+
     void print() {
         if (header->count != 0) {
             Node<Type>* node = header->next;
@@ -161,19 +192,28 @@ public:
         cout << node->data << "\n";
         }
     }
+
+    void toSet(set<int> &set) {
+        Node<Type>* node = header->next;
+        while (node->next != nullptr) {
+            set.insert(node->data);
+            node = node->next;
+        }
+    }
 };
 
 class Graph {
     int count;
     map<int, HeaderList<int>> nodes;
     map<int, int> minLengths;
-    map<int, int> maxLengths;
     public:
+    map<int, int> prev;
     Graph() {
         count = 0;
     }
 
     void add(int num) {
+        count++;
         nodes[num] = HeaderList<int>();
         int next;
         while (cin.peek() != '\n') {
@@ -186,33 +226,38 @@ class Graph {
         return minLengths.at(n);
     }
 
-    int maxLength(int n) {
-        return maxLengths.at(n);
-    }
-
     void setMinLength(int number, int n) {
         minLengths[number] = n;
-    }
-
-    void setMaxLength(int number, int n) {
-        maxLengths[number] = n;
-    }
-
-    void setLength(int number, int n) {
-        minLengths[number] = n;
-        maxLengths[number] = n;
     }
 
     HeaderList<int> getNode(int n) {
         return nodes[n];
     }
 
+    int getCount() {
+        return count;
+    }
+
+    void travel(int n, vector<int> used, vector<vector<int>> &ways) {
+        bool isEnd = true;
+        used.push_back(n);
+        for (int i = 0; i < nodes[n].header->getCount(); i++) {
+            if (std::find(used.begin(), used.end(), nodes[n].get(i)) == used.end()) {
+                isEnd = false;
+                this->travel(nodes[n].get(i), used, ways);
+            }
+        }
+        if (isEnd) {
+            ways.push_back(used);
+        }
+    }
+
 };
 
 int main() {
     Queue<int> queue = Queue<int>();
-    set<int> used;
     Graph graph;
+    set<int> fixed;
     int n, m;
     cout << "Graph nodes (-1 to exit): \n";
     while (cin >> n) {
@@ -222,22 +267,48 @@ int main() {
 
     cout << "Select first and last nodes: ";
     cin >> n >> m;
-    graph.setLength(n, 0);
+    graph.setMinLength(n, 0);
     queue.push(n);
-    used.insert(n);
-    int number = 1;
-    while (queue.getCount() != 0) {
+    fixed.insert(n);
+
+    while (!fixed.count(m)) {
         int node = queue.pop();
-        
-        cout << node << " -> " << number << '\n';
-        number++;
-        while (graph.getNode(node).header->getCount() != 0) {
-            int i = graph.getNode(node).popFront();
-            if (!used.count(i)) {
+        int x = 0;
+        while (x < graph.getNode(node).header->getCount()) {
+            int i = graph.getNode(node).get(x);
+            x++;
+            if (!fixed.count(i)) {
                 queue.push(i);
-                used.insert(i);
+                graph.setMinLength(i, graph.minLength(node)+1);
+                graph.prev[i] = node;
+                fixed.insert(i);
             }
         }
+    }
+
+    int i = m;
+    do {
+        cout << i << " <- ";
+        i = graph.prev[i];
+    } while (i != n);
+    cout << n << '\n';
+
+    vector<int> res;
+    fixed.clear();
+    for (int i = 1; i < graph.getCount(); i++) {
+        if (fixed.count(i)) { continue; };
+        vector<vector<int>> ways = vector<vector<int>>();;
+        graph.travel(i, vector<int>(), ways);
+        for (int j = 0; j < ways.size(); j++) {
+            if (ways.at(j).size() > res.size()) {
+                res = ways.at(j);
+            }
+        }
+        fixed = std::set<int>(res.begin(), res.end());
+    }
+
+    for (int i = 0; i < res.size(); i++) {
+        cout << res[i] << " ";
     }
     
 }

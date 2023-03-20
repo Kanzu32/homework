@@ -1,0 +1,29 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    /* background-color: whitesmoke; */
+}
+
+.block {
+    position: absolute;
+    display: block;
+    height: 150px;
+    width: 250px;
+    background-color:lavenderblush;
+    border-radius: 25px;
+    border: solid gray;
+}
+
+#view {
+    position: relative;
+    display: block;
+    height: 800px;
+    width: 1000px;
+    background-color: azure;
+    border: solid black;
+    overflow: auto;
+    cursor: grab;
+}
