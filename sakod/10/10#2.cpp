@@ -3,10 +3,7 @@
 #include <vector>
 #include <set>
 
-//Реализуйте алгоритм проверки связности графа, основанный на
-//следующем результате [Пападимитриу, Стайнглиц, 1985, с.199], а именно:
-//"граф G связен в том и только в том случае, если после применения к нему
-//алгоритмов обхода графа в глубину или в ширину все вершины будут помечены".
+//Найдите количество ребер в остовом дереве заданного графа, полученном обходом графа в глубину.
 
 using namespace std;
 
@@ -42,6 +39,18 @@ class Graph {
         }
     }
 
+    int STConections(int n, set<int> &visited) {
+        int count = 0;
+        visited.insert(n);
+        for (int i = 0; i < nodes[n].size(); i++) {
+            if (!visited.count(nodes[n][i])) {
+                count++;
+                count += this->STConections(nodes[n][i], visited);
+            }
+        }
+        return count;
+    }
+
 };
 
 int main() {
@@ -54,15 +63,5 @@ int main() {
     };
 
     set<int> visited;
-    graph.travel(1, visited);
-
-    for (int i : visited) {
-        cout << i << " ";
-    }
-
-    if (visited == graph.keys) {
-        cout << "\nYES";
-    } else {
-        cout << "\nNO";
-    }
+    cout << graph.STConections(1, visited);
 }
