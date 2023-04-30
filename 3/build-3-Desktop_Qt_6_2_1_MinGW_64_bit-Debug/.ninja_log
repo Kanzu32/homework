@@ -1,8 +1,0 @@
-# ninja log v5
-1	178	6697522257673376	3_autogen/timestamp	ac9003acc0388c99
-1	178	6697522257673376	3_autogen/mocs_compilation.cpp	ac9003acc0388c99
-1	178	6697522257673376	C:/Users/Max/Desktop/3/build-3-Desktop_Qt_6_2_1_MinGW_64_bit-Debug/3_autogen/timestamp	ac9003acc0388c99
-1	178	6697522257673376	C:/Users/Max/Desktop/3/build-3-Desktop_Qt_6_2_1_MinGW_64_bit-Debug/3_autogen/mocs_compilation.cpp	ac9003acc0388c99
-179	231	6697522258985045	CMakeFiles/3.dir/3_autogen/mocs_compilation.cpp.obj	9015db5a42083bb3
-181	1876	6697522275411448	CMakeFiles/3.dir/main.cpp.obj	3fbf12c6b3d521e1
-1880	2059	6697522277075885	3.exe	4da85a39cba0da95

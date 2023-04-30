@@ -1,5 +1,0 @@
-C:/Users/Max/Desktop/3/build-3-Desktop_Qt_6_2_1_MinGW_64_bit-Debug/CMakeFiles/3.dir
-C:/Users/Max/Desktop/3/build-3-Desktop_Qt_6_2_1_MinGW_64_bit-Debug/CMakeFiles/edit_cache.dir
-C:/Users/Max/Desktop/3/build-3-Desktop_Qt_6_2_1_MinGW_64_bit-Debug/CMakeFiles/rebuild_cache.dir
-C:/Users/Max/Desktop/3/build-3-Desktop_Qt_6_2_1_MinGW_64_bit-Debug/CMakeFiles/3_autogen_timestamp_deps.dir
-C:/Users/Max/Desktop/3/build-3-Desktop_Qt_6_2_1_MinGW_64_bit-Debug/CMakeFiles/3_autogen.dir
