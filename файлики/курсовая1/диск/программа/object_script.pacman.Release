@@ -1,0 +1,14 @@
+release/game.o
+release/help.o
+release/main.o
+release/records.o
+release/settings.o
+release/settingsdialog.o
+release/widget.o
+release/qrc_res.o
+release/moc_game.o
+release/moc_help.o
+release/moc_records.o
+release/moc_settings.o
+release/moc_settingsdialog.o
+release/moc_widget.o

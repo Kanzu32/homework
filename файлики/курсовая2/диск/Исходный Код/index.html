@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Binary Tree</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.cdnfonts.com/css/helvetica-neue-9" rel="stylesheet">
+    <script type="text/javascript" src="wz_jsgraphics.js"></script>
+</head>
+<body>
+    <div id="view">
+        <div id="content"></div>
+    </div>
+    <div id="sidebar">
+        <div class="bar-item">
+            <p class="text-hint">Number mode</p>
+            <label class="switch">
+                <input type="checkbox" id="data-type-input">
+                <span class="slider round"></span>
+            </label>
+        </div>
+        <div class="bar-item">
+            <p class="text-hint">Auto balance</p>
+            <label class="switch">
+                <input type="checkbox" id="balance-input">
+                <span class="slider round"></span>
+            </label>
+        </div>
+        <div class="bar-item">
+            <p class="text-hint">Duplicates</p>
+            <label class="switch">
+                <input type="checkbox" id="duplicate-input">
+                <span class="slider round"></span>
+            </label>
+        </div>
+        <div class="line"></div>
+        <div class="bar-item">
+            <p class="text-hint">Animation</p>
+            <label class="switch">
+                <input type="checkbox" id="animation-input">
+                <span class="slider round"></span>
+            </label>
+        </div>
+
+        <div class="bar-item">
+            <h5>Scale:</h5>
+            <input type="range" id="scale-input" min=0.5 max=1.0 step="0.01">
+        </div>
+        <div class="line"></div>
+        <div class="bar-item">
+            <input type="text" class="input" id="new-node-input" placeholder="Add by value">
+            <button onclick="addNode()" class="button" id="new-node-button">Add node</button>
+        </div>
+        <div class="bar-item">
+            <input type="text" class="input" id="remove-node-input" placeholder="Remove by value">
+            <button onclick="removeNode()" class="button" id="remove-node-button">Remove node</button>
+        </div>
+        <div class="bar-item">
+            <input type="text" class="input" id="remove-id-node-input" placeholder="Remove by ID">
+            <button onclick="removeNodeByID()" class="button" id="remove-id-node-button">Remove node</button>
+        </div>
+        <div class="line"></div>
+        <div class="bar-item">
+            <label id="input-file-wrapper">
+                <p>Choose file</p>
+                <input type="file" id="file-input" accept=".txt"/>
+            </label>
+            <button onclick="load()" class="button" id="create-button">Create</button>
+        </div>
+        <button onclick="download()" class="bar-item button" id="download-button">Download</button>
+        <div class="line"></div>
+        <button onclick="deleteAll()" class="bar-item button red" id="delete-all-button">Delete all</button>
+    </div>
+    
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+debug/game.o
+debug/help.o
+debug/main.o
+debug/records.o
+debug/settings.o
+debug/settingsdialog.o
+debug/widget.o
+debug/qrc_res.o
+debug/moc_game.o
+debug/moc_help.o
+debug/moc_records.o
+debug/moc_settings.o
+debug/moc_settingsdialog.o
+debug/moc_widget.o
