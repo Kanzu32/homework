@@ -1,36 +1,62 @@
-var step = 0.001;
+var step = 0.0001;
 var graphicsSize = 600;
 var gridFreq = 6;
 var graphVal = 6;
-var graphicThickness = 2;
+var graphicThickness = 1;
 var accurancy = 0;
 var textSize = 16;
 var color = "red";
 
-function f(x) {
-    return Math.sin(x)*3+2;
-}
+// function f(x) {
+//     return Math.sin(x)*3+2;
+// }
 
 // function f(x) {
 //     return (x+2)**2;
 // }
 
-// function f(fi) {
-//     let a = 2;
-//     let m = -2.5; //2.5, -2.5
-//     return Math.pow(Math.pow(a, m)*Math.cos(m*fi), 1/m);
-// }
-
-function decToPol(x, y) {
-    let fi = Math.atan2(y, x);
-    let r = Math.sqrt(x*x+y*y);
-    return [fi, r];
+function f(fi) {
+    let a = 2;
+    let m = 2.5; //2.5, -2.5
+    return Math.pow(Math.pow(a, m)*Math.cos(m*fi), 1/m);
 }
 
-function polToDec(fi, r) {
-    let x = r*Math.cos(fi);
-    let y = r*Math.sin(fi);
-    return [x, y];
+function drawAxis(x, y, size) {
+    ctx.stroke();
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.moveTo(x, y + size/2);
+    ctx.lineTo(x + size, y + size/2);
+
+    ctx.moveTo(x + size, y + size/2);
+    ctx.lineTo(x + size-10, y + size/2+5)
+    ctx.moveTo(x + size, y + size/2);
+    ctx.lineTo(x + size-10, y + size/2-5)
+
+    ctx.moveTo(x+size/2, y);
+    ctx.lineTo(x+size/2, y+size);
+
+    ctx.moveTo(x+size/2, y);
+    ctx.lineTo(x+size/2-5, y+10)
+    ctx.moveTo(x+size/2, y);
+    ctx.lineTo(x+size/2+5, y+10)
+
+    ctx.stroke();
+}
+
+function drawLabels(x, y, size, maxVal, gridStep, gridSize, n) {
+    for (let i = 1; i < 2*n; i++) {
+        ctx.textAlign = "center";
+        ctx.fillText((-maxVal+(i*gridStep)).toFixed(accurancy), x+i*gridSize-10, y+size/2+15);
+        ctx.textAlign = "right";
+        if (maxVal-i*gridStep != 0) ctx.fillText((maxVal-i*gridStep).toFixed(accurancy), x+size/2-5, y+i*gridSize+15);
+    }
+    
+    ctx.strokeRect(x, y, size, size);
+    ctx.textAlign = "center";
+    ctx.fillText("x", x+size-10, y+size/2+15);
+    ctx.textAlign = "right";
+    ctx.fillText("y", x+size/2-5, y+15);
 }
 
 function drawDec(f, x, y, size, n, maxVal) {
@@ -45,14 +71,7 @@ function drawDec(f, x, y, size, n, maxVal) {
         ctx.lineTo(x + size/2 + gridSize*i, y + size);
     }
     
-    ctx.stroke();
-    ctx.lineWidth = 3;
-    ctx.beginPath();
-    ctx.moveTo(x, y + size/2);
-    ctx.lineTo(x + size, y + size/2);
-    ctx.moveTo(x+size/2, y);
-    ctx.lineTo(x+size/2, y+size);
-    ctx.stroke();
+    drawAxis(x, y, size)
 
     ctx.fillStyle = color;
     for (let i = -maxVal; i <= maxVal; i += step) {
@@ -62,18 +81,7 @@ function drawDec(f, x, y, size, n, maxVal) {
     }
     ctx.fillStyle = "black";
 
-    for (let i = 1; i < 2*n; i++) {
-        ctx.textAlign = "center";
-        ctx.fillText((-maxVal+(i*gridStep)).toFixed(accurancy), x+i*gridSize-10, y+size/2+15);
-        ctx.textAlign = "right";
-        if (maxVal-i*gridStep != 0) ctx.fillText((maxVal-i*gridStep).toFixed(accurancy), x+size/2-5, y+i*gridSize+15);
-    }
-    
-    ctx.strokeRect(x, y, size, size);
-    ctx.textAlign = "center";
-    ctx.fillText("x", x+size-10, y+size/2+15);
-    ctx.textAlign = "right";
-    ctx.fillText("y", x+size/2-5, y+15);
+    drawLabels(x, y, size, maxVal, gridStep, gridSize, n)
 
 }
 
@@ -86,14 +94,7 @@ function drawPol(f, x, y, size, n, maxVal) {
         ctx.arc(x+size/2, y+size/2, gridSize*i, 0, 2*Math.PI);
     }
     
-    ctx.stroke();
-    ctx.lineWidth = 3;
-    ctx.beginPath();
-    ctx.moveTo(x, y + size/2);
-    ctx.lineTo(x + size, y + size/2);
-    ctx.moveTo(x+size/2, y);
-    ctx.lineTo(x+size/2, y+size);
-    ctx.stroke();
+    drawAxis(x, y, size)
 
     ctx.fillStyle = color;
     for (let i = -Math.PI*2; i <= Math.PI*2; i += step) {
@@ -105,18 +106,7 @@ function drawPol(f, x, y, size, n, maxVal) {
     }
     ctx.fillStyle = "black";
     
-    for (let i = 1; i < 2*n; i++) {
-        ctx.textAlign = "center";
-        ctx.fillText((-maxVal+(i*gridStep)).toFixed(accurancy), x+i*gridSize-10, y+size/2+15);
-        ctx.textAlign = "right";
-        if (maxVal-i*gridStep != 0) ctx.fillText((maxVal-i*gridStep).toFixed(accurancy), x+size/2-5, y+i*gridSize+15);
-    }
-    
-    ctx.strokeRect(x, y, size, size);
-    ctx.textAlign = "center";
-    ctx.fillText("x", x+size-10, y+size/2+15);
-    ctx.textAlign = "right";
-    ctx.fillText("y", x+size/2-5, y+15);
+    drawLabels(x, y, size, maxVal, gridStep, gridSize, n)
 }
 
 var canvas = document.getElementById("graphics");

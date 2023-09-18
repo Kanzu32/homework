@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Max\\Documents\\GitHub\\homework\\OOP\\lab1\\lab1.csproj": {}
+    "c:\\Users\\Max\\Documents\\GitHub\\homework\\OOP\\lab1\\lab1.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Max\\Documents\\GitHub\\homework\\OOP\\lab1\\lab1.csproj": {
+    "c:\\Users\\Max\\Documents\\GitHub\\homework\\OOP\\lab1\\lab1.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Max\\Documents\\GitHub\\homework\\OOP\\lab1\\lab1.csproj",
+        "projectUniqueName": "c:\\Users\\Max\\Documents\\GitHub\\homework\\OOP\\lab1\\lab1.csproj",
         "projectName": "lab1",
-        "projectPath": "C:\\Users\\Max\\Documents\\GitHub\\homework\\OOP\\lab1\\lab1.csproj",
+        "projectPath": "c:\\Users\\Max\\Documents\\GitHub\\homework\\OOP\\lab1\\lab1.csproj",
         "packagesPath": "C:\\Users\\Max\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Max\\Documents\\GitHub\\homework\\OOP\\lab1\\obj\\",
+        "outputPath": "c:\\Users\\Max\\Documents\\GitHub\\homework\\OOP\\lab1\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Max\\AppData\\Roaming\\NuGet\\NuGet.Config",
