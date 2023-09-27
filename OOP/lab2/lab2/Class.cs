@@ -46,8 +46,7 @@ namespace lab2 {
             get { return code; }
         }
 
-        public override string ToString()
-        {
+        public override string ToString() {
             string st = "name\"" + this.name + "\"   code=\"" + this.code + "\"   count=" + count.ToString();
             return st;
         }

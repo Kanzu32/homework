@@ -1,7 +1,7 @@
 var step = 0.0001;
 var graphicsSize = 600;
-var gridFreq = 6;
-var graphVal = 6;
+var gridFreq = 10;
+var graphVal = 10;
 var graphicThickness = 1;
 var accurancy = 0;
 var textSize = 16;
@@ -73,13 +73,13 @@ function drawDec(f, x, y, size, n, maxVal) {
     
     drawAxis(x, y, size)
 
-    ctx.fillStyle = color;
-    for (let i = -maxVal; i <= maxVal; i += step) {
-        let val = f(i);
-        if (Math.abs(val) >= maxVal) continue;
-        ctx.fillRect(x+size/2+i*gridSize/gridStep, y+size/2-val*gridSize/gridStep, graphicThickness, graphicThickness);
-    }
-    ctx.fillStyle = "black";
+    // ctx.fillStyle = color;
+    // for (let i = -maxVal; i <= maxVal; i += step) {
+    //     let val = f(i);
+    //     if (Math.abs(val) >= maxVal) continue;
+    //     ctx.fillRect(x+size/2+i*gridSize/gridStep, y+size/2-val*gridSize/gridStep, graphicThickness, graphicThickness);
+    // }
+    // ctx.fillStyle = "black";
 
     drawLabels(x, y, size, maxVal, gridStep, gridSize, n)
 
@@ -96,15 +96,15 @@ function drawPol(f, x, y, size, n, maxVal) {
     
     drawAxis(x, y, size)
 
-    ctx.fillStyle = color;
-    for (let i = -Math.PI*2; i <= Math.PI*2; i += step) {
-        let val = f(i);
-        let screenX = val*Math.cos(i);
-        let screenY = val*Math.sin(i);
-        if (Math.abs(screenY) >= maxVal || Math.abs(screenX) >= maxVal) continue;
-        ctx.fillRect(x+size/2+screenX*gridSize/gridStep, y+size/2-screenY*gridSize/gridStep, graphicThickness, graphicThickness);
-    }
-    ctx.fillStyle = "black";
+    // ctx.fillStyle = color;
+    // for (let i = -Math.PI*2; i <= Math.PI*2; i += step) {
+    //     let val = f(i);
+    //     let screenX = val*Math.cos(i);
+    //     let screenY = val*Math.sin(i);
+    //     if (Math.abs(screenY) >= maxVal || Math.abs(screenX) >= maxVal) continue;
+    //     ctx.fillRect(x+size/2+screenX*gridSize/gridStep, y+size/2-screenY*gridSize/gridStep, graphicThickness, graphicThickness);
+    // }
+    // ctx.fillStyle = "black";
     
     drawLabels(x, y, size, maxVal, gridStep, gridSize, n)
 }
