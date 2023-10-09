@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "c:\\Users\\Max\\Documents\\GitHub\\homework\\OOP\\lab1\\lab21\\lab21.csproj": {}
+    "C:\\Users\\Max\\Documents\\GitHub\\homework\\OOP\\lab1\\lab21\\lab21.csproj": {}
   },
   "projects": {
-    "c:\\Users\\Max\\Documents\\GitHub\\homework\\OOP\\lab1\\lab21\\lab21.csproj": {
+    "C:\\Users\\Max\\Documents\\GitHub\\homework\\OOP\\lab1\\lab21\\lab21.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\Users\\Max\\Documents\\GitHub\\homework\\OOP\\lab1\\lab21\\lab21.csproj",
+        "projectUniqueName": "C:\\Users\\Max\\Documents\\GitHub\\homework\\OOP\\lab1\\lab21\\lab21.csproj",
         "projectName": "lab21",
-        "projectPath": "c:\\Users\\Max\\Documents\\GitHub\\homework\\OOP\\lab1\\lab21\\lab21.csproj",
+        "projectPath": "C:\\Users\\Max\\Documents\\GitHub\\homework\\OOP\\lab1\\lab21\\lab21.csproj",
         "packagesPath": "C:\\Users\\Max\\.nuget\\packages\\",
-        "outputPath": "c:\\Users\\Max\\Documents\\GitHub\\homework\\OOP\\lab1\\lab21\\obj\\",
+        "outputPath": "C:\\Users\\Max\\Documents\\GitHub\\homework\\OOP\\lab1\\lab21\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Max\\AppData\\Roaming\\NuGet\\NuGet.Config",

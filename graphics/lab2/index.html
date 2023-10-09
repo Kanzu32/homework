@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lab 1</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="left">
+        <canvas width="1280" height="720" id="graphics"></canvas>
+        <div id="moves">
+            <div class="control" id="enter"><button>Ввод</button></div>
+            <div class="control" id="reset"><button>Сброс</button></div>
+            <div class="control"><button>Динамика</button></div>
+            <div class="control"><button>Пассивный перенос</button></div>
+            <div class="control"><button>Активный перенос</button></div>
+            <div class="control"><button>Перенос на вектор</button></div>
+            <div class="control"><button>Активный поворот</button></div>
+            <div class="control"><button>Пассивный поворот</button></div>
+            <div class="control"><button>Поворот отн. точки</button></div>
+            <div class="control"><button>Отражение по X</button></div>
+            <div class="control"><button>Отражение по Y</button></div>
+        </div>
+        <table id="matrix-table">
+            <tbody>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div id="right">
+        <table id="dots-table">
+            <thead>
+                <tr>
+                    <th>Точка</th>
+                    <th>X1</th>
+                    <th>Y1</th>
+                    <th>X2</th>
+                    <th>Y2</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- <tr>
+                    <td>The table body</td>
+                    <td>with two columns</td>
+                </tr> -->
+            </tbody>
+        </table>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
