@@ -7,19 +7,16 @@
 </head>
 <body>
     <div id="left">
-        <canvas width="1280" height="720" id="graphics"></canvas>
+        <div id="screen">
+            <canvas width="1280" height="720" id="canv1"></canvas>
+            <canvas width="1280" height="720" id="canv2"></canvas>
+        </div>
         <div id="moves">
-            <div class="control" id="enter"><button>Ввод</button></div>
-            <div class="control" id="reset"><button>Сброс</button></div>
-            <div class="control"><button>Динамика</button></div>
-            <div class="control"><button>Пассивный перенос</button></div>
-            <div class="control"><button>Активный перенос</button></div>
-            <div class="control"><button>Перенос на вектор</button></div>
-            <div class="control"><button>Активный поворот</button></div>
-            <div class="control"><button>Пассивный поворот</button></div>
-            <div class="control"><button>Поворот отн. точки</button></div>
-            <div class="control"><button>Отражение по X</button></div>
-            <div class="control"><button>Отражение по Y</button></div>
+            <div class="control"><button id="enter">Ввод</button><button id="reset">Сброс</button><button id="dynamic">Динамика</button><input id="time-input"></div>
+            <div class="control"><button id="move">Перенос на вектор</button></div>
+            <div class="control"><button id="scale">Масштабирование вдоль вектора</button><input id="coeff-input"></div>
+            <div class="control"><button id="reflect">Отражение отн. вершины</button></div>
+            <div class="control"><button id="rotate">Поворот отн. вершины</button><input type="number" id="angle-input"></div>
         </div>
         <table id="matrix-table">
             <tbody>

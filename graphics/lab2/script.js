@@ -8,11 +8,29 @@ var textSize = 16;
 var color = "red";
 var dotSize = 5;
 var dotColor = "DodgerBlue";
-var offset = 10;
+var offset = 1;
+
+var eps = 0.3;
 
 var gridSize = graphicsSize/(gridFreq*2);
 
-function drawAxis(x, y, size) {
+var inputCoords;
+var inputVal;
+
+var isAnimated = false;
+var animationTimer;
+
+var data = [];
+var convertedData = [];
+var animatedData = [];
+
+var transformMatrix = regularMatrix();
+
+const MODES = {REGULAR: 1, MOVE: 2, SCALE: 3, REFLECT: 4, ROTATE: 5};
+
+var mode = MODES.REGULAR;
+
+function drawAxis(ctx, x, y, size) {
     ctx.stroke();
     ctx.lineWidth = 3;
     ctx.beginPath();
@@ -31,7 +49,7 @@ function drawAxis(x, y, size) {
     ctx.stroke();
 }
 
-function drawLabels(x, y, size, maxVal, gridStep, gridSize, n) {
+function drawLabels(ctx, x, y, size, maxVal, gridStep, gridSize, n) {
     for (let i = 1; i < 2*n; i++) {
         ctx.textAlign = "center";
         ctx.fillText((-maxVal+(i*gridStep)).toFixed(accurancy), x+i*gridSize-10, y+size/2+15);
@@ -45,7 +63,7 @@ function drawLabels(x, y, size, maxVal, gridStep, gridSize, n) {
     ctx.fillText("y", x+size/2-5, y+15);
 }
 
-function drawDecFigure(x, y, size, n, maxVal, data) {
+function drawDecFigure(ctx, x, y, size, n, maxVal, d) {
     ctx.strokeStyle = "black";
     ctx.beginPath();
     ctx.lineWidth = 1;
@@ -58,36 +76,36 @@ function drawDecFigure(x, y, size, n, maxVal, data) {
     }
     ctx.stroke();
 
-    drawAxis(x, y, size)
+    drawAxis(ctx, x, y, size)
 
-    drawLabels(x, y, size, maxVal, gridStep, gridSize, n)
+    drawLabels(ctx, x, y, size, maxVal, gridStep, gridSize, n)
 
     ctx.beginPath();
     ctx.strokeStyle = color;
     let screenCoord1;
     let screenCoord2;
     for (let i = 1; i < data.length; i++) {
-        screenCoord1 = toScreen(data[i-1][0], data[i-1][1]);
-        screenCoord2 = toScreen(data[i][0], data[i][1]);
+        screenCoord1 = toScreen(d[i-1][0], d[i-1][1]);
+        screenCoord2 = toScreen(d[i][0], d[i][1]);
         ctx.moveTo(x+screenCoord1[0], y+screenCoord1[1]);
         ctx.lineTo(x+screenCoord2[0], y+screenCoord2[1]);
     }
     if (data.length > 0) {
-        screenCoord1 = toScreen(data[0][0], data[0][1]);
-        screenCoord2 = toScreen(data[data.length-1][0], data[data.length-1][1]);
+        screenCoord1 = toScreen(d[0][0], d[0][1]);
+        screenCoord2 = toScreen(d[d.length-1][0], d[d.length-1][1]);
         ctx.moveTo(x+screenCoord1[0], y+screenCoord1[1]);
         ctx.lineTo(x+screenCoord2[0], y+screenCoord2[1]);
     }
     ctx.stroke();
 
-    for (let i = 0; i < data.length; i++) {
-        let screenCoord = toScreen(data[i][0], data[i][1]);
-        drawDot(x+screenCoord[0], y+screenCoord[1], i+1);
+    for (let i = 0; i < d.length; i++) {
+        let screenCoord = toScreen(d[i][0], d[i][1]);
+        drawDot(ctx, x+screenCoord[0], y+screenCoord[1], i+1);
     }
     
 }
 
-function drawDot(x, y, label) {
+function drawDot(ctx, x, y, label) {
     ctx.beginPath();
     ctx.fillStyle = dotColor;
     ctx.strokeStyle = dotColor;
@@ -100,36 +118,32 @@ function drawDot(x, y, label) {
     ctx.strokeStyle = "black";
 }
 
-var data = [];
-var convertedData = [];
 
-var transformMatrix = regularMatrix();
 
-var canvas = document.getElementById("graphics");
-canvas.width = offset*3+graphicsSize*2;
-canvas.height = graphicsSize + offset*2;
+var canvas1 = document.getElementById("canv1");
+canvas1.width = offset*2+graphicsSize;
+canvas1.height = graphicsSize + offset*2;
 
-var ctx = canvas.getContext('2d');
-ctx.translate(0.5, 0.5);
-ctx.font = textSize + "px sans-serif";
-ctx.strokeStyle = "black";
-ctx.lineCap = "square";
+var context1 = canvas1.getContext('2d');
+context1.translate(0.5, 0.5);
+context1.font = textSize + "px sans-serif";
+context1.strokeStyle = "black";
+context1.lineCap = "square";
 
-drawDecFigure(offset, offset, graphicsSize, gridFreq, graphVal, data);
-drawDecFigure(offset*2+graphicsSize, offset, graphicsSize, gridFreq, graphVal, convertedData);
+var canvas2 = document.getElementById("canv2");
+canvas2.width = offset*2+graphicsSize;
+canvas2.height = graphicsSize + offset*2;
 
-canvas.addEventListener("click", (event)=>{
-    if (event.offsetX < offset || event.offsetY < offset || event.offsetX > graphicsSize+offset || event.offsetY > graphicsSize+offset) {
-        return;
-    }
-    drawDot(event.offsetX, event.offsetY, data.length+1);
-    let clickX = event.offsetX - offset;
-    let clickY = event.offsetY - offset;
-    let dotCoord = toGraph(clickX, clickY);
-    data.push(dotCoord);
-    convertedData.push([0, 0]);  // ****
-    updateDotsTable();
-});
+var context2 = canvas2.getContext('2d');
+context2.translate(0.5, 0.5);
+context2.font = textSize + "px sans-serif";
+context2.strokeStyle = "black";
+context2.lineCap = "square";
+
+drawDecFigure(context1, offset, offset, graphicsSize, gridFreq, graphVal, data);
+drawDecFigure(context2, offset, offset, graphicsSize, gridFreq, graphVal, convertedData);
+
+canvas1.addEventListener("click", setDot);
 
 let resetButton = document.getElementById("reset");
 resetButton.addEventListener("click", ()=>{
@@ -145,14 +159,72 @@ enterButton.addEventListener("click", ()=>{
     updateDotsTable();
 });
 
+let moveButton = document.getElementById("move");
+moveButton.addEventListener("click", ()=>{
+    mode = MODES.MOVE;
+    canvas1.removeEventListener("click", setDot);
+    canvas1.addEventListener("click", chooseCoord);
+});
 
+let scaleButton = document.getElementById("scale");
+let coeffButton = document.getElementById("coeff-input");
+scaleButton.addEventListener("click", ()=>{
+    mode = MODES.SCALE;
+    
+    canvas1.removeEventListener("click", setDot);
+    canvas1.addEventListener("click", chooseCoord);
+});
+
+let rotateButton = document.getElementById("rotate");
+let angleField = document.getElementById("angle-input");
+rotateButton.addEventListener("click", ()=>{
+    mode = MODES.ROTATE;
+    canvas1.removeEventListener("click", setDot);
+    
+    canvas1.addEventListener("click", chooseDot);
+});
+
+let reflectButton = document.getElementById("reflect");
+reflectButton.addEventListener("click", ()=>{
+    mode = MODES.REFLECT;
+    canvas1.removeEventListener("click", setDot);
+    canvas1.addEventListener("click", chooseDot);
+});
+
+let dynamicButton = document.getElementById("dynamic");
+let timeInput = document.getElementById("time-input");
+dynamicButton.addEventListener("click", ()=>{
+    if (isAnimated) {
+        disableAnimation();
+    } else {
+        isAnimated = true;
+        animatedData = data;
+        animationTimer = setInterval(drawAnimation, parseInt(timeInput, 10));
+        canvas1.removeEventListener("click", setDot);
+        
+    }
+});
+
+function drawAnimation() {
+    context2.clearRect(0, 0, canvas2.width, canvas2.height);
+    doTransform();
+    drawDecFigure(context2, offset, offset, graphicsSize, gridFreq, graphVal, animatedData);
+}
+
+function disableAnimation() {
+    isAnimated = false;
+    clearTimeout(animationTimer);
+    canvas1.addEventListener("click", setDot);
+    redraw();
+}
 
 function redraw() {
-    transformMatrix = scaleMatrix(5, 5);
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    drawDecFigure(offset, offset, graphicsSize, gridFreq, graphVal, data);
-    convert(transformMatrix);
-    drawDecFigure(offset*2+graphicsSize, offset, graphicsSize, gridFreq, graphVal, convertedData);
+    context1.clearRect(0, 0, canvas1.width, canvas1.height);
+    context2.clearRect(0, 0, canvas2.width, canvas2.height);
+    drawDecFigure(context1, offset, offset, graphicsSize, gridFreq, graphVal, data);
+    doTransform();
+    drawDecFigure(context2, offset, offset, graphicsSize, gridFreq, graphVal, convertedData);
+    updateDotsTable();
 };
 
 function toGraph(screenX, screenY) {
@@ -210,11 +282,6 @@ function degToRad(deg) {
   return deg * (Math.PI/180);
 }
 
-function getNewCoords(coords, matrix) {
-    let r = matrixMul(matrix, [[coords[0]], [coords[1]], [1]]);
-    return [r[0][0], r[1][0]];
-}
-
 function scaleMatrix(a, b) {
     return [[a, 0, 0],
             [0, b, 0],
@@ -229,9 +296,9 @@ function rotateMatrix(deg) { // против часовой
 }
 
 function moveMatrix(a, b) {
-    return [[1, 0, a],
-            [0, 1, b],
-            [0, 0, 1]];
+    return [[1, 0, 0],
+            [0, 1, 0],
+            [a, b, 1]];
 }
 
 function reflectMatrix() {
@@ -244,8 +311,89 @@ function regularMatrix() {
             [0, 0, 1]];
 }
 
-function convert(matrix) {
+
+
+
+function getDot(dot) {
+    let x = dot[0];
+    let y = dot[1];
     for (let i = 0; i < data.length; i++) {
-        convertedData[i] = getNewCoords(data[i], matrix);
+        if (Math.abs(x-data[i][0]) <= eps && Math.abs(y-data[i][1]) <= eps) {
+            return data[i];
+        }
     }
+    return undefined;
+}
+
+function chooseDot(event) {
+    if (event.offsetX < offset || event.offsetY < offset || event.offsetX > graphicsSize+offset || event.offsetY > graphicsSize+offset) {
+        return;
+    }
+    let clickX = event.offsetX - offset;
+    let clickY = event.offsetY - offset;
+    let dotCoord = toGraph(clickX, clickY);
+    let d = getDot(dotCoord);
+    if (d != undefined) {
+        inputCoords = d;
+        canvas1.removeEventListener("click", chooseDot);
+        canvas1.addEventListener("click", setDot);
+        redraw();
+    }
+}
+
+function chooseCoord(event) {
+    if (event.offsetX < offset || event.offsetY < offset || event.offsetX > graphicsSize+offset || event.offsetY > graphicsSize+offset) {
+        return;
+    }
+    let clickX = event.offsetX - offset;
+    let clickY = event.offsetY - offset;
+    let dotCoord = toGraph(clickX, clickY);
+    inputCoords = dotCoord;
+    canvas1.removeEventListener("click", chooseCoord);
+    canvas1.addEventListener("click", setDot);
+    redraw();
+}
+
+function setDot(event) {
+    if (event.offsetX < offset || event.offsetY < offset || event.offsetX > graphicsSize+offset || event.offsetY > graphicsSize+offset) {
+        return;
+    }
+    drawDot(context1, event.offsetX, event.offsetY, data.length+1);
+    let clickX = event.offsetX - offset;
+    let clickY = event.offsetY - offset;
+    let dotCoord = toGraph(clickX, clickY);
+    data.push([dotCoord[0], dotCoord[1], 1]);
+    convertedData.push([0, 0, 1]);
+    updateDotsTable();
+}
+
+function doTransform() {
+    switch (mode) {
+        case MODES.REGULAR:
+            transformMatrix = regularMatrix();
+            break;
+        case MODES.MOVE:
+            transformMatrix = moveMatrix(inputCoords[0], inputCoords[1]);
+            break;
+        case MODES.SCALE:
+            inputVal = parseFloat(coeffButton.value, 10);
+            let l = Math.sqrt(inputCoords[0]**2 + inputCoords[1]**2);
+            inputCoords[0] = inputCoords[0]/l;
+            inputCoords[1] = inputCoords[1]/l;
+            transformMatrix = scaleMatrix(inputCoords[0]*inputVal, inputCoords[1]*inputVal);
+            break;
+        case MODES.REFLECT:
+            transformMatrix = matrixMul(moveMatrix(-inputCoords[0], -inputCoords[1]), matrixMul(reflectMatrix(), moveMatrix(inputCoords[0], inputCoords[1])));
+            break;
+        case MODES.ROTATE:
+            inputVal = parseInt(angleField.value, 10);
+            transformMatrix = matrixMul(moveMatrix(-inputCoords[0], -inputCoords[1]), matrixMul(rotateMatrix(inputVal), moveMatrix(inputCoords[0], inputCoords[1])));
+            break;
+    }
+    if (isAnimated) {
+        animatedData = matrixMul(animatedData, transformMatrix);
+    } else {
+        convertedData = matrixMul(data, transformMatrix);
+    }
+    
 }

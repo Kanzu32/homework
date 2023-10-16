@@ -1,6 +1,14 @@
-canvas {
+/* canvas {
     image-rendering: pixelated;
     image-rendering: crisp-edges;
+} */
+
+#screen {
+    display: flex;
+}
+
+canvas {
+    margin: 3px;
 }
 
 body {
