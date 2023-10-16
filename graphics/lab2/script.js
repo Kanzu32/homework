@@ -140,6 +140,8 @@ context2.font = textSize + "px sans-serif";
 context2.strokeStyle = "black";
 context2.lineCap = "square";
 
+var transformTable = document.querySelector("#matrix-table > tbody");
+
 drawDecFigure(context1, offset, offset, graphicsSize, gridFreq, graphVal, data);
 drawDecFigure(context2, offset, offset, graphicsSize, gridFreq, graphVal, convertedData);
 
@@ -147,6 +149,9 @@ canvas1.addEventListener("click", setDot);
 
 let resetButton = document.getElementById("reset");
 resetButton.addEventListener("click", ()=>{
+    if (isAnimated) {
+        disableAnimation();
+    }
     data = [];
     convertedData = [];
     redraw();
@@ -161,33 +166,48 @@ enterButton.addEventListener("click", ()=>{
 
 let moveButton = document.getElementById("move");
 moveButton.addEventListener("click", ()=>{
+    if (isAnimated) {
+        disableAnimation();
+    }
     mode = MODES.MOVE;
     canvas1.removeEventListener("click", setDot);
+    canvas1.removeEventListener("click", chooseDot);
     canvas1.addEventListener("click", chooseCoord);
 });
 
 let scaleButton = document.getElementById("scale");
 let coeffButton = document.getElementById("coeff-input");
 scaleButton.addEventListener("click", ()=>{
+    if (isAnimated) {
+        disableAnimation();
+    }
     mode = MODES.SCALE;
     
     canvas1.removeEventListener("click", setDot);
+    canvas1.removeEventListener("click", chooseDot);
     canvas1.addEventListener("click", chooseCoord);
 });
 
 let rotateButton = document.getElementById("rotate");
 let angleField = document.getElementById("angle-input");
 rotateButton.addEventListener("click", ()=>{
+    if (isAnimated) {
+        disableAnimation();
+    }
     mode = MODES.ROTATE;
     canvas1.removeEventListener("click", setDot);
-    
+    canvas1.removeEventListener("click", chooseCoord);
     canvas1.addEventListener("click", chooseDot);
 });
 
 let reflectButton = document.getElementById("reflect");
 reflectButton.addEventListener("click", ()=>{
+    if (isAnimated) {
+        disableAnimation();
+    }
     mode = MODES.REFLECT;
     canvas1.removeEventListener("click", setDot);
+    canvas1.removeEventListener("click", chooseCoord);
     canvas1.addEventListener("click", chooseDot);
 });
 
@@ -311,9 +331,6 @@ function regularMatrix() {
             [0, 0, 1]];
 }
 
-
-
-
 function getDot(dot) {
     let x = dot[0];
     let y = dot[1];
@@ -377,6 +394,9 @@ function doTransform() {
             break;
         case MODES.SCALE:
             inputVal = parseFloat(coeffButton.value, 10);
+            if (!inputVal)  {
+                inputVal = 1;
+            }
             let l = Math.sqrt(inputCoords[0]**2 + inputCoords[1]**2);
             inputCoords[0] = inputCoords[0]/l;
             inputCoords[1] = inputCoords[1]/l;
@@ -395,5 +415,19 @@ function doTransform() {
     } else {
         convertedData = matrixMul(data, transformMatrix);
     }
-    
+    fillTransformTable()
 }
+
+function fillTransformTable() {
+    let i = 0;
+    
+    for (let tr of transformTable.children) {
+        let j = 0;
+        for (let td of tr.children) {
+            td.innerHTML = transformMatrix[i][j].toFixed(3)
+            j++
+        }
+        i++;
+    }
+}
+fillTransformTable()
