@@ -1,0 +1,45 @@
+/* canvas {
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+} */
+
+* {
+    padding: 0;
+    margin: 0;
+}
+
+#screen {
+    display: flex;
+    flex-direction: column;
+}
+
+
+body {
+    display: flex;
+}
+
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+    padding: 5px 15px;
+    text-align: center;
+}
+
+#dots-table {
+    padding: 5px 15px;
+    width: 100%;
+    margin-left: 10px;
+}
+
+#matrix-table {
+    margin-top: 10px;
+}
+
+.control {
+    margin-top: 2px;
+    padding: auto;
+}
+
+.control * {
+    margin: 0 1px;
+}
