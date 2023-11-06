@@ -173,9 +173,10 @@ function drawParallel(ctx, x, y, size, n, maxVal) {
     let screenCoord1;
     let screenCoord2;
     ctx.strokeStyle = color;
-    let newDots = matrixMul(dots, matrixMul(rotateYMatrix(xzAngle), rotateYMatrix(rotateAngle)))
+    // let newDots = matrixMul(dots, matrixMul(rotateYMatrix(xzAngle), rotateYMatrix(rotateAngle)))
     // newDots = matrixMul(dots, rotateYMatrix(rotateAngle));
-    newDots = matrixMul(newDots, transformMatrix);
+    // let newDots = matrixMul(dots, matrixMul(transformMatrix, rotateYMatrix(xzAngle)));
+    let newDots = matrixMul(dots, transformMatrix);
 
     for (let i = 0; i < lines.length; i++) {
         screenCoord1 = toScreen(newDots[lines[i][0]][0], newDots[lines[i][0]][1]);
@@ -440,7 +441,7 @@ function rotateYMatrix(angle) {
 function parallelMatrix() {
     return [[1, 0, 0, 0],
             [0, 1, 0, 0],
-            [-(projectionVector[0]/projectionVector[2]), -(projectionVector[1]/projectionVector[2]), 0, 0],
+            [-(projectionVector[0]/projectionVector[2])+Math.cos(xzAngle), -(projectionVector[1]/projectionVector[2])-Math.sin(xzAngle), 0, 0],
             [-distance*projectionVector[0]/projectionVector[2], -distance*projectionVector[1]/projectionVector[2], 0, 1]];
 }
 
