@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lab 1</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="left">
+        <div id="screen">
+            <div class="canvas-wrap">
+                <canvas id="canv1"></canvas>
+                <canvas id="canv2"></canvas>
+            </div>
+            <div class="canvas-wrap">
+                <canvas id="canv3"></canvas>
+                <canvas id="canv4"></canvas>
+            </div>
+        </div>
+    </div>
+    <div id="right">
+        <div class="control"><input id="fileInput" type="file" accept="text/plain"><button id="enterFile">Ввод</button></div>
+        <div class="control">Угол проекционного вектора<input id="projectionAngleInput" type="range" min="-89" max="89" value="0"></div>
+        <div class="control">Угол поворота фигуры<input id="rotateAngleInput" type="range" min="-180" max="180" value="0"></div>
+        <div class="control">Расстояние до картинной плоскости<input id="distanceInput" type="number" min="0" max="100" value="0"><button id="enterDistance">Ввод</button></div>
+        <div class="control">Милисекунды / градус<input type="number" id="timeInput" value="100"><button id="enterTime">Ввод</button></div>
+        <div class="control">Угол XZ<input id="XZAngleInput" type="range" min="10" max="170" value="0" step="10"></div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
