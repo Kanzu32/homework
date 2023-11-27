@@ -156,6 +156,9 @@ resetButton.addEventListener("click", ()=>{
     convertedData = [];
     redraw();
     updateDotsTable();
+    transformMatrix = regularMatrix();
+    mode = MODES.REGULAR;
+    fillTransformTable();
 });
 
 let enterButton = document.getElementById("enter");
@@ -219,7 +222,11 @@ dynamicButton.addEventListener("click", ()=>{
     } else {
         isAnimated = true;
         animatedData = data;
-        animationTimer = setInterval(drawAnimation, parseInt(timeInput, 10));
+        let time = parseInt(timeInput.value, 10);
+        if (!time) {
+            time = 1000;
+        }
+        animationTimer = setInterval(drawAnimation, time);
         canvas1.removeEventListener("click", setDot);
         
     }
