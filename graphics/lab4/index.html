@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lab 1</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="left">
+        <div id="screen">
+            <div class="canvas-wrap">
+                <canvas id="canv1"></canvas>
+                <canvas id="canv2"></canvas>
+            </div>
+            <div class="canvas-wrap">
+                <canvas id="canv3"></canvas>
+                <canvas id="canv4"></canvas>
+            </div>
+        </div>
+    </div>
+    <div id="right">
+        <div class="control"><input id="fileInput" type="file" accept="text/plain"><button id="enterFile">Ввод</button></div>
+        <div class="control">Угол проекционного вектора<input id="projectionAngleInput" type="range" min="-89" max="89" value="0"></div>
+        <div class="control">Угол поворота фигуры<input id="rotateAngleInput" type="range" min="-180" max="180" value="0"></div>
+        <div class="control">Расстояние до картинной плоскости<input class="fixed" id="distanceInput" type="number" min="0" max="100" value="0"><button id="enterDistance">Ввод</button></div>
+        <div class="control">Милисекунды / градус<input class="fixed" type="number" id="timeInput" value="100"><button id="enterTime">Ввод</button></div>
+        <div class="control">Угол XZ<input id="XZAngleInput" type="range" min="10" max="170" value="0" step="10"></div>
+        <div id="moves">
+            <div class="control"><button id="enter">Ввод</button><button id="reset">Сброс</button><button id="dynamic">Динамика</button><input class="fixed" id="time-input" type="number"></div>
+            <div class="control"><button id="move">Перенос относ. грани</button>
+                <input class="fixed" type="number" id="move1"><input class="fixed" type="number" id="move2"><input class="fixed" type="number" id="move3"><input class="fixed" type="number" id="move-size">
+            </div>
+            <div class="control"><button id="scale">Масштабирование вдоль плоскости</button>
+                <input class="fixed" type="number" id="scale1x"><input class="fixed" type="number" id="scale1y"><input class="fixed" type="number" id="scale1z">
+                <input class="fixed"  type="number" id="scale2x"><input class="fixed" type="number" id="scale2y"><input class="fixed" type="number" id="scale2z">
+                <input class="fixed" type="number" id="scale3x"><input class="fixed" type="number" id="scale3y"><input class="fixed" type="number" id="scale13z">
+                <input class="fixed" id="coeff-input" type="number" step="0.1"></div>
+            <div class="control"><button id="reflect">Отражение отн. грани</button>
+                <input class="fixed" type="number" id="reflect1"><input class="fixed" type="number" id="reflect2"><input class="fixed" type="number" id="reflect3">
+            </div>
+            <div class="control"><button id="rotate">Поворот отн. произвольной прямой</button>
+                <input class="fixed" type="number" id="rotate1x"><input class="fixed" type="number" id="rotate1y"><input class="fixed" type="number" id="rotate1z">
+                <input class="fixed" type="number" id="rotate2x"><input class="fixed" type="number" id="rotate2y"><input class="fixed" type="number" id="rotate2z">
+                <input class="fixed" type="number" id="angle-input">
+            </div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
