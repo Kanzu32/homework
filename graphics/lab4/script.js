@@ -10,11 +10,7 @@ var vectorColor = "DodgerBlue";
 var offset = 1;
 var gridSize = graphicsSize/(gridFreq*2);
 var dots = [];
-var rotatedDots = [];
 var lines = [];
-var rotateAngle = 0;
-var rotateAngleDeg = 0;
-var rotateAngleTransitionTo = 0;
 var projectionAngle = 0;
 var projectionAngleDeg = 0;
 var projectionAngleTransitionTo = 0;
@@ -37,12 +33,13 @@ var moveVector = [];
 var moveCoef = 1;
 
 var scaleVector = [];
-var scaleCoef = 1;
 
 var reflectVector = [];
 
-rotateVector = [];
-rotateAngleByVector = 0;
+var rotateVector = [];
+var rotateAngle = 0;
+var rotateAngleDeg = 0;
+var rotateAngleTransitionTo = 0;
 
 function drawAxis(ctx, x, y, size) {
     ctx.stroke();
@@ -98,7 +95,35 @@ function drawSide(ctx, x, y, size, n, maxVal, xid=0, yid=1, matrix=frontalMatrix
     let screenCoord1;
     let screenCoord2;
     ctx.strokeStyle = color;
-    let newDots = matrixMul(rotatedDots, matrix);
+
+    switch (mode) {
+        case MODES.REGULAR:
+            break;
+        case MODES.MOVE:
+            matrix = matrixMul(moveMatrix(moveVector[0]*moveCoef, moveVector[1]*moveCoef, moveVector[2]*moveCoef), matrix);
+            break;
+        case MODES.SCALE:
+            matrix = matrixMul(scaleMatrix(scaleVector[0], scaleVector[1], scaleVector[2]), matrix);
+            break;
+        case MODES.REFLECT:
+            matrix = matrixMul(scaleMatrix(reflectVector[0], reflectVector[1], reflectVector[2]), matrix);
+            break;
+        case MODES.ROTATE:
+            angleXV = Math.acos(rotateVector[0]); // 1 0 0
+            angleYV = Math.acos(rotateVector[1]); // 0 1 0
+            if (angleYV == Math.PI) {
+                angleYV = 0;
+            }
+            if (angleXV == Math.PI) {
+                angleXV = 0;
+            }
+            matrix = matrixMul(moveMatrix(moveVector[0], moveVector[1], moveVector[2]), matrixMul(rotateZMatrix(-angleYV),
+            matrixMul(rotateYMatrix(-angleXV), matrixMul(rotateYMatrix(rotateAngle), matrixMul(rotateZMatrix(angleYV),
+            matrixMul(rotateYMatrix(angleXV), matrixMul(moveMatrix(-moveVector[0], -moveVector[1], -moveVector[2]), matrix)))))));
+            break;
+    }
+
+    let newDots = matrixMul(dots, matrix);
 
     for (let i = 0; i < lines.length; i++) {
         screenCoord1 = toScreen(newDots[lines[i][0]][xid], newDots[lines[i][0]][yid]);
@@ -115,6 +140,7 @@ function drawSide(ctx, x, y, size, n, maxVal, xid=0, yid=1, matrix=frontalMatrix
     ctx.moveTo(x+screenCoord1[0], y+screenCoord1[1]);
     ctx.lineTo(x+screenCoord2[0], y+screenCoord2[1]);
     ctx.stroke();
+
 }
 
 function drawAxis3d(ctx, x, y, size) {
@@ -143,6 +169,7 @@ function drawAxis3d(ctx, x, y, size) {
     ctx.stroke();
 }
 function drawLabels3d(ctx, x, y, size, maxVal, gridStep, gridSize, n, xid, yid, zid) {
+    ctx.fillStyle = "black";
     ctx.beginPath();
     for (let i = 1; i < 2*n; i++) {
         ctx.textAlign = "center";
@@ -156,7 +183,7 @@ function drawLabels3d(ctx, x, y, size, maxVal, gridStep, gridSize, n, xid, yid, 
     ctx.beginPath();
     for (let i = 0; i < 2*n+1; i++) {
         if (xzAngleDeg != 90 && projectionAngle != 0) {
-            let zi = matrixMul([[0, 0, i-maxVal, 1]], parallelMatrix());
+            let zi = matrixMul([[0, 0, i-maxVal, 1]], parallelMatrix(0));
             if (maxVal-i*gridStep != 0) ctx.fillText(i-maxVal, x+zi[0][0]*gridSize+size/2, y-zi[0][1]*gridSize+size/2);
         }
     }
@@ -191,8 +218,7 @@ function drawParallel(ctx, x, y, size, n, maxVal) {
     let screenCoord2;
     ctx.strokeStyle = color;
 
-    let newDots = matrixMul(rotatedDots, transformMatrix);
-    
+    let newDots = matrixMul(dots, transformMatrix);
     for (let i = 0; i < lines.length; i++) {
         screenCoord1 = toScreen(newDots[lines[i][0]][0], newDots[lines[i][0]][1]);
         screenCoord2 = toScreen(newDots[lines[i][1]][0], newDots[lines[i][1]][1]);
@@ -200,6 +226,17 @@ function drawParallel(ctx, x, y, size, n, maxVal) {
         ctx.lineTo(x+screenCoord2[0], y+screenCoord2[1]);
     }
     ctx.stroke();
+
+    ctx.beginPath();
+    ctx.fillStyle = "Lime";
+
+    for (let i = 0; i < dots.length; i++) {
+        let screenCoord = toScreen(newDots[i][0], newDots[i][1]);
+        ctx.textAlign = "center";
+        ctx.fillText(i, x+screenCoord[0], y+screenCoord[1]);
+    }
+    ctx.stroke();
+    ctx.strokeStyle = vectorColor;
 }
 
 var canvases = document.getElementsByTagName("canvas");
@@ -223,25 +260,7 @@ function redraw() {
     drawParallel(contexts[1], offset, offset, graphicsSize, gridFreq, graphVal, 0, 1);
     drawSide(contexts[2], offset, offset, graphicsSize, gridFreq, graphVal, 0, 1, frontalMatrix());
     drawSide(contexts[3], offset, offset, graphicsSize, gridFreq, graphVal, 2, 1, rightMatrix());
-    //updateParameters();
-    //updateDotsTable();
-    //fillTransformTable();
 };
-
-// function updateParameters() {
-//     let paramText = document.getElementById("param");
-
-//     paramText.innerHTML = "mx = 1, my = 1, mz = " + Math.abs(Math.tan(projectionAngle)).toFixed(3) +
-//     " Sx = " + Math.cos(xzAngle).toFixed(3) + " Sy = " + Math.sin(xzAngle).toFixed(3) + " Sz = "
-//     + (1/Math.tan(projectionAngle)).toFixed(3);
-
-//     let projectionAngleText = document.getElementById("projectionAngleText");
-//     projectionAngleText.innerHTML = projectionAngleDeg;
-//     let rotateAngleText = document.getElementById("rotateAngleText");
-//     rotateAngleText.innerHTML = rotateAngleDeg;
-//     let xzAngleText = document.getElementById("XZAngleText");
-//     xzAngleText.innerHTML = xzAngleDeg;
-// }
 
 function toGraph(screenX, screenY) {
     let graphX = (screenX - graphicsSize/2) / gridSize;
@@ -302,8 +321,6 @@ function parse(text) {
         dots[i][3] = parseInt(1);
     }
 
-    rotatedDots = dots;
-
     let j = 1;
     for (let i = 0; i < l; i++) {
         while (d[l*3+1+j] != ";") {
@@ -325,14 +342,6 @@ projectionAngleInput.addEventListener("change", getProjectionAngle);
 function getProjectionAngle() {
     projectionAngleTransitionTo = projectionAngleInput.value;
 }
-
-// let rotateAngleInput = document.getElementById("rotateAngleInput");
-// rotateAngleInput.value = 0;
-// rotateAngleInput.addEventListener("change", getRotateAngle);
-
-// function getRotateAngle() {
-//     rotateAngleTransitionTo = rotateAngleInput.value;
-// }
 
 let distanceEnterButton = document.getElementById("enterDistance");
 document.getElementById("distanceInput").value = 0;
@@ -376,13 +385,11 @@ moveButton.addEventListener("click", ()=>{
         moveVector = [n[0]/l, n[1]/l, n[2]/l];
         moveCoef = factor;
         mode = MODES.MOVE;
-        doTransform();
-        redraw();
     }
 });
 
 let scaleButton = document.getElementById("scale");
-scaleButton .addEventListener("click", ()=>{
+scaleButton.addEventListener("click", ()=>{
     let dot1x = parseInt(document.getElementById("scale1x").value);
     let dot1y = parseInt(document.getElementById("scale1y").value);
     let dot1z = parseInt(document.getElementById("scale1z").value);
@@ -395,16 +402,13 @@ scaleButton .addEventListener("click", ()=>{
     let dot3y = parseInt(document.getElementById("scale3y").value);
     let dot3z = parseInt(document.getElementById("scale3z").value);
 
-    let factor = parseInt(document.getElementById("coeff-input").value);
+    let factor = parseFloat(document.getElementById("coeff-input").value);
     let a = [dot2x-dot1x, dot2y-dot1y, dot2z-dot1z];
     let b = [dot3x-dot1x, dot3y-dot1y, dot3z-dot1z];
     let n = [a[1]*b[2]-a[2]*b[1], a[2]*b[0]-a[0]*b[2], a[0]*b[1]-a[1]*b[0]];
     let l = Math.sqrt(n[0]*n[0] + n[1]*n[1] + n[2]*n[2]);
-    scaleVector = [n[0]/l, n[1]/l, n[2]/l];
-    scaleCoef = factor;
+    scaleVector = [n[0]*factor/l || 1, n[1]*factor/l || 1, n[2]*factor/l || 1];
     mode = MODES.SCALE;
-    doTransform();
-    redraw();
 });
 
 let reflectButton = document.getElementById("reflect");
@@ -417,10 +421,8 @@ reflectButton.addEventListener("click", ()=>{
         let b = [dots[dot3][0]-dots[dot1][0], dots[dot3][1]-dots[dot1][1], dots[dot3][2]-dots[dot1][2]];
         let n = [a[1]*b[2]-a[2]*b[1], a[2]*b[0]-a[0]*b[2], a[0]*b[1]-a[1]*b[0]];
         let l = Math.sqrt(n[0]*n[0] + n[1]*n[1] + n[2]*n[2]);
-        reflectVector = [n[0]/l, n[1]/l, n[2]/l];
+        reflectVector = [n[0]*(-1)/l || 1, n[1]*(-1)/l || 1, n[2]*(-1)/l || 1];
         mode = MODES.REFLECT;
-        doTransform();
-        redraw();
     }
 });
 
@@ -437,18 +439,15 @@ rotateButton.addEventListener("click", ()=>{
     let angle = parseInt(document.getElementById("angle-input").value);
     let n = [dot2x-dot1x, dot2y-dot1y, dot2z-dot1z];
     let l = Math.sqrt(n[0]*n[0] + n[1]*n[1] + n[2]*n[2]);
-    rotateVector = [n[0]/l, n[1]/l, n[2]/l];
-    rotateAngleByVector = angle;
+    moveVector = [-dot1x, -dot1y, -dot1z];
+    rotateVector = [n[0]/l, n[1]/l, n[2]/l, 1];
+    rotateAngleTransitionTo = angle;
     mode = MODES.ROTATE;
-    doTransform();
-    redraw();
 });
 
 let resetButton = document.getElementById("reset");
 resetButton.addEventListener("click", ()=>{
     mode = MODES.REGULAR;
-    doTransform();
-    redraw();
 });
 
 function doTransform() {
@@ -460,89 +459,53 @@ function doTransform() {
             transformMatrix = matrixMul(moveMatrix(moveVector[0]*moveCoef, moveVector[1]*moveCoef, moveVector[2]*moveCoef), parallelMatrix());
             break;
         case MODES.SCALE:
-            transformMatrix = matrixMul(scaleMatrix(scaleVector[0]*scaleCoef, scaleVector[1]*scaleCoef, scaleVector[2]*scaleCoef), parallelMatrix());
+            transformMatrix = matrixMul(scaleMatrix(scaleVector[0], scaleVector[1], scaleVector[2]), parallelMatrix());
             break;
         case MODES.REFLECT:
-            transformMatrix = matrixMul(scaleMatrix(0, 0, -1), parallelMatrix());
+            transformMatrix = matrixMul(scaleMatrix(reflectVector[0], reflectVector[1], reflectVector[2]), parallelMatrix());
             break;
         case MODES.ROTATE:
-            angleXV = Math.asin(rotateVector[2]); // 0 0 1
-            angleYV = Math.asin(rotateVector[0]); // 1 0 0
-            rotateVector = [[rotateVector[0], rotateVector[1], rotateVector[2], 1]]
-            console.log(matrixMul(rotateZMatrix(angleXV), matrixMul(rotateYMatrix(angleXV), rotateVector)));
-            console.log("XV: " + angleXV + ", YV: " + angleYV)
-            transformMatrix = matrixMul(parallelMatrix())
+            angleXV = Math.acos(rotateVector[0]); // 1 0 0
+            angleYV = Math.acos(rotateVector[1]); // 0 1 0
+            if (angleYV == Math.PI) {
+                angleYV = 0;
+            }
+            if (angleXV == Math.PI) {
+                angleXV = 0;
+            }
+            transformMatrix = matrixMul(moveMatrix(moveVector[0], moveVector[1], moveVector[2]), matrixMul(rotateZMatrix(-angleYV),
+            matrixMul(rotateYMatrix(-angleXV), matrixMul(rotateYMatrix(rotateAngle), matrixMul(rotateZMatrix(angleYV),
+            matrixMul(rotateYMatrix(angleXV), matrixMul(moveMatrix(-moveVector[0], -moveVector[1], -moveVector[2]), parallelMatrix())))))));
             break;
     }
-    //fillTransformTable()
 }
 
-
 function updateTransition() {
-    let changed = false;
     if (rotateAngleDeg != rotateAngleTransitionTo) {
         if (rotateAngleDeg > rotateAngleTransitionTo) rotateAngleDeg -= 1;
         if (rotateAngleDeg < rotateAngleTransitionTo) rotateAngleDeg += 1;
         rotateAngle = degToRad(rotateAngleDeg);
-        changed = true;
     }
     if (projectionAngleDeg != projectionAngleTransitionTo) {
         if (projectionAngleDeg > projectionAngleTransitionTo) projectionAngleDeg -= 1;
         if (projectionAngleDeg < projectionAngleTransitionTo) projectionAngleDeg += 1;
         projectionAngle = degToRad(projectionAngleDeg);
         projectionVector = [Math.cos(-xzAngle), Math.sin(-xzAngle), 1/Math.tan(projectionAngle), 1];
-        changed = true;
     }
-    if (distance != distanceTransitionTo) {
+    if (Math.abs(distance-distanceTransitionTo) > 0.01) {
         if (distance > distanceTransitionTo) distance -= 0.1;
-        if (distance < distanceTransitionTo) distance += 0.1;
-        changed = true;
+        else if (distance < distanceTransitionTo) distance += 0.1;
     }
     if (xzAngleDeg != xzAngleTransitionTo) {
         if (xzAngleDeg > xzAngleTransitionTo) xzAngleDeg -= 1;
         if (xzAngleDeg < xzAngleTransitionTo) xzAngleDeg += 1;
         xzAngle = degToRad(xzAngleDeg);
         projectionVector = [Math.cos(-xzAngle), Math.sin(-xzAngle), 1/Math.tan(projectionAngle), 1];
-        changed = true;
     }
 
-    if (changed) {
-        mode = MODES.REGULAR;
-        transformMatrix = parallelMatrix();
-        rotatedDots = matrixMul(dots, rotateYMatrix(rotateAngle));
-        redraw();
-    }
+    doTransform();
+    redraw();
 }
-
-// function updateDotsTable() {
-//     let table = document.querySelector("#dots-table > tbody");
-//     table.innerHTML = "";
-//     for (let i = 0; i < dots.length; i++) {
-//         let row = document.createElement("tr");
-//         let dot = document.createElement("td");
-//         dot.textContent = i+1;
-//         let x1 = document.createElement("td");
-//         x1.textContent = dots[i][0].toFixed(3);
-//         let y1 = document.createElement("td");
-//         y1.textContent = dots[i][1].toFixed(3);
-//         let z1 = document.createElement("td");
-//         z1.textContent = dots[i][2].toFixed(3);
-//         let x2 = document.createElement("td");
-//         x2.textContent = rotatedDots[i][0].toFixed(3);
-//         let y2 = document.createElement("td");
-//         y2.textContent = rotatedDots[i][1].toFixed(3);
-//         let z2 = document.createElement("td");
-//         z2.textContent = rotatedDots[i][2].toFixed(3);
-//         row.appendChild(dot);
-//         row.appendChild(x1);
-//         row.appendChild(y1);
-//         row.appendChild(z1);
-//         row.appendChild(x2);
-//         row.appendChild(y2);
-//         row.appendChild(z2);
-//         table.appendChild(row);
-//     }
-// }
 
 function matrixMul(a, b) {
     let r = [];
@@ -619,11 +582,11 @@ function moveMatrix(a, b, c) {
            [a, b, c, 1]];
 }
 
-function parallelMatrix() {
+function parallelMatrix(dist=distance) {
     return [[1, 0, 0, 0],
             [0, 1, 0, 0],
             [-(projectionVector[0]/projectionVector[2]), -(projectionVector[1]/projectionVector[2]), 0, 0],
-            [-distance*projectionVector[0]/projectionVector[2], -distance*projectionVector[1]/projectionVector[2], 0, 1]];
+            [-dist*projectionVector[0]/projectionVector[2], -dist*projectionVector[1]/projectionVector[2], 0, 1]];
 }
 
 function regularMatrix() {
@@ -633,24 +596,8 @@ function regularMatrix() {
             [0, 0, 0, 1]];
 }
 
-// function fillTransformTable() {
-//     let transformTable = document.querySelector("#matrix-table > tbody");
-//     let i = 0;
-    
-//     for (let tr of transformTable.children) {
-//         let j = 0;
-//         for (let td of tr.children) {
-//             td.innerHTML = transformMatrix[i][j].toFixed(3);
-//             j++;
-//         }
-//         i++;
-//     }
-// }
-
 getXZAngle();
 getTime();
 getProjectionAngle();
-// getRotateAngle();
 getDistance();
 redraw();
-//fillTransformTable();
