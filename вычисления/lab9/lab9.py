@@ -35,7 +35,6 @@ def simpson(a, b, n, f):
     s = 0
     for i in range(n*2+1):
         if i == n*2 or i == 0:
-            print("FUCK", i)
             s += f(a + ((b-a)*i)/(2*n))
         elif i % 2 == 0:
             s += 2*f(a + ((b-a)*i)/(2*n))

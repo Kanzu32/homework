@@ -1,0 +1,15 @@
+C:\Users\Max\Documents\GitHub\homework\OOP\kr1\Kr1\obj\Debug\net8.0\Kr1.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Max\Documents\GitHub\homework\OOP\kr1\Kr1\obj\Debug\net8.0\Kr1.AssemblyInfoInputs.cache
+C:\Users\Max\Documents\GitHub\homework\OOP\kr1\Kr1\obj\Debug\net8.0\Kr1.AssemblyInfo.cs
+C:\Users\Max\Documents\GitHub\homework\OOP\kr1\Kr1\obj\Debug\net8.0\Kr1.csproj.CoreCompileInputs.cache
+C:\Users\Max\Documents\GitHub\homework\OOP\kr1\Kr1\obj\Debug\net8.0\Kr1.sourcelink.json
+C:\Users\Max\Documents\GitHub\homework\OOP\kr1\Kr1\bin\Debug\net8.0\Kr1.exe
+C:\Users\Max\Documents\GitHub\homework\OOP\kr1\Kr1\bin\Debug\net8.0\Kr1.deps.json
+C:\Users\Max\Documents\GitHub\homework\OOP\kr1\Kr1\bin\Debug\net8.0\Kr1.runtimeconfig.json
+C:\Users\Max\Documents\GitHub\homework\OOP\kr1\Kr1\bin\Debug\net8.0\Kr1.dll
+C:\Users\Max\Documents\GitHub\homework\OOP\kr1\Kr1\bin\Debug\net8.0\Kr1.pdb
+C:\Users\Max\Documents\GitHub\homework\OOP\kr1\Kr1\obj\Debug\net8.0\Kr1.dll
+C:\Users\Max\Documents\GitHub\homework\OOP\kr1\Kr1\obj\Debug\net8.0\refint\Kr1.dll
+C:\Users\Max\Documents\GitHub\homework\OOP\kr1\Kr1\obj\Debug\net8.0\Kr1.pdb
+C:\Users\Max\Documents\GitHub\homework\OOP\kr1\Kr1\obj\Debug\net8.0\Kr1.genruntimeconfig.cache
+C:\Users\Max\Documents\GitHub\homework\OOP\kr1\Kr1\obj\Debug\net8.0\ref\Kr1.dll
