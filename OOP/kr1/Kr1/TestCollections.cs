@@ -14,7 +14,7 @@ class TestCollections<TKey, TValue> {
 
     public TestCollections(int count, GenerateElement<TKey, TValue> generateFunction) {
         this.generateFunction = generateFunction;
-        //Надо  сравнить  время  поиска элемента в коллекциях-списках List<TKey>
+        //Надо  сравнить  время  поиска элемента в коллекциях-списках List<TKey> !!!
     }
 
     // public static ref KeyValuePair<TKey, TValue> Generate(int n) {
