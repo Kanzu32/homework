@@ -22,7 +22,7 @@ namespace Kr1
 			}
 			set
 			{
-				ArgumentOutOfRangeException.ThrowIfNegative(value, "Circulation value must be non-negative.");
+				ArgumentOutOfRangeException.ThrowIfNegative(value, "Circulation value must positive or zero.");
 				_circulation = value;
 			}
 		}
@@ -42,15 +42,10 @@ namespace Kr1
 			Circulation = 0;
 		}
 
-		virtual public object DeepCopy()
-		{
-			// Копия !!!
-			return this;
-		}
+		virtual public object DeepCopy() => new Edition { Title = Title, ReleaseDate = ReleaseDate, Circulation = Circulation };
 
 		public override bool Equals(object? obj)
 		{
-			// проверка по значениям, ==, != !!!
 			return obj != null &&
 			       obj is Edition other &&
 				   other.Title == Title &&

@@ -4,12 +4,55 @@ internal class Program
 {
     private static void Main(string[] args)
     {
+		Console.WriteLine("Задание 1:\n");
 
-        Article article1 = new Article(new Person("A", "B", "C"),"title", 5.43);
-		Article article2 = new Article(new Person("H", "N", "A"), "t", 2.3);
-		Console.WriteLine(article1.CompareTo(article2));
-		Console.WriteLine(new ArticleComparer().Compare(article1, article2));
-		Console.WriteLine(article1.Compare(article1, article2));
+		Person e1 = new Person("Иванов", "И");
+		Person a1 = new Person("A", "AF");
+		Person a2 = new Person("B", "BF");
+		Person a3 = new Person("C", "CF");
+		Magazine magazine = new Magazine("New magazine", Frequency.Weekly, DateTime.Now, 1000,
+				[new Article(a2, "Aa", 8.9), new Article(a3, "Cc", 5), new Article(a1, "Bb", 4.6)], [e1]);
+		
+		Console.WriteLine(magazine.ToString());
+		magazine.SortByTitle();
+		Console.WriteLine(magazine.ToString());
+		magazine.SortByAuthor();
+		Console.WriteLine(magazine.ToString());
+		magazine.SortByRating();
+		Console.WriteLine(magazine.ToString());
+
+		Console.WriteLine("Задание 2:\n");
+
+		MagazineCollection<string> collection = new MagazineCollection<string>(magazine => magazine.Title);
+		collection.AddDefaults();
+		collection.AddMagazines(magazine);
+		Console.WriteLine(collection.ToString());
+
+		Console.WriteLine("Задание 3:\n");
+
+		Console.WriteLine("MaxAverageRating: " + collection.MaxAverageRating + "\n");
+		foreach (var entry in collection.FrequencyGroup(Frequency.Weekly))
+		{
+			Console.WriteLine(entry.Value.ToShortString()+"\n");
+		}
+		foreach (var group in collection.GroupByFrequency)
+		{
+			Console.WriteLine("Group " + group.Key + "\n");
+			foreach (var entry in group)
+			{
+				Console.WriteLine(entry.Value.ToShortString());
+			}
+			Console.WriteLine("\n");
+		}
+
+		Console.WriteLine("Задание 4:\n");
+
+		TestCollections<Edition, Magazine> test = new TestCollections<Edition, Magazine>(50000, TestCollections<Edition, Magazine>.GeneratePair);
+		//foreach (var entry in test.KeyDictionary)
+		//{
+		//	Console.WriteLine(entry.Value.ToString());
+		//}
+		test.Test();
 	}
 
     

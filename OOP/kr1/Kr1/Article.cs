@@ -1,6 +1,6 @@
 namespace Kr1
 {
-	class Article : IComparable, IComparer<Article> //??? IComparable или IComparable<Article>
+	class Article : IComparable, IComparer<Article>
 	{
 		public Person Author { get; set; }
 		public string Title { get; set; }
@@ -22,17 +22,17 @@ namespace Kr1
 
 		public override string ToString()
 		{
-			return $"Article: {Title}, {Author} RAITING: {Rating:f2}";
+			return $"Article: {Title}, {Author}, RAITING: {Rating:f2}";
 		}
 
-		public int CompareTo(object? obj)
+		public int CompareTo(object? obj) // by title
 		{
 			ArgumentNullException.ThrowIfNull(obj);
 			if (obj is Article article) return Title.CompareTo(article.Title);
 			else throw new ArgumentException("Unable to compare Article with non-article object.");
 		}
 
-		public int Compare(Article? x, Article? y)
+		public int Compare(Article? x, Article? y) // by lastname
 		{
 			ArgumentNullException.ThrowIfNull(x);
 			ArgumentNullException.ThrowIfNull(y);

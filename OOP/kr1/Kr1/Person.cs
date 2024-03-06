@@ -10,25 +10,22 @@ namespace Kr1
 	{
 		public string Firstname { get; set; }
 		public string Lastname { get; set; }
-		public string Middlename { get; set; }
 
-		public Person(string lastname, string firstname, string middlename)
+		public Person(string lastname, string firstname)
 		{
 			Firstname = firstname;
 			Lastname = lastname;
-			Middlename = middlename;
 		}
 
 		public Person()
 		{
 			Firstname = "-";
 			Lastname = "Unknown person";
-			Middlename = "-";
 		}
 
 		public override string ToString()
 		{
-			return $"{Lastname} {Firstname} {Middlename}";
+			return $"{Lastname} {Firstname}";
 		}
 	}
 }
