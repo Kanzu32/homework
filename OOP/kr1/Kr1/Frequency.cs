@@ -6,7 +6,5 @@ using System.Threading.Tasks;
 
 namespace Kr1
 {
-	class Frequency
-	{
-	}
+	enum Frequency { Daily, Weekly, Monthly, SemiAnnually, Annually }
 }

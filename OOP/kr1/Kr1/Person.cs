@@ -8,27 +8,27 @@ namespace Kr1
 {
 	class Person
 	{
-		string firstname;
-		string lastname;
-		string middlename;
+		public string Firstname { get; set; }
+		public string Lastname { get; set; }
+		public string Middlename { get; set; }
 
 		public Person(string lastname, string firstname, string middlename)
 		{
-			this.firstname = firstname;
-			this.lastname = lastname;
-			this.middlename = middlename;
+			Firstname = firstname;
+			Lastname = lastname;
+			Middlename = middlename;
 		}
 
 		public Person()
 		{
-			this.firstname = "-";
-			this.lastname = "Unknown person";
-			this.middlename = "-";
+			Firstname = "-";
+			Lastname = "Unknown person";
+			Middlename = "-";
 		}
 
 		public override string ToString()
 		{
-			return $"{lastname} {firstname} {middlename}";
+			return $"{Lastname} {Firstname} {Middlename}";
 		}
 	}
 }

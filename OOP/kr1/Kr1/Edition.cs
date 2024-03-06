@@ -8,22 +8,38 @@ namespace Kr1
 {
 	class Edition
 	{
-		private string name;
-		private DateTime releaseDate;
-		private int circulation;
+		protected string Title { get => _title; set => _title = value ?? throw new ArgumentNullException(nameof(value), "Cannot set to null"); }
+		protected string _title;
 
-		public Edition(string name, DateTime releaseDate, int circulation)
+		protected DateTime ReleaseDate { get => _releaseDate; set => _releaseDate = value; }
+		protected DateTime _releaseDate;
+
+		protected int Circulation
 		{
-			this.name = name;
-			this.releaseDate = releaseDate;
-			this.circulation = circulation;
+			get
+			{
+				return _circulation;
+			}
+			set
+			{
+				ArgumentOutOfRangeException.ThrowIfNegative(value, "Circulation value must be non-negative.");
+				_circulation = value;
+			}
+		}
+		protected int _circulation;
+
+		public Edition(string title, DateTime releaseDate, int circulation)
+		{
+			Title = title;
+			ReleaseDate = releaseDate;
+			Circulation = circulation;
 		}
 
 		public Edition()
 		{
-			this.name = "Unnamed edition";
-			this.releaseDate = new DateTime();
-			this.circulation = 0;
+			Title = "Untitled edition";
+			ReleaseDate = new DateTime();
+			Circulation = 0;
 		}
 
 		virtual public object DeepCopy()
@@ -32,32 +48,34 @@ namespace Kr1
 			return this;
 		}
 
-		protected string Name { get => name; set => name = value; }
-		protected DateTime ReleaseDate { get => releaseDate; set => releaseDate = value; }
-		protected int Circulation { get => circulation;
-			set
-			{
-				ArgumentOutOfRangeException.ThrowIfNegative(value, "Circulation value must be non-negative.");
-				this.circulation = value;
-			}
-		}
-
 		public override bool Equals(object? obj)
 		{
 			// проверка по значениям, ==, != !!!
-			return base.Equals(obj);
+			return obj != null &&
+			       obj is Edition other &&
+				   other.Title == Title &&
+				   other.ReleaseDate == ReleaseDate &&
+				   other.Circulation == Circulation;
+		}
+
+		public static bool operator ==(Edition left, Edition right)
+		{
+			return left.Equals(right);
+		}
+
+		public static bool operator !=(Edition left, Edition right)
+		{
+			return !left.Equals(right);
 		}
 
 		public override int GetHashCode()
 		{
-			// !!!
-			return base.GetHashCode();
+			return HashCode.Combine(Title, ReleaseDate, Circulation);
 		}
 
 		public override string ToString()
-		{	
-			// все поля класса !!!
-			return base.ToString();
+		{
+			return $"Edition: title {Title}, release date {ReleaseDate}, circulation {Circulation}";
 		}
 	}
 }

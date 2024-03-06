@@ -8,75 +8,82 @@ namespace Kr1
 {
 	class Magazine
 	{
-		string name;
-		Frequency frequency;
-		DateTime date;
-		int circulation;
-		Article[] articles; //???
-		List<Person> editors;
-		List<Article> articles2; //???
+		public string Title { get => _title; set => _title = value; }
+		private string _title;
 
-		public Magazine(string name, Frequency frequency, DateTime date, int circulation)
+		public Frequency Frequency { get => _frequency; set => _frequency = value; }
+		private Frequency _frequency;
+
+		public DateTime ReleaseDate { get => _releaseDate; set => _releaseDate = value; }
+		private DateTime _releaseDate;
+
+		public int Circulation { get => _circulation; set => _circulation = value; }
+		private int _circulation;
+
+		public Article[] Articles { get { return [.. _articles]; } set { _articles = [.. value]; } }
+		private List<Article> _articles; //закрытое поле типа Article [] со списком статей в журнале И System.Collections.Generic.List<Article> для списка статей в журнале ???
+
+		private List<Person> _editors;
+
+		public double AverageRating
 		{
-			this.name = name;
-			this.frequency = frequency;
-			this.date = date;
-			this.circulation = circulation;
-			this.articles = [];
+			get
+			{
+				double sum = 0;
+				foreach (var Article in Articles)
+				{
+					sum += Article.Rating;
+				}
+				return sum / Articles.Length;
+			}
+		}
+
+		public Magazine(string title, Frequency frequency, DateTime releaseDate, int circulation)
+		{
+			_title = title;
+			_frequency = frequency;
+			_releaseDate = releaseDate;
+			_circulation = circulation;
+			_articles = [];
+			_editors = [];
 		}
 
 		public Magazine()
 		{
-			this.name = "Unnamed magazine";
-			this.frequency = new Frequency();
-			this.date = new DateTime();
-			this.circulation = 0;
-			this.articles = [];
+			_title = "Untitled magazine";
+			_frequency = new Frequency();
+			_releaseDate = new DateTime();
+			_circulation = 0;
+			_articles = [];
+			_editors = [];
 		}
-
-		public string Name { get => name; set => name = value; }
-		public Frequency Frequency { get => frequency; set => frequency = value; }
-		public DateTime Date { get => date; set => date = value; }
-		public int Circulation { get => circulation; set => circulation = value; }
-		//public Article[] Articles { get => articles; set => articles = value; } //???
-		public Article[] Articles { get { return articles2.ToArray(); } set { articles2 = [.. articles2, .. value]; } }
-		public double AvarageRating { get {
-			// Среднее значение рейтинга !!!
-			double sum = 0;
-			foreach (var article in articles)
-			{
-				sum += article.Rating;
-			}
-			return sum/articles.Length;
-		}}
+		
 		public bool this[Frequency frequency]
 		{
-			get {
-				if (this.frequency == frequency) return true;
+			get
+			{
+				if (Frequency == frequency) return true;
 				return false;
 			}
 		}
 
 		public void AddArticles(Article[] articles) {
-			// !!!
-			this.articles = [.. this.articles, .. articles];
+			Articles = [.. Articles, .. articles];
 		}
 
 		public override string ToString()
 		{
-			// список со всеми статьями !!!
-			string str = $"Magazine: name {name}, freq {frequency}, date {date}, circulation {circulation}\n";
-			foreach (var article in this.articles) {
+			string str = $"Magazine: title {Title}, freq {Frequency}, release {ReleaseDate}, circulation {Circulation}\n";
+			foreach (var article in Articles) {
 				str += article.ToString() + "\n";
 			}
 
-			return $"Magazine: name {name}, freq {frequency}, date {date}, circulation {circulation}\n"; ;
+			return str;
 		}
 
 		public string ToShortString()
 		{
-			// список со средним рейтингом !!!
-			return $"Magazine: name {name}, freq {frequency}, date {date}, circulation {circulation}, avarage rating {AvarageRating}";
+			return $"Magazine: title {Title}, freq {Frequency}, release {ReleaseDate}, circulation {Circulation}, aver. rating {AverageRating}";
 		}
 	}
 }
