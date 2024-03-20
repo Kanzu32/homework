@@ -1,7 +1,6 @@
 
 using Kr1;
 using System.Diagnostics;
-using System.Linq;
 
 delegate KeyValuePair<TKey,TValue> GenerateElement<TKey, TValue>(int i);
 

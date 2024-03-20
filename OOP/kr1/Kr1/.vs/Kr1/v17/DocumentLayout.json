@@ -3,20 +3,32 @@
   "WorkspaceRootPath": "C:\\Users\\Max\\Documents\\GitHub\\homework\\OOP\\kr1\\Kr1\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A55CA056-BB2E-49C3-B84A-70E961C017A3}|Kr1.csproj|c:\\users\\max\\documents\\github\\homework\\oop\\kr1\\kr1\\testcollections.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A55CA056-BB2E-49C3-B84A-70E961C017A3}|Kr1.csproj|solutionrelative:testcollections.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{A55CA056-BB2E-49C3-B84A-70E961C017A3}|Kr1.csproj|c:\\users\\max\\documents\\github\\homework\\oop\\kr1\\kr1\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A55CA056-BB2E-49C3-B84A-70E961C017A3}|Kr1.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A55CA056-BB2E-49C3-B84A-70E961C017A3}|Kr1.csproj|c:\\users\\max\\documents\\github\\homework\\oop\\kr1\\kr1\\magazine.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{A55CA056-BB2E-49C3-B84A-70E961C017A3}|Kr1.csproj|c:\\users\\max\\documents\\github\\homework\\oop\\kr1\\kr1\\testcollections.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A55CA056-BB2E-49C3-B84A-70E961C017A3}|Kr1.csproj|solutionrelative:testcollections.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A55CA056-BB2E-49C3-B84A-70E961C017A3}|Kr1.csproj|c:\\users\\max\\documents\\github\\homework\\oop\\kr1\\kr1\\person.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A55CA056-BB2E-49C3-B84A-70E961C017A3}|Kr1.csproj|solutionrelative:person.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A55CA056-BB2E-49C3-B84A-70E961C017A3}|Kr1.csproj|C:\\Users\\Max\\Documents\\GitHub\\homework\\OOP\\kr1\\Kr1\\magazine.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A55CA056-BB2E-49C3-B84A-70E961C017A3}|Kr1.csproj|solutionrelative:magazine.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A55CA056-BB2E-49C3-B84A-70E961C017A3}|Kr1.csproj|c:\\users\\max\\documents\\github\\homework\\oop\\kr1\\kr1\\edition.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{A55CA056-BB2E-49C3-B84A-70E961C017A3}|Kr1.csproj|c:\\users\\max\\documents\\github\\homework\\oop\\kr1\\kr1\\frequency.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A55CA056-BB2E-49C3-B84A-70E961C017A3}|Kr1.csproj|solutionrelative:frequency.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A55CA056-BB2E-49C3-B84A-70E961C017A3}|Kr1.csproj|C:\\Users\\Max\\Documents\\GitHub\\homework\\OOP\\kr1\\Kr1\\edition.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A55CA056-BB2E-49C3-B84A-70E961C017A3}|Kr1.csproj|solutionrelative:edition.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A55CA056-BB2E-49C3-B84A-70E961C017A3}|Kr1.csproj|c:\\users\\max\\documents\\github\\homework\\oop\\kr1\\kr1\\articlecomparer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A55CA056-BB2E-49C3-B84A-70E961C017A3}|Kr1.csproj|solutionrelative:articlecomparer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -26,58 +38,98 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\Max\\Documents\\GitHub\\homework\\OOP\\kr1\\Kr1\\Program.cs",
-              "RelativeDocumentMoniker": "Program.cs",
-              "ToolTip": "C:\\Users\\Max\\Documents\\GitHub\\homework\\OOP\\kr1\\Kr1\\Program.cs",
-              "RelativeToolTip": "Program.cs",
-              "ViewState": "AQIAABYAAAAAAAAAAAAswDEAAABVAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-03-06T16:10:40.824Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "TestCollections.cs",
-              "DocumentMoniker": "C:\\Users\\Max\\Documents\\GitHub\\homework\\OOP\\kr1\\Kr1\\TestCollections.cs",
-              "RelativeDocumentMoniker": "TestCollections.cs",
-              "ToolTip": "C:\\Users\\Max\\Documents\\GitHub\\homework\\OOP\\kr1\\Kr1\\TestCollections.cs",
-              "RelativeToolTip": "TestCollections.cs",
-              "ViewState": "AQIAAB8AAAAAAAAAAAAuwCsAAAAbAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-03-06T14:32:18.405Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "Edition.cs",
-              "DocumentMoniker": "C:\\Users\\Max\\Documents\\GitHub\\homework\\OOP\\kr1\\Kr1\\Edition.cs",
-              "RelativeDocumentMoniker": "Edition.cs",
-              "ToolTip": "C:\\Users\\Max\\Documents\\GitHub\\homework\\OOP\\kr1\\Kr1\\Edition.cs",
-              "RelativeToolTip": "Edition.cs",
-              "ViewState": "AQIAAAoAAAAAAAAAAAA7wBwAAAAdAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-03-06T15:39:55.155Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
               "Title": "Magazine.cs",
               "DocumentMoniker": "C:\\Users\\Max\\Documents\\GitHub\\homework\\OOP\\kr1\\Kr1\\Magazine.cs",
               "RelativeDocumentMoniker": "Magazine.cs",
               "ToolTip": "C:\\Users\\Max\\Documents\\GitHub\\homework\\OOP\\kr1\\Kr1\\Magazine.cs",
               "RelativeToolTip": "Magazine.cs",
-              "ViewState": "AQIAAFcAAAAAAAAAAAA8wGwAAAAAAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-02-21T15:17:56.034Z",
+              "IsPinned": true,
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "TestCollections.cs",
+              "DocumentMoniker": "C:\\Users\\Max\\Documents\\GitHub\\homework\\OOP\\kr1\\Kr1\\TestCollections.cs",
+              "RelativeDocumentMoniker": "TestCollections.cs",
+              "ToolTip": "C:\\Users\\Max\\Documents\\GitHub\\homework\\OOP\\kr1\\Kr1\\TestCollections.cs",
+              "RelativeToolTip": "TestCollections.cs",
+              "ViewState": "AQIAABoAAAAAAAAAAAAAwCcAAAAdAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-03-20T13:33:54.332Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\Max\\Documents\\GitHub\\homework\\OOP\\kr1\\Kr1\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "C:\\Users\\Max\\Documents\\GitHub\\homework\\OOP\\kr1\\Kr1\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AQIAAB4AAAAAAAAAAAAAADAAAAAPAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-03-20T13:33:53.5Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Person.cs",
+              "DocumentMoniker": "C:\\Users\\Max\\Documents\\GitHub\\homework\\OOP\\kr1\\Kr1\\Person.cs",
+              "RelativeDocumentMoniker": "Person.cs",
+              "ToolTip": "C:\\Users\\Max\\Documents\\GitHub\\homework\\OOP\\kr1\\Kr1\\Person.cs",
+              "RelativeToolTip": "Person.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-03-20T13:33:21.629Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Frequency.cs",
+              "DocumentMoniker": "C:\\Users\\Max\\Documents\\GitHub\\homework\\OOP\\kr1\\Kr1\\Frequency.cs",
+              "RelativeDocumentMoniker": "Frequency.cs",
+              "ToolTip": "C:\\Users\\Max\\Documents\\GitHub\\homework\\OOP\\kr1\\Kr1\\Frequency.cs",
+              "RelativeToolTip": "Frequency.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAQAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-03-20T13:32:30.349Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "ArticleComparer.cs",
+              "DocumentMoniker": "C:\\Users\\Max\\Documents\\GitHub\\homework\\OOP\\kr1\\Kr1\\ArticleComparer.cs",
+              "RelativeDocumentMoniker": "ArticleComparer.cs",
+              "ToolTip": "C:\\Users\\Max\\Documents\\GitHub\\homework\\OOP\\kr1\\Kr1\\ArticleComparer.cs",
+              "RelativeToolTip": "ArticleComparer.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-03-20T13:31:31.141Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Edition.cs",
+              "DocumentMoniker": "C:\\Users\\Max\\Documents\\GitHub\\homework\\OOP\\kr1\\Kr1\\Edition.cs",
+              "RelativeDocumentMoniker": "Edition.cs",
+              "ToolTip": "C:\\Users\\Max\\Documents\\GitHub\\homework\\OOP\\kr1\\Kr1\\Edition.cs",
+              "RelativeToolTip": "Edition.cs",
+              "ViewState": "AQIAACYAAAAAAAAAAADwv0YAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-03-06T15:39:55.155Z",
               "EditorCaption": ""
             }
           ]

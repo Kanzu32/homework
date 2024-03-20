@@ -46,12 +46,10 @@ internal class Program
 		}
 
 		Console.WriteLine("Задание 4:\n");
-
-		TestCollections<Edition, Magazine> test = new TestCollections<Edition, Magazine>(50000, TestCollections<Edition, Magazine>.GeneratePair);
-		//foreach (var entry in test.KeyDictionary)
-		//{
-		//	Console.WriteLine(entry.Value.ToString());
-		//}
+		Console.Write("N: ");
+		int n = Convert.ToInt32(Console.ReadLine());
+		TestCollections<Edition, Magazine> test = new TestCollections<Edition, Magazine>(n, TestCollections<Edition, Magazine>.GeneratePair);
+		
 		test.TestSearchTimes();
 	}
 
