@@ -52,7 +52,7 @@ internal class Program
 		//{
 		//	Console.WriteLine(entry.Value.ToString());
 		//}
-		test.Test();
+		test.TestSearchTimes();
 	}
 
     

@@ -5,7 +5,7 @@ using System.Linq;
 
 delegate KeyValuePair<TKey,TValue> GenerateElement<TKey, TValue>(int i);
 
-class TestCollections<TKey, TValue> {
+class TestCollections<TKey, TValue> where TKey: notnull {
 	private static DateTime _staticDate = DateTime.Now;
 	public List<TKey> KeyList => _keyList;
 	private List<TKey> _keyList;
@@ -34,125 +34,59 @@ class TestCollections<TKey, TValue> {
 			_keyList.Add(pair.Key);
 			_valueList.Add(pair.Value);
 			_keyDictionary.Add(pair.Key, pair.Value);
-			if (pair.Key == null) _stringDictionary.Add(i.ToString(), pair.Value);
-			else _stringDictionary.Add(pair.Key.ToString() ?? i.ToString(), pair.Value);
+			_stringDictionary.Add(pair.Key.ToString() ?? i.ToString(), pair.Value);
 		}
     }
 
-	public void Test()
+	public void TestSearchTimes()
+	{
+		var first = _generateFunction(0);
+		var middle = _generateFunction(_keyList.Count / 2);
+		var last = _generateFunction(_keyList.Count);
+		var non = _generateFunction(_keyList.Count + 1);
+
+		Console.WriteLine("First element");
+		SearchTimeForElement(first);
+		Console.WriteLine("\nMiddle element");
+		SearchTimeForElement(middle);
+		Console.WriteLine("\nLast element");
+		SearchTimeForElement(last);
+		Console.WriteLine("\nNo exist element");
+		SearchTimeForElement(non);
+	}
+
+	private void SearchTimeForElement(KeyValuePair<TKey, TValue> element)
 	{
 		var sw = new Stopwatch();
-		var first = _generateFunction(0);
-		var last = _generateFunction(_count - 1);
-		var middle = _generateFunction(_count/2);
-		var non = _generateFunction(-1);
-
 		Console.WriteLine("KeyList");
 		sw.Start();
-		_keyList.Contains(first.Key);
+		_keyList.Contains(element.Key);
 		sw.Stop();
-		Console.WriteLine("First: " + sw.Elapsed.TotalNanoseconds);
+		Console.WriteLine($"{sw.Elapsed.TotalNanoseconds} ns");
 
+		Console.WriteLine("ValueList");
 		sw.Restart();
-		_keyList.Contains(middle.Key);
+		_valueList.Contains(element.Value);
 		sw.Stop();
-		Console.WriteLine("Middle: " + sw.Elapsed.TotalNanoseconds);
+		Console.WriteLine($"{sw.Elapsed.TotalNanoseconds} ns");
 
+		Console.WriteLine("KeyDictionary (ContainsKey)");
 		sw.Restart();
-		_keyList.Contains(last.Key);
+		_keyDictionary.ContainsKey(element.Key);
 		sw.Stop();
-		Console.WriteLine("Last: " + sw.Elapsed.TotalNanoseconds);
+		Console.WriteLine($"{sw.Elapsed.TotalNanoseconds} ns");
 
+		Console.WriteLine("StringDictionary");
 		sw.Restart();
-		_keyList.Contains(non.Key);
+		_stringDictionary.ContainsKey(element.Key.ToString());
 		sw.Stop();
-		Console.WriteLine("Non-existent: " + sw.Elapsed.TotalNanoseconds);
+		Console.WriteLine($"{sw.Elapsed.TotalNanoseconds} ns");
 
-		Console.WriteLine("\nValueList");
+		Console.WriteLine("KeyDictionary (ContainsValue)");
 		sw.Restart();
-		_valueList.Contains(first.Value);
+		_keyDictionary.ContainsValue(element.Value);
 		sw.Stop();
-		Console.WriteLine("First: " + sw.Elapsed.TotalNanoseconds);
-
-		sw.Restart();
-		_valueList.Contains(middle.Value);
-		sw.Stop();
-		Console.WriteLine("Middle: " + sw.Elapsed.TotalNanoseconds);
-
-		sw.Restart();
-		_valueList.Contains(last.Value);
-		sw.Stop();
-		Console.WriteLine("Last: " + sw.Elapsed.TotalNanoseconds);
-
-		sw.Restart();
-		_valueList.Contains(non.Value);
-		sw.Stop();
-		Console.WriteLine("Non-existent: " + sw.Elapsed.TotalNanoseconds);
-
-
-		Console.WriteLine("\nKeyDict");
-		sw.Restart();
-		_keyDictionary.ContainsKey(first.Key);
-		sw.Stop();
-		Console.WriteLine("First: " + sw.Elapsed.TotalNanoseconds);
-
-		sw.Restart();
-		_keyDictionary.ContainsKey(middle.Key);
-		sw.Stop();
-		Console.WriteLine("Middle: " + sw.Elapsed.TotalNanoseconds);
-
-		sw.Restart();
-		_keyDictionary.ContainsKey(last.Key);
-		sw.Stop();
-		Console.WriteLine("Last: " + sw.Elapsed.TotalNanoseconds);
-
-		sw.Restart();
-		_keyDictionary.ContainsKey(non.Key);
-		sw.Stop();
-		Console.WriteLine("Non-existent: " + sw.Elapsed.TotalNanoseconds);
-
-
-		Console.WriteLine("\nStringDict");
-		sw.Restart();
-		_stringDictionary.ContainsKey(first.ToString());
-		sw.Stop();
-		Console.WriteLine("First: " + sw.Elapsed.TotalNanoseconds);
-
-		sw.Restart();
-		_stringDictionary.ContainsKey(middle.ToString());
-		sw.Stop();
-		Console.WriteLine("Middle: " + sw.Elapsed.TotalNanoseconds);
-
-		sw.Restart();
-		_stringDictionary.ContainsKey(last.ToString());
-		sw.Stop();
-		Console.WriteLine("Last: " + sw.Elapsed.TotalNanoseconds);
-
-		sw.Restart();
-		_stringDictionary.ContainsKey(non.ToString());
-		sw.Stop();
-		Console.WriteLine("Non-existent: " + sw.Elapsed.TotalNanoseconds);
-
-		Console.WriteLine("\nKeyDict by value");
-		sw.Restart();
-		_keyDictionary.ContainsValue(first.Value);
-		sw.Stop();
-		Console.WriteLine("First: " + sw.Elapsed.TotalNanoseconds);
-
-		sw.Restart();
-		_keyDictionary.ContainsValue(middle.Value);
-		sw.Stop();
-		Console.WriteLine("Middle: " + sw.Elapsed.TotalNanoseconds);
-
-		sw.Restart();
-		_keyDictionary.ContainsValue(last.Value);
-		sw.Stop();
-		Console.WriteLine("Last: " + sw.Elapsed.TotalNanoseconds);
-
-		sw.Restart();
-		_keyDictionary.ContainsValue(non.Value);
-		sw.Stop();
-		Console.WriteLine("Non-existent: " + sw.Elapsed.TotalNanoseconds);
+		Console.WriteLine($"{sw.Elapsed.TotalNanoseconds} ns");
 	}
 
 	public static KeyValuePair<Edition, Magazine> GeneratePair(int i)

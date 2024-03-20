@@ -118,7 +118,7 @@ namespace Kr1
 
 	delegate TKey KeySelector<TKey>(Magazine mg);
 
-	class MagazineCollection<TKey>
+	class MagazineCollection<TKey> where TKey : notnull
 	{
 		private Dictionary<TKey, Magazine> _collection;
 		private KeySelector<TKey> _keySelector;
